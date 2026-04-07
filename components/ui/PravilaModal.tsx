@@ -120,7 +120,7 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
             <div className="text-5xl mb-4 relative inline-block">
               {pravila.icon}
             </div>
-            <p className="text-[10px] text-gold-light tracking-[3px] font-heading mb-2">
+            <p className="text-[11px] text-gold-light tracking-[3px] font-heading mb-2">
               PRAVILĂ SFÂRȘITĂ
             </p>
             <h2 className="text-[24px] font-heading text-gold tracking-wider mb-2">
@@ -129,7 +129,7 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
 
             <ByzantineDivider color="#C5A55A" opacity={0.5} />
 
-            <p className="text-[14px] text-warm-gray leading-relaxed mb-6">
+            <p className="text-[15px] text-warm-gray leading-relaxed mb-6">
               Ai rostit {totalSteps} rugăciuni din {pravila.title}. Dumnezeu să primească
               ruga ta și să-ți dăruiască pace.
             </p>
@@ -141,10 +141,10 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
                 border: "1px solid #C5A55A44",
               }}
             >
-              <p className="text-[11px] text-gold-light tracking-wider font-heading mb-1">
+              <p className="text-[12px] text-gold-light tracking-wider font-heading mb-1">
                 COMPLETATĂ AZI
               </p>
-              <p className="text-[13px] text-ivory">
+              <p className="text-[14px] text-ivory">
                 {new Date().toLocaleDateString("ro-RO", {
                   weekday: "long",
                   day: "numeric",
@@ -200,11 +200,11 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
             ×
           </button>
           <div className="flex-1 min-w-0">
-            <p className="text-[10px] text-gold-light tracking-[2px] font-heading uppercase truncate flex items-center gap-1.5">
+            <p className="text-[11px] text-gold-light tracking-[2px] font-heading uppercase truncate flex items-center gap-1.5">
               <span className="text-base">{pravila.icon}</span>
               <span>{pravila.title}</span>
             </p>
-            <p className="text-[11px] text-warm-gray mt-0.5">
+            <p className="text-[12px] text-warm-gray mt-0.5">
               Pasul <span className="text-gold font-semibold">{currentStep + 1}</span> din{" "}
               <span className="text-gold">{totalSteps}</span>
               <span className="mx-1.5 opacity-40">·</span>
@@ -288,7 +288,7 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
               }}
             >
               <div className="absolute left-0 top-0 bottom-0 w-0.5 rounded-l-lg" style={{ background: "#C5A55A" }} />
-              <p className="text-[12px] text-ivory/85 italic leading-relaxed pl-2">
+              <p className="text-[13px] text-ivory/85 italic leading-relaxed pl-2">
                 <span className="text-gold mr-1">¶</span>
                 {step.note}
               </p>
@@ -304,7 +304,7 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
               border: "1px solid #C5A55A18",
             }}
           >
-            <p className="text-[16px] text-ivory whitespace-pre-wrap font-body sacred-text">
+            <p className="text-[17px] text-ivory whitespace-pre-wrap font-body sacred-text">
               {step.text}
             </p>
           </div>
@@ -333,7 +333,7 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
             style={{
               background: isFirstStep ? "#C5A55A08" : "linear-gradient(135deg, #C5A55A22, #C5A55A11)",
               border: `1px solid ${isFirstStep ? "#C5A55A15" : "#C5A55A44"}`,
-              color: isFirstStep ? "#8A7E7244" : "#C5A55A",
+              color: isFirstStep ? "#A89E9244" : "#C5A55A",
               opacity: isFirstStep ? 0.4 : 1,
             }}
             aria-label="Pasul anterior"
@@ -372,7 +372,7 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
             style={{
               background: isLastStep ? "#C5A55A08" : "linear-gradient(135deg, #C5A55A22, #C5A55A11)",
               border: `1px solid ${isLastStep ? "#C5A55A15" : "#C5A55A44"}`,
-              color: isLastStep ? "#8A7E7244" : "#C5A55A",
+              color: isLastStep ? "#A89E9244" : "#C5A55A",
               opacity: isLastStep ? 0.4 : 1,
             }}
             aria-label="Pasul următor"

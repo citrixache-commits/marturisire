@@ -134,7 +134,7 @@ export default function DonationsScreen({ onShowPremium }: Props) {
             style={{
               background: filter === key ? "#C5A55A33" : "#1A141066",
               border: filter === key ? "1px solid #C5A55A66" : "1px solid #C5A55A11",
-              color: filter === key ? "#C5A55A" : "#8A7E72",
+              color: filter === key ? "#C5A55A" : "#A89E92",
             }}>
             {label}
           </button>
@@ -152,7 +152,7 @@ export default function DonationsScreen({ onShowPremium }: Props) {
                 <span className="text-2xl">{cause.emoji}</span>
                 <div className="flex-1">
                   <p className="text-[14px] text-ivory font-medium leading-tight">{cause.title}</p>
-                  <p className="text-[11px] text-warm-gray mt-1 leading-relaxed">{cause.description}</p>
+                  <p className="text-[12px] text-warm-gray mt-1 leading-relaxed">{cause.description}</p>
                 </div>
               </div>
 
@@ -199,7 +199,7 @@ export default function DonationsScreen({ onShowPremium }: Props) {
                   ))}
                   <button onClick={() => handleDonate(cause.id)}
                     className="flex-1 rounded-xl py-2.5 text-center text-sm transition-all active:scale-95"
-                    style={{ background: "#1A141066", border: "1px solid #C5A55A22", color: "#8A7E72" }}>
+                    style={{ background: "#1A141066", border: "1px solid #C5A55A22", color: "#A89E92" }}>
                     Altă sumă
                   </button>
                 </div>

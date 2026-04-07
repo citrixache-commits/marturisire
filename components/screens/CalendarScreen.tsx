@@ -33,11 +33,11 @@ export default function CalendarScreen() {
           <button
             key={t}
             onClick={() => setTab(t)}
-            className="flex-1 text-[11px] py-2 rounded-lg font-heading tracking-[1.5px] transition-all"
+            className="flex-1 text-[12px] py-2 rounded-lg font-heading tracking-[1.5px] transition-all"
             style={{
               background: tab === t ? "#C5A55A22" : "#1A141066",
               border: tab === t ? "1px solid #C5A55A66" : "1px solid #C5A55A11",
-              color: tab === t ? "#C5A55A" : "#8A7E72",
+              color: tab === t ? "#C5A55A" : "#A89E92",
               fontWeight: tab === t ? 600 : 400,
             }}
           >
@@ -56,10 +56,10 @@ export default function CalendarScreen() {
               border: "1px solid #C5A55A44",
             }}
           >
-            <p className="text-[10px] text-gold-light tracking-[2px] font-heading mb-2">
+            <p className="text-[11px] text-gold-light tracking-[2px] font-heading mb-2">
               ASTĂZI
             </p>
-            <p className="text-[16px] text-ivory font-medium mb-1">
+            <p className="text-[17px] text-ivory font-medium mb-1">
               {formatDateRomanian(todayISO)}
             </p>
             {todaySaint?.type && (
@@ -73,7 +73,7 @@ export default function CalendarScreen() {
                 className="mt-3 p-3 rounded-xl"
                 style={{ background: "#1A141066", border: "1px solid #C5A55A22" }}
               >
-                <p className="text-[13px] text-ivory/90 italic leading-relaxed">
+                <p className="text-[14px] text-ivory/90 italic leading-relaxed">
                   „{todaySaint.gospel}"
                 </p>
                 {todaySaint.gospelRef && (
@@ -97,13 +97,13 @@ export default function CalendarScreen() {
                 style={{ border: "3px solid #C5A55A", background: "#1A1410" }}
               >
                 <span className="text-xl font-bold text-gold leading-none">{daysToPascha}</span>
-                <span className="text-[8px] text-gold-light tracking-wider mt-0.5">ZILE</span>
+                <span className="text-[9px] text-gold-light tracking-wider mt-0.5">ZILE</span>
               </div>
               <div>
                 <p className="text-[11px] text-gold-light tracking-[2px] font-heading mb-0.5">
                   PÂNĂ LA PAȘTE
                 </p>
-                <p className="text-[15px] text-ivory font-medium">
+                <p className="text-[16px] text-ivory font-medium">
                   Duminică, 12 aprilie 2026
                 </p>
                 <p className="text-[11px] text-warm-gray">Învierea Domnului</p>
@@ -119,7 +119,7 @@ export default function CalendarScreen() {
                 border: "2px solid #C5A55A",
               }}
             >
-              <p className="text-[10px] text-ivory tracking-[3px] font-heading mb-2">ASTĂZI</p>
+              <p className="text-[11px] text-ivory tracking-[3px] font-heading mb-2">ASTĂZI</p>
               <p className="text-2xl text-ivory font-heading font-bold mb-1">
                 HRISTOS A ÎNVIAT!
               </p>
@@ -166,8 +166,8 @@ export default function CalendarScreen() {
                   }}
                 >
                   <p
-                    className="text-[9px] font-heading tracking-wider mb-1"
-                    style={{ color: isToday ? "#C5A55A" : "#8A7E72" }}
+                    className="text-[10px] font-heading tracking-wider mb-1"
+                    style={{ color: isToday ? "#C5A55A" : "#A89E92" }}
                   >
                     {dayNames[dow]}
                   </p>
@@ -178,10 +178,10 @@ export default function CalendarScreen() {
                     {date.getDate()}
                   </p>
                   {saint?.fasting === "post" && (
-                    <span className="text-[8px] text-[#E8A0A0]">○</span>
+                    <span className="text-[9px] text-[#E8A0A0]">○</span>
                   )}
                   {saint?.fasting === "harti" && (
-                    <span className="text-[8px] text-gold">✦</span>
+                    <span className="text-[9px] text-gold">✦</span>
                   )}
                 </div>
               );
@@ -203,7 +203,7 @@ export default function CalendarScreen() {
                   <div className="flex-1">
                     <p className="text-[13px] text-ivory font-medium">{event.name}</p>
                     {event.description && (
-                      <p className="text-[10px] text-warm-gray mt-0.5">{event.description}</p>
+                      <p className="text-[11px] text-warm-gray mt-0.5">{event.description}</p>
                     )}
                   </div>
                   <div className="text-right">
@@ -228,7 +228,7 @@ export default function CalendarScreen() {
               border: "1px solid #C5A55A44",
             }}
           >
-            <p className="text-[10px] text-gold-light tracking-[2px] font-heading mb-2">
+            <p className="text-[11px] text-gold-light tracking-[2px] font-heading mb-2">
               SĂPTĂMÂNA MARE
             </p>
             <p className="text-[14px] text-ivory font-medium mb-3">6 — 11 aprilie 2026</p>
@@ -247,13 +247,13 @@ export default function CalendarScreen() {
                     <span className="text-base">{day.icon}</span>
                     <div className="flex-1">
                       <p
-                        className="text-[12px] font-medium"
+                        className="text-[13px] font-medium"
                         style={{ color: isToday ? "#C5A55A" : "#F5F0E8" }}
                       >
                         {day.name}
                       </p>
                       {day.description && (
-                        <p className="text-[10px] text-warm-gray">{day.description}</p>
+                        <p className="text-[11px] text-warm-gray">{day.description}</p>
                       )}
                     </div>
                   </div>
@@ -282,7 +282,7 @@ export default function CalendarScreen() {
                   <span className="text-2xl">{feast.icon}</span>
                   <div className="flex-1">
                     <p className="text-[13px] text-ivory font-medium">{feast.name}</p>
-                    <p className="text-[10px] text-warm-gray">
+                    <p className="text-[11px] text-warm-gray">
                       {formatDateRomanian(feast.date)}
                     </p>
                   </div>
@@ -324,7 +324,7 @@ export default function CalendarScreen() {
                       <p className="text-[14px] text-ivory font-medium">{post.name}</p>
                       {isActive && (
                         <span
-                          className="text-[8px] text-gold px-1.5 py-0.5 rounded font-heading tracking-wider"
+                          className="text-[9px] text-gold px-1.5 py-0.5 rounded font-heading tracking-wider"
                           style={{ background: "#C5A55A22" }}
                         >
                           ACUM

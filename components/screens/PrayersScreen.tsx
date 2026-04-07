@@ -21,7 +21,7 @@ export default function PrayersScreen({ onShowPremium }: Props) {
       {activePrayer && (
         <div className="rounded-2xl p-6 mb-5 animate-fade-in"
           style={{ background: "linear-gradient(135deg, #4A0E1A, #6B1D2A)", border: "1px solid #C5A55A44" }}>
-          <p className="text-[11px] text-gold-light tracking-[2px] font-heading mb-2">SE ASCULTĂ ACUM</p>
+          <p className="text-[12px] text-gold-light tracking-[2px] font-heading mb-2">SE ASCULTĂ ACUM</p>
           <h3 className="text-lg text-ivory font-medium mb-4">{activePrayer.title}</h3>
 
           {/* Progress bar */}
@@ -29,7 +29,7 @@ export default function PrayersScreen({ onShowPremium }: Props) {
             <div className="h-full bg-gold rounded-full transition-all duration-300 animate-pulse-gentle" style={{ width: "35%" }} />
           </div>
           <div className="flex justify-between items-center mb-4">
-            <span className="text-[11px] text-warm-gray">5:12</span>
+            <span className="text-[12px] text-warm-gray">5:12</span>
             <div className="flex gap-5 items-center">
               <button className="text-xl text-ivory">&#9198;</button>
               <button onClick={() => setActiveId(null)}
@@ -38,7 +38,7 @@ export default function PrayersScreen({ onShowPremium }: Props) {
               </button>
               <button className="text-xl text-ivory">&#9197;</button>
             </div>
-            <span className="text-[11px] text-warm-gray">{activePrayer.duration}</span>
+            <span className="text-[12px] text-warm-gray">{activePrayer.duration}</span>
           </div>
 
           {/* Show text toggle */}
@@ -53,7 +53,7 @@ export default function PrayersScreen({ onShowPremium }: Props) {
           {showText && activePrayer.text && (
             <div className="mt-4 p-4 rounded-xl max-h-60 overflow-y-auto"
               style={{ background: "#1A141088", border: "1px solid #C5A55A11" }}>
-              <p className="text-[14px] text-ivory/90 leading-[1.8] whitespace-pre-wrap font-body">
+              <p className="text-[15px] text-ivory/90 leading-[1.8] whitespace-pre-wrap font-body">
                 {activePrayer.text}
               </p>
             </div>
@@ -93,8 +93,8 @@ export default function PrayersScreen({ onShowPremium }: Props) {
               }}>
               <span className="text-2xl">{iconMap[prayer.icon] || "\u{1F64F}"}</span>
               <div className="flex-1">
-                <p className="text-[14px] text-ivory font-medium">{prayer.title}</p>
-                <p className="text-[11px] text-warm-gray mt-0.5">{prayer.duration}</p>
+                <p className="text-[15px] text-ivory font-medium">{prayer.title}</p>
+                <p className="text-[12px] text-warm-gray mt-0.5">{prayer.duration}</p>
               </div>
               {prayer.premium ? (
                 <span className="text-[9px] text-gold px-2 py-0.5 rounded-md font-heading tracking-wider"

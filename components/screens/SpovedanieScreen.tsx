@@ -124,16 +124,16 @@ export default function SpovedanieScreen() {
           <div className="absolute -top-5 -right-5 opacity-[0.08]">
             <OrthodoxCross size={120} color="#C5A55A" />
           </div>
-          <p className="text-[10px] tracking-[3px] mb-2 font-heading text-gold-light uppercase">
+          <p className="text-[11px] tracking-[3px] mb-2 font-heading text-gold-light uppercase">
             Sfântul Închisorilor
           </p>
           <h3 className="text-3xl font-light mb-2 text-ivory leading-tight">
             Valeriu Gafencu
           </h3>
-          <p className="text-xs text-warm-gray italic leading-relaxed mb-3">
+          <p className="text-[13px] text-warm-gray italic leading-relaxed mb-3">
             1921 &ndash; 1952 &middot; Martir al temnițelor comuniste
           </p>
-          <p className="text-[13px] text-ivory leading-relaxed">
+          <p className="text-[14px] text-ivory leading-relaxed">
             &bdquo;Doresc și rog ca fiecare prieten să copieze acest îndreptar la spovedanie.&rdquo;
           </p>
         </div>
@@ -146,7 +146,7 @@ export default function SpovedanieScreen() {
             <p className="text-base font-bold text-ivory font-heading tracking-wider">
               ÎNCEPE EXAMENUL DE CONȘTIINȚĂ
             </p>
-            <p className="text-xs text-ivory/80 mt-1">
+            <p className="text-[13px] text-ivory/85 mt-1">
               {totalIntrebari} întrebări &middot; ~20 minute
             </p>
           </div>
@@ -266,10 +266,10 @@ export default function SpovedanieScreen() {
         {/* Progress bar */}
         <div className="mb-4">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-[11px] text-warm-gray tracking-wider">
+            <span className="text-[12px] text-warm-gray tracking-wider">
               SECȚIUNEA {sectionIndex + 1}/{toateSectiunile.length}
             </span>
-            <span className="text-[11px] text-gold font-semibold">{progressPct}%</span>
+            <span className="text-[12px] text-gold font-semibold">{progressPct}%</span>
           </div>
           <div className="w-full h-1 rounded-full" style={{ background: "#F5F0E815" }}>
             <div className="h-full rounded-full transition-all"
@@ -303,7 +303,7 @@ export default function SpovedanieScreen() {
             const ans = answers[q.id];
             return (
               <div key={q.id} className="glass-card p-4">
-                <p className="text-[14px] text-ivory leading-relaxed mb-3">
+                <p className="text-[15px] text-ivory leading-relaxed mb-3">
                   <span className="text-gold font-semibold mr-2">{i + 1}.</span>
                   {q.text}
                 </p>
@@ -313,7 +313,7 @@ export default function SpovedanieScreen() {
                     style={{
                       background: ans === "da" ? "#6B1D2A88" : "#1A141066",
                       border: ans === "da" ? "1px solid #C5A55A66" : "1px solid #C5A55A22",
-                      color: ans === "da" ? "#F5F0E8" : "#8A7E72",
+                      color: ans === "da" ? "#F5F0E8" : "#A89E92",
                     }}>
                     Da
                   </button>
@@ -322,7 +322,7 @@ export default function SpovedanieScreen() {
                     style={{
                       background: ans === "nu" ? "#3A6B3A66" : "#1A141066",
                       border: ans === "nu" ? "1px solid #5A9B5A66" : "1px solid #C5A55A22",
-                      color: ans === "nu" ? "#F5F0E8" : "#8A7E72",
+                      color: ans === "nu" ? "#F5F0E8" : "#A89E92",
                     }}>
                     Nu
                   </button>
@@ -348,7 +348,7 @@ export default function SpovedanieScreen() {
             {sectionIndex === toateSectiunile.length - 1 ? "Vezi rezumat" : "Continuă"} &rarr;
           </button>
         </div>
-        <p className="text-[10px] text-warm-gray text-center">
+        <p className="text-[11px] text-warm-gray text-center">
           {sectionAnswered}/{currentSection.questions.length} întrebări răspunse în această secțiune
         </p>
       </div>
@@ -399,7 +399,7 @@ export default function SpovedanieScreen() {
                 </p>
                 <ul className="space-y-2">
                   {items.map((q, i) => (
-                    <li key={i} className="text-[12px] text-ivory leading-relaxed flex gap-2">
+                    <li key={i} className="text-[13px] text-ivory leading-relaxed flex gap-2">
                       <span className="text-wine-medium flex-shrink-0">&bull;</span>
                       <span>{q}</span>
                     </li>
@@ -433,7 +433,7 @@ export default function SpovedanieScreen() {
           </button>
           <button onClick={resetExamen}
             className="w-full rounded-xl p-3 text-xs transition-all active:scale-[0.98]"
-            style={{ background: "transparent", border: "1px solid #C5A55A22", color: "#8A7E72" }}>
+            style={{ background: "transparent", border: "1px solid #C5A55A22", color: "#A89E92" }}>
             Șterge și începe din nou
           </button>
         </div>
@@ -459,7 +459,7 @@ export default function SpovedanieScreen() {
         <div className="glass-card gold-border-left p-5 mb-4">
           <ul className="space-y-3">
             {sfaturiFinale.map((s, i) => (
-              <li key={i} className="text-[13px] text-ivory leading-relaxed flex gap-3">
+              <li key={i} className="text-[14px] text-ivory leading-relaxed flex gap-3">
                 <span className="text-gold flex-shrink-0 font-heading font-semibold">{i + 1}.</span>
                 <span>{s}</span>
               </li>

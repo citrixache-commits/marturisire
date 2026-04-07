@@ -16,7 +16,7 @@ export default function FastingScreen() {
         style={{ background: "linear-gradient(135deg, #4A0E1A, #6B1D2A88)", border: "1px solid #C5A55A33" }}>
         <div className="flex justify-between items-center">
           <div>
-            <p className="text-[11px] text-gold-light tracking-[2px] font-heading mb-1">POSTUL MARE</p>
+            <p className="text-[12px] text-gold-light tracking-[2px] font-heading mb-1">POSTUL MARE</p>
             <p className="text-xl text-ivory font-medium">Săptămâna Patimilor</p>
           </div>
           <div className="w-14 h-14 rounded-full flex flex-col items-center justify-center"
@@ -28,13 +28,13 @@ export default function FastingScreen() {
         <div className="w-full h-1.5 rounded-full mt-4" style={{ background: "#F5F0E815" }}>
           <div className="h-full rounded-full" style={{ width: "92%", background: "linear-gradient(90deg, #C5A55A, #6B1D2A)" }} />
         </div>
-        <p className="text-[11px] text-warm-gray mt-1.5">92% completat — mai sunt 3 zile până la Paște!</p>
+        <p className="text-[12px] text-warm-gray mt-1.5">92% completat — mai sunt 3 zile până la Paște!</p>
       </div>
 
       {/* Today's rules */}
       <div className="glass-card p-4 mb-5">
         <p className="text-[11px] text-gold tracking-[2px] font-heading mb-3">REGULI DE POST AZI</p>
-        <p className="text-[13px] text-ivory/80 mb-3">{rules.description}</p>
+        <p className="text-[14px] text-ivory/85 mb-3">{rules.description}</p>
         <div className="flex flex-wrap gap-2">
           {rules.forbidden.map((r, i) => (
             <span key={i} className="text-xs rounded-lg px-2.5 py-1 text-[#E8A0A0]"
@@ -58,8 +58,8 @@ export default function FastingScreen() {
           <div key={i} className="glass-card p-3.5 flex items-center gap-3.5">
             <span className="text-3xl">{recipe.emoji}</span>
             <div className="flex-1">
-              <p className="text-[14px] text-ivory font-medium">{recipe.name}</p>
-              <p className="text-[11px] text-warm-gray mt-0.5">
+              <p className="text-[15px] text-ivory font-medium">{recipe.name}</p>
+              <p className="text-[12px] text-warm-gray mt-0.5">
                 {recipe.time} &middot; {recipe.cal}
               </p>
             </div>

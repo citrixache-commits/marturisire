@@ -127,9 +127,9 @@ export default function AppShell() {
             className="flex flex-col items-center gap-0.5 px-3 py-1.5 transition-colors"
             style={{ opacity: activeTab === tab.id ? 1 : 0.55 }}>
             <span className="text-[15px]">{tab.icon}</span>
-            <span className="text-[8px] tracking-[0.3px] font-heading"
+            <span className="text-[9px] tracking-[0.3px] font-heading"
               style={{
-                color: activeTab === tab.id ? "#C5A55A" : "#8A7E72",
+                color: activeTab === tab.id ? "#C5A55A" : "#A89E92",
               }}>
               {tab.label}
             </span>

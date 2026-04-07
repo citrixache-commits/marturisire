@@ -9,7 +9,7 @@ export const colors = {
   ivoryDark: "#E8E0D0",
   dark: "#1A1410",
   darkCard: "#1E1814",
-  warmGray: "#8A7E72",
+  warmGray: "#A89E92",
   theotokos: "#1B3A5C",
   fasting: "#8B3A62",
   allowed: "#3A6B3A",
