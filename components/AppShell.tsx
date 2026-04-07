@@ -80,8 +80,8 @@ export default function AppShell() {
           <div className="flex items-center gap-2.5">
             <OrthodoxCross size={28} color="#C5A55A" />
             <div>
-              <h1 className="text-[26px] font-heading font-bold text-gold tracking-[3px] leading-none">
-                LUMINA
+              <h1 className="text-[22px] font-heading font-bold text-gold tracking-[2px] leading-none">
+                MĂRTURISIRE
               </h1>
               <p className="text-[10px] text-gold-light tracking-[4px] font-light">
                 CREDINȚĂ ORTODOXĂ

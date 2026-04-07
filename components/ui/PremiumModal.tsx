@@ -26,7 +26,7 @@ export default function PremiumModal({ onClose }: Props) {
           </div>
 
           <h2 className="text-[22px] font-heading text-gold tracking-wider mt-2 mb-1">
-            Ce pregătim în LUMINA
+            Ce pregătim
           </h2>
 
           <ByzantineDivider color="#C5A55A" opacity={0.4} />

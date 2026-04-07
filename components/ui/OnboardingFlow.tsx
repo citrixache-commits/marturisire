@@ -83,7 +83,7 @@ export default function OnboardingFlow({ onComplete }: Props) {
         {step === 0 && (
           <>
             <OrthodoxCross size={56} color="#C5A55A" />
-            <h1 className="text-3xl font-heading text-gold tracking-wider mt-6 mb-2">LUMINA</h1>
+            <h1 className="text-[26px] font-heading text-gold tracking-[2px] mt-6 mb-2">MĂRTURISIRE</h1>
             <p className="text-[10px] text-gold-light tracking-[3px] font-heading uppercase mb-4">
               Credință Ortodoxă
             </p>
@@ -295,7 +295,7 @@ export default function OnboardingFlow({ onComplete }: Props) {
         {step === 7 && (
           <>
             <OrthodoxCross size={36} color="#C5A55A" />
-            <h2 className="text-[22px] font-heading text-gold tracking-wider mt-3 mb-1">LUMINA PREMIUM</h2>
+            <h2 className="text-[22px] font-heading text-gold tracking-wider mt-3 mb-1">MĂRTURISIRE PREMIUM</h2>
             <p className="text-xs text-warm-gray text-center mb-5 max-w-[280px]">
               Îndreptarul complet + rugăciuni + calendar ortodox
             </p>
@@ -357,7 +357,7 @@ export default function OnboardingFlow({ onComplete }: Props) {
         {step === 0 && (
           <button onClick={onComplete}
             className="w-full text-warm-gray text-[13px] mt-3 p-2 bg-transparent border-none">
-            Am mai folosit LUMINA
+            Am mai folosit aplicația
           </button>
         )}
         {step === TOTAL_STEPS - 1 && (

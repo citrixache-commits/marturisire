@@ -1,4 +1,4 @@
-// LUMINA Design Tokens — Bizantin Modern
+// MĂRTURISIRE Design Tokens — Bizantin Modern
 export const colors = {
   gold: "#C5A55A",
   goldLight: "#E8D5A3",

@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "LUMINA — Îndreptar de Spovedanie",
-  description: "Aplicație ortodoxă cu Îndreptarul Sfântului Valeriu Gafencu, rugăciuni canonice, calendar liturgic și reguli de post",
+  title: "Mărturisire — Îndreptar Ortodox de Spovedanie",
+  description: "Aplicație ortodoxă cu Îndreptarul Sfântului Valeriu Gafencu, pravilă de rugăciune, calendar liturgic și reguli de post. marturisire.ro",
 };
 
 export const viewport: Viewport = {

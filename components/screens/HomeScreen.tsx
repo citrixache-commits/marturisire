@@ -160,7 +160,7 @@ export default function HomeScreen({ onNavigate, onShowPremium, onOpenPravila, p
       <button onClick={onShowPremium}
         className="w-full py-3 mb-4 active:scale-[0.98] transition-transform text-center">
         <p className="text-[11px] text-warm-gray italic">
-          Vezi ce pregătim în LUMINA <span className="text-gold-dim">&rarr;</span>
+          Vezi ce pregătim <span className="text-gold-dim">&rarr;</span>
         </p>
       </button>
 

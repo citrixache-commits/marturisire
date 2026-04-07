@@ -105,7 +105,7 @@ export default function DonationsScreen({ onShowPremium }: Props) {
         <div className="flex justify-between items-end">
           <div>
             <p className="text-3xl text-gold font-bold">&euro;{totalRaised.toLocaleString()}</p>
-            <p className="text-xs text-warm-gray mt-1">strânși prin LUMINA</p>
+            <p className="text-xs text-warm-gray mt-1">strânși prin Mărturisire</p>
           </div>
           <div className="text-right">
             <p className="text-lg text-ivory font-semibold">{causes.length}</p>
