@@ -1,0 +1,30 @@
+import type { Metadata, Viewport } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "LUMINA — Îndreptar de Spovedanie",
+  description: "Aplicație ortodoxă cu Îndreptarul Sfântului Valeriu Gafencu, rugăciuni canonice, calendar liturgic și reguli de post",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: "#1A1410",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="ro">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Alegreya+SC:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="bg-dark min-h-screen">
+        {children}
+      </body>
+    </html>
+  );
+}
