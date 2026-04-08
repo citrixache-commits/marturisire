@@ -102,10 +102,10 @@ export default function AppShell() {
           <div className="flex items-center gap-2.5">
             <OrthodoxCross size={28} color="#C5A55A" />
             <div>
-              <h1 className="text-[22px] font-heading font-bold text-gold tracking-[2px] leading-none">
+              <h1 className="text-[24px] font-heading font-bold text-gold tracking-[2px] leading-none">
                 MĂRTURISIRE
               </h1>
-              <p className="text-[11px] text-gold-light tracking-[4px] font-light">
+              <p className="text-[12px] text-gold-light tracking-[4px] font-light">
                 CREDINȚĂ ORTODOXĂ
               </p>
             </div>
@@ -153,7 +153,7 @@ export default function AppShell() {
             className="flex flex-col items-center gap-0.5 px-3 py-1.5 transition-colors"
             style={{ opacity: activeTab === tab.id ? 1 : 0.55 }}>
             <span className="text-[15px]">{tab.icon}</span>
-            <span className="text-[10px] tracking-[0.3px] font-heading"
+            <span className="text-[11px] tracking-[0.3px] font-heading"
               style={{
                 color: activeTab === tab.id ? "#C5A55A" : "#A89E92",
               }}>

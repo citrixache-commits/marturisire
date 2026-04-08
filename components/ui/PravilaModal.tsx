@@ -120,16 +120,16 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
             <div className="text-5xl mb-4 relative inline-block">
               {pravila.icon}
             </div>
-            <p className="text-[12px] text-gold-light tracking-[3px] font-heading mb-2">
+            <p className="text-[13px] text-gold-light tracking-[3px] font-heading mb-2">
               PRAVILĂ SFÂRȘITĂ
             </p>
-            <h2 className="text-[26px] font-heading text-gold tracking-wider mb-2">
+            <h2 className="text-[28px] font-heading text-gold tracking-wider mb-2">
               Slavă Ție, Dumnezeule!
             </h2>
 
             <ByzantineDivider color="#C5A55A" opacity={0.5} />
 
-            <p className="text-[16px] text-warm-gray leading-relaxed mb-6">
+            <p className="text-[17px] text-warm-gray leading-relaxed mb-6">
               Ai rostit {totalSteps} rugăciuni din {pravila.title}. Dumnezeu să primească
               ruga ta și să-ți dăruiască pace.
             </p>
@@ -141,10 +141,10 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
                 border: "1px solid #C5A55A44",
               }}
             >
-              <p className="text-[13px] text-gold-light tracking-wider font-heading mb-1">
+              <p className="text-[14px] text-gold-light tracking-wider font-heading mb-1">
                 COMPLETATĂ AZI
               </p>
-              <p className="text-[15px] text-ivory">
+              <p className="text-[16px] text-ivory">
                 {new Date().toLocaleDateString("ro-RO", {
                   weekday: "long",
                   day: "numeric",
@@ -156,7 +156,7 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
 
             <button
               onClick={onClose}
-              className="w-full rounded-xl p-3.5 text-ivory text-[14px] font-semibold font-heading tracking-wider"
+              className="w-full rounded-xl p-3.5 text-ivory text-[16px] font-semibold font-heading tracking-wider"
               style={{
                 background: "linear-gradient(135deg, #C5A55A, #9A7F3C)",
                 boxShadow: "0 4px 12px rgba(197, 165, 90, 0.2)",
@@ -200,11 +200,11 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
             ×
           </button>
           <div className="flex-1 min-w-0">
-            <p className="text-[12px] text-gold-light tracking-[2px] font-heading uppercase truncate flex items-center gap-1.5">
+            <p className="text-[13px] text-gold-light tracking-[2px] font-heading uppercase truncate flex items-center gap-1.5">
               <span className="text-base">{pravila.icon}</span>
               <span>{pravila.title}</span>
             </p>
-            <p className="text-[13px] text-warm-gray mt-0.5">
+            <p className="text-[14px] text-warm-gray mt-0.5">
               Pasul <span className="text-gold font-semibold">{currentStep + 1}</span> din{" "}
               <span className="text-gold">{totalSteps}</span>
               <span className="mx-1.5 opacity-40">·</span>
@@ -270,11 +270,11 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
             <div className="h-px flex-1" style={{ background: "linear-gradient(90deg, #C5A55A55, transparent)" }} />
           </div>
 
-          <h2 className="text-[28px] font-heading text-gold tracking-wide mb-1 leading-tight">
+          <h2 className="text-[30px] font-heading text-gold tracking-wide mb-1 leading-tight">
             {step.title}
           </h2>
           {step.subtitle && (
-            <p className="text-[14px] text-gold-light italic mb-4">
+            <p className="text-[15px] text-gold-light italic mb-4">
               {step.subtitle}
             </p>
           )}
@@ -288,7 +288,7 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
               }}
             >
               <div className="absolute left-0 top-0 bottom-0 w-0.5 rounded-l-lg" style={{ background: "#C5A55A" }} />
-              <p className="text-[14px] text-ivory/85 italic leading-relaxed pl-2">
+              <p className="text-[15px] text-ivory/85 italic leading-relaxed pl-2">
                 <span className="text-gold mr-1">¶</span>
                 {step.note}
               </p>
@@ -304,7 +304,7 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
               border: "1px solid #C5A55A18",
             }}
           >
-            <p className="text-[18px] text-ivory whitespace-pre-wrap font-body sacred-text">
+            <p className="text-[20px] text-ivory whitespace-pre-wrap font-body sacred-text">
               {step.text}
             </p>
           </div>

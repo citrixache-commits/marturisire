@@ -49,14 +49,14 @@ export default function HomeScreen({ onNavigate, onShowPremium, onOpenPravila, p
           style={{ background: "radial-gradient(circle at top right, rgba(197, 165, 90, 0.15) 0%, transparent 70%)" }} />
 
         <div className="relative">
-          <p className="text-[12px] tracking-[3px] mb-1 font-heading text-gold-light uppercase">
+          <p className="text-[13px] tracking-[3px] mb-1 font-heading text-gold-light uppercase">
             {dayNamesRo[today.getDay()]}
           </p>
           <h2 className="text-[44px] font-light mb-1 text-ivory leading-none font-heading tracking-tight">
             {today.getDate()} <span className="text-[28px] text-gold-light font-light">{monthNamesRo[today.getMonth()]}</span>
           </h2>
           {saint.type && (
-            <span className="inline-block text-[12px] font-semibold font-heading text-gold-light px-3 py-1 rounded-lg mb-2 mt-2 tracking-wider"
+            <span className="inline-block text-[13px] font-semibold font-heading text-gold-light px-3 py-1 rounded-lg mb-2 mt-2 tracking-wider"
               style={{
                 background: "linear-gradient(135deg, #C5A55A33, #C5A55A11)",
                 border: "1px solid #C5A55A66",
@@ -65,7 +65,7 @@ export default function HomeScreen({ onNavigate, onShowPremium, onOpenPravila, p
               {saint.type}
             </span>
           )}
-          <p className="text-[18px] italic text-ivory leading-relaxed mt-2">{saint.name}</p>
+          <p className="text-[20px] italic text-ivory leading-relaxed mt-2">{saint.name}</p>
           <div className="flex items-center gap-2 mt-3 w-fit rounded-lg px-3 py-1.5"
             style={{
               background: saint.fasting === "post"
@@ -76,7 +76,7 @@ export default function HomeScreen({ onNavigate, onShowPremium, onOpenPravila, p
               border: `1px solid ${saint.fasting === "post" ? "#C5A55A33" : saint.fasting === "harti" ? "#C5A55A66" : "#3A6B3A66"}`,
             }}>
             <span className="text-sm">{saint.fasting === "post" ? "\u{1F7E3}" : saint.fasting === "harti" ? "\u{2728}" : "\u{1F7E2}"}</span>
-            <span className="text-[13px] text-ivory font-medium">
+            <span className="text-[14px] text-ivory font-medium">
               {saint.fasting === "post" ? "Zi de Post" : saint.fasting === "harti" ? "Harți — Sărbătoare!" : "Dezlegare"}
             </span>
           </div>
@@ -86,13 +86,13 @@ export default function HomeScreen({ onNavigate, onShowPremium, onOpenPravila, p
       {/* Daily Gospel */}
       <div className="glass-card gold-border-left p-5 mb-4 relative overflow-hidden">
         <div className="absolute top-2 right-2 text-[60px] opacity-[0.04] leading-none select-none pointer-events-none font-heading text-gold">"</div>
-        <p className="text-[12px] text-gold tracking-[3px] font-heading mb-2">EVANGHELIA ZILEI</p>
-        <p className="text-[18px] text-ivory leading-[1.75] italic relative">
+        <p className="text-[13px] text-gold tracking-[3px] font-heading mb-2">EVANGHELIA ZILEI</p>
+        <p className="text-[20px] text-ivory leading-[1.75] italic relative">
           &bdquo;{saint.gospel}&rdquo;
         </p>
         <div className="flex items-center gap-2 mt-3">
           <div className="h-px w-6" style={{ background: "#C5A55A66" }} />
-          <p className="text-[13px] text-gold-light font-heading tracking-wider">
+          <p className="text-[14px] text-gold-light font-heading tracking-wider">
             {saint.gospelRef}
           </p>
         </div>
@@ -107,13 +107,13 @@ export default function HomeScreen({ onNavigate, onShowPremium, onOpenPravila, p
           boxShadow: "0 4px 16px rgba(27, 58, 92, 0.25)",
         }}>
         <div className="text-left flex-1">
-          <p className="text-[12px] text-gold-light tracking-[3px] font-heading uppercase mb-1">
+          <p className="text-[13px] text-gold-light tracking-[3px] font-heading uppercase mb-1">
             Îndreptar Valeriu Gafencu
           </p>
-          <p className="text-[18px] font-bold text-ivory font-heading tracking-wider">
+          <p className="text-[20px] font-bold text-ivory font-heading tracking-wider">
             EXAMEN DE CONȘTIINȚĂ
           </p>
-          <p className="text-[14px] text-ivory/85 mt-1 italic">
+          <p className="text-[15px] text-ivory/85 mt-1 italic">
             Pregătește-te pentru spovedanie
           </p>
         </div>
@@ -149,7 +149,7 @@ export default function HomeScreen({ onNavigate, onShowPremium, onOpenPravila, p
               </span>
             )}
             <span className="text-3xl">{item.icon}</span>
-            <span className="text-[13px] text-ivory text-center whitespace-pre-line leading-tight font-medium">
+            <span className="text-[14px] text-ivory text-center whitespace-pre-line leading-tight font-medium">
               {item.label}
             </span>
           </button>
@@ -159,7 +159,7 @@ export default function HomeScreen({ onNavigate, onShowPremium, onOpenPravila, p
       {/* Ce vine — discret */}
       <button onClick={onShowPremium}
         className="w-full py-3 mb-4 active:scale-[0.98] transition-transform text-center">
-        <p className="text-[13px] text-warm-gray italic">
+        <p className="text-[14px] text-warm-gray italic">
           Vezi ce pregătim <span className="text-gold-dim">&rarr;</span>
         </p>
       </button>
@@ -167,13 +167,13 @@ export default function HomeScreen({ onNavigate, onShowPremium, onOpenPravila, p
       {/* Week Calendar */}
       <div className="glass-card-elevated p-4 mb-4">
         <div className="flex items-center justify-between mb-3">
-          <p className="text-[12px] text-gold tracking-[2px] font-heading">
+          <p className="text-[13px] text-gold tracking-[2px] font-heading">
             {saint.type?.includes("Săptămâna") || saint.type?.includes("Luminată")
               ? saint.type?.toUpperCase()
               : "CALENDAR SĂPTĂMÂNAL"}
           </p>
           <div className="h-px flex-1 mx-3" style={{ background: "linear-gradient(90deg, #C5A55A55, transparent)" }} />
-          <span className="text-[11px] text-warm-gray font-heading tracking-wider">LUN – DUM</span>
+          <span className="text-[12px] text-warm-gray font-heading tracking-wider">LUN – DUM</span>
         </div>
         <div className="flex gap-1.5 justify-between">
           {week.map((d, i) => {
@@ -197,11 +197,11 @@ export default function HomeScreen({ onNavigate, onShowPremium, onOpenPravila, p
                     : "1px solid transparent",
                   boxShadow: isToday ? "0 0 12px rgba(197, 165, 90, 0.25)" : "none",
                 }}>
-                <p className="text-[12px] text-warm-gray mb-1 font-heading">{dayLetters[i]}</p>
-                <p className={`text-[15px] mb-0.5 ${isSpecial ? "text-gold font-bold" : isToday ? "text-gold font-bold" : "text-ivory"}`}>
+                <p className="text-[13px] text-warm-gray mb-1 font-heading">{dayLetters[i]}</p>
+                <p className={`text-[16px] mb-0.5 ${isSpecial ? "text-gold font-bold" : isToday ? "text-gold font-bold" : "text-ivory"}`}>
                   {d.date.getDate()}
                 </p>
-                <p className={`text-[10px] ${isSpecial ? "text-gold" : isFasting ? "text-[#C08080]" : "text-warm-gray"} font-heading tracking-wider uppercase`}>
+                <p className={`text-[11px] ${isSpecial ? "text-gold" : isFasting ? "text-[#C08080]" : "text-warm-gray"} font-heading tracking-wider uppercase`}>
                   {isSpecial ? "Paște" : d.saint?.fasting === "post" ? "post" : d.saint?.fasting === "harti" ? "harți" : "liber"}
                 </p>
               </div>
