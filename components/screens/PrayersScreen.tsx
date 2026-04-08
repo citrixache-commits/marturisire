@@ -59,9 +59,9 @@ export default function PrayersScreen() {
 
               {/* Inline prayer text */}
               {isActive && prayer.text && (
-                <div className="rounded-b-xl p-5 animate-fade-in"
-                  style={{ background: "linear-gradient(180deg, #C5A55A10, #1A141088)", border: "1px solid #C5A55A44", borderTop: "none" }}>
-                  <p className="text-[18px] text-ivory/90 leading-[1.8] whitespace-pre-wrap font-body">
+                <div className="rounded-b-xl p-6 animate-fade-in"
+                  style={{ background: "linear-gradient(180deg, #C5A55A08, #1A141066)", border: "1px solid #C5A55A33", borderTop: "none" }}>
+                  <p className="text-[18px] text-ivory/90 leading-[2] whitespace-pre-wrap font-body">
                     {prayer.text}
                   </p>
                 </div>

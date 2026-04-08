@@ -5,22 +5,21 @@ import OnboardingFlow from "./ui/OnboardingFlow";
 import PravilaModal from "./ui/PravilaModal";
 import ScreenSkeleton from "./ui/Skeleton";
 import HomeScreen from "./screens/HomeScreen";
+import AboutModal from "./ui/AboutModal";
 
 const PrayersScreen = lazy(() => import("./screens/PrayersScreen"));
 const SpovedanieScreen = lazy(() => import("./screens/SpovedanieScreen"));
-const FastingScreen = lazy(() => import("./screens/FastingScreen"));
 const CalendarScreen = lazy(() => import("./screens/CalendarScreen"));
 
-type Tab = "home" | "calendar" | "spovedanie" | "prayers" | "fasting";
+type Tab = "home" | "calendar" | "spovedanie" | "prayers";
 
-const tabOrder: Tab[] = ["home", "calendar", "spovedanie", "prayers", "fasting"];
+const tabOrder: Tab[] = ["home", "calendar", "spovedanie", "prayers"];
 
 const tabs: { id: Tab; label: string; icon: string }[] = [
   { id: "home", label: "Acasă", icon: "\u{1F3E0}" },
   { id: "calendar", label: "Calendar", icon: "\u{1F4C5}" },
   { id: "spovedanie", label: "Îndreptar", icon: "\u{1F4DC}" },
   { id: "prayers", label: "Rugăciuni", icon: "\u{1F64F}" },
-  { id: "fasting", label: "Post", icon: "\u{1F957}" },
 ];
 
 function haptic() {
@@ -34,7 +33,7 @@ export default function AppShell() {
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [pravilaOpen, setPravilaOpen] = useState<"dimineata" | "seara" | null>(null);
   const [pravilaRefresh, setPravilaRefresh] = useState(0);
-  const [streak] = useState(12);
+  const [showAbout, setShowAbout] = useState(false);
   const [slideClass, setSlideClass] = useState("");
   const prevTabRef = useRef<Tab>("home");
 
@@ -48,7 +47,6 @@ export default function AppShell() {
     setActiveTab(tab);
   }
 
-  // Reset slide animation after it plays
   useEffect(() => {
     const t = setTimeout(() => setSlideClass(""), 350);
     return () => clearTimeout(t);
@@ -124,23 +122,15 @@ export default function AppShell() {
             </button>
           ))}
         </nav>
-        <div className="flex items-center gap-2 px-2 pt-4" style={{ borderTop: "1px solid #C5A55A22" }}>
-          <div className="flex items-center gap-1 px-3 py-1 rounded-full"
-            style={{ background: "#C5A55A22", border: "1px solid #C5A55A44" }}>
-            <span className="text-sm">{"\u{1F525}"}</span>
-            <span className="text-[14px] text-gold font-semibold">{streak}</span>
-          </div>
-          <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold"
-            style={{
-              background: "linear-gradient(135deg, #6B1D2A, #C5A55A)",
-              border: "2px solid #C5A55A66",
-            }}>
-            S
-          </div>
-        </div>
+        <button onClick={() => setShowAbout(true)}
+          className="flex items-center gap-3 px-3 py-3 rounded-xl text-left transition-all mt-2"
+          style={{ border: "1px solid transparent" }}>
+          <span className="text-[18px]">ℹ️</span>
+          <span className="text-[15px] tracking-[0.5px] font-heading text-warm-gray">Despre</span>
+        </button>
       </aside>
 
-      {/* Mobile Header — hidden on desktop */}
+      {/* Mobile Header */}
       <header className="sticky top-0 z-[100] px-5 pt-4 pb-3 lg:hidden"
         style={{
           background: "linear-gradient(180deg, #1A1410ee, #1A1410cc)",
@@ -159,24 +149,16 @@ export default function AppShell() {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 px-3 py-1 rounded-full"
-              style={{ background: "#C5A55A22", border: "1px solid #C5A55A44" }}>
-              <span className="text-sm">{"\u{1F525}"}</span>
-              <span className="text-[14px] text-gold font-semibold">{streak}</span>
-            </div>
-            <div className="w-9 h-9 rounded-full flex items-center justify-center text-base font-bold"
-              style={{
-                background: "linear-gradient(135deg, #6B1D2A, #C5A55A)",
-                border: "2px solid #C5A55A66",
-              }}>
-              S
-            </div>
-          </div>
+          <button onClick={() => setShowAbout(true)}
+            className="w-9 h-9 rounded-full flex items-center justify-center"
+            style={{ background: "#C5A55A15", border: "1px solid #C5A55A33" }}
+            aria-label="Despre aplicație">
+            <span className="text-[14px] text-gold">ℹ️</span>
+          </button>
         </div>
       </header>
 
-      {/* Content — offset on desktop for sidebar */}
+      {/* Content */}
       <main id="main-content" className={`relative z-[1] pb-[100px] lg:pb-10 lg:ml-[220px] ${slideClass}`} role="main">
         <div className="max-w-[430px] md:max-w-none mx-auto lg:mx-0 lg:px-8 xl:px-12">
           {activeTab === "home" && <HomeScreen onNavigate={(t) => switchTab(t as Tab)} onOpenPravila={(type) => { haptic(); setPravilaOpen(type); }} pravilaRefresh={pravilaRefresh} />}
@@ -184,12 +166,11 @@ export default function AppShell() {
             {activeTab === "calendar" && <CalendarScreen />}
             {activeTab === "spovedanie" && <SpovedanieScreen />}
             {activeTab === "prayers" && <PrayersScreen />}
-            {activeTab === "fasting" && <FastingScreen />}
           </Suspense>
         </div>
       </main>
 
-      {/* Mobile Tab Bar — hidden on desktop */}
+      {/* Mobile Tab Bar */}
       <nav aria-label="Navigare principală" className="lg:hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] md:max-w-full z-[200] flex justify-around px-2 pt-2"
         style={{
           background: "linear-gradient(180deg, #1A1410ee, #1A1410)",
@@ -205,9 +186,7 @@ export default function AppShell() {
             style={{ opacity: activeTab === tab.id ? 1 : 0.55 }}>
             <span className="text-[15px]">{tab.icon}</span>
             <span className="text-[11px] tracking-[0.3px] font-heading"
-              style={{
-                color: activeTab === tab.id ? "#C5A55A" : "#A89E92",
-              }}>
+              style={{ color: activeTab === tab.id ? "#C5A55A" : "#A89E92" }}>
               {tab.label}
             </span>
           </button>
@@ -216,6 +195,7 @@ export default function AppShell() {
 
       {showOnboarding && <OnboardingFlow onComplete={completeOnboarding} />}
       {pravilaOpen && <PravilaModal pravilaId={pravilaOpen} onClose={() => { setPravilaOpen(null); setPravilaRefresh((n) => n + 1); }} />}
+      {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
     </div>
   );
 }

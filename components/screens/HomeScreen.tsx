@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { getTodaySaint, getWeekDays } from "@/data/saints-calendar";
-import ByzantineDivider from "@/components/ui/ByzantineDivider";
 
 const dayNamesRo = ["Duminică", "Luni", "Marți", "Miercuri", "Joi", "Vineri", "Sâmbătă"];
 const dayLetters = ["L", "M", "M", "J", "V", "S", "D"];
@@ -13,14 +12,28 @@ interface Props {
   pravilaRefresh?: number;
 }
 
+function getIndruptarProgress(): { answered: number; total: number } {
+  if (typeof window === "undefined") return { answered: 0, total: 178 };
+  try {
+    const saved = localStorage.getItem("lumina-spovedanie");
+    if (saved) {
+      const data = JSON.parse(saved);
+      return { answered: Object.keys(data.answers || {}).length, total: 178 };
+    }
+  } catch {}
+  return { answered: 0, total: 178 };
+}
+
 export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }: Props) {
   const today = new Date();
   const saint = getTodaySaint();
   const week = getWeekDays();
   const todayKey = today.toISOString().split("T")[0];
+  const hour = today.getHours();
 
   const [pravilaDimDone, setPravilaDimDone] = useState(false);
   const [pravilaSearaDone, setPravilaSearaDone] = useState(false);
+  const [indreptarProgress, setIndreptarProgress] = useState({ answered: 0, total: 178 });
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -30,23 +43,97 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
     setPravilaSearaDone(
       localStorage.getItem(`lumina-pravila-seara-${todayKey}`) === "done"
     );
+    setIndreptarProgress(getIndruptarProgress());
   }, [todayKey, pravilaRefresh]);
+
+  // Determine main CTA
+  const mainCTA = (() => {
+    if (hour < 15 && !pravilaDimDone) {
+      return { label: "Începe Pravila Dimineții", action: () => onOpenPravila("dimineata"), icon: "\u{2600}\u{FE0F}" };
+    }
+    if (!pravilaSearaDone) {
+      return { label: "Începe Pravila Serii", action: () => onOpenPravila("seara"), icon: "\u{1F319}" };
+    }
+    if (indreptarProgress.answered < indreptarProgress.total) {
+      return { label: "Continuă Îndreptarul", action: () => onNavigate("spovedanie"), icon: "\u{1F4DC}" };
+    }
+    return { label: "Citește Rugăciunile", action: () => onNavigate("prayers"), icon: "\u{1F64F}" };
+  })();
 
   return (
     <div className="px-4 py-5 stagger-children lg:py-8">
+
+      {/* Main CTA — single dominant action */}
+      <button onClick={mainCTA.action}
+        className="w-full rounded-2xl p-6 mb-5 flex items-center gap-4 active:scale-[0.98] transition-transform"
+        style={{
+          background: "linear-gradient(135deg, #4A0E1Add, #6B1D2A99)",
+          border: "1px solid #C5A55A44",
+          boxShadow: "0 4px 24px rgba(74, 14, 26, 0.3)",
+        }}>
+        <span className="text-4xl">{mainCTA.icon}</span>
+        <div className="flex-1 text-left">
+          <p className="text-[22px] font-heading text-ivory font-bold tracking-wider">
+            {mainCTA.label}
+          </p>
+          <p className="text-[14px] text-gold-light mt-1">
+            {pravilaDimDone && pravilaSearaDone
+              ? "Ai terminat pravilele de azi"
+              : pravilaDimDone
+              ? "Pravila dimineții — terminată"
+              : "Acțiunea ta de azi"}
+          </p>
+        </div>
+        <span className="text-gold text-2xl">&#8594;</span>
+      </button>
+
+      {/* Today's status — compact */}
+      <div className="flex gap-3 mb-5">
+        {[
+          { done: pravilaDimDone, label: "Dimineața", icon: "\u{2600}\u{FE0F}", action: () => onOpenPravila("dimineata") },
+          { done: pravilaSearaDone, label: "Seara", icon: "\u{1F319}", action: () => onOpenPravila("seara") },
+        ].map((item, i) => (
+          <button key={i} onClick={item.action}
+            className="flex-1 rounded-xl p-3 flex items-center gap-2.5 transition-all active:scale-[0.97]"
+            style={{
+              background: item.done ? "#3A6B3A18" : "#1A141066",
+              border: item.done ? "1px solid #3A6B3A44" : "1px solid #C5A55A15",
+            }}>
+            <span className="text-xl">{item.icon}</span>
+            <div className="flex-1 text-left">
+              <p className="text-[14px] text-ivory">{item.label}</p>
+            </div>
+            {item.done && (
+              <span className="text-[12px] text-[#5A9B5A] font-bold">&#10003;</span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      {/* Îndreptar progress — only if started */}
+      {indreptarProgress.answered > 0 && (
+        <button onClick={() => onNavigate("spovedanie")}
+          className="w-full rounded-xl p-4 mb-5 flex items-center gap-3 active:scale-[0.98] transition-transform"
+          style={{ background: "#1A141066", border: "1px solid #C5A55A15" }}>
+          <span className="text-xl">{"\u{1F4DC}"}</span>
+          <div className="flex-1 text-left">
+            <p className="text-[14px] text-ivory">Îndreptar — {indreptarProgress.answered}/{indreptarProgress.total}</p>
+            <div className="w-full h-1 rounded-full mt-1.5" style={{ background: "#F5F0E815" }}>
+              <div className="h-full rounded-full" style={{
+                width: `${Math.round((indreptarProgress.answered / indreptarProgress.total) * 100)}%`,
+                background: "linear-gradient(90deg, #C5A55A, #6B1D2A)",
+              }} />
+            </div>
+          </div>
+        </button>
+      )}
+
       {/* Date & Saint Card */}
       <div className="relative overflow-hidden rounded-2xl p-6 mb-4"
         style={{
-          background: "linear-gradient(135deg, #4A0E1Add, #6B1D2A99 50%, #4A0E1Add)",
-          border: "1px solid #C5A55A44",
-          boxShadow: "0 8px 32px rgba(74, 14, 26, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+          background: "linear-gradient(135deg, #4A0E1Acc, #6B1D2A77 50%, #4A0E1Acc)",
+          border: "1px solid #C5A55A33",
         }}>
-        {/* Large watermark cross */}
-        <div className="absolute -top-6 -right-6 text-[140px] opacity-[0.05] leading-none select-none pointer-events-none">&#10013;&#65039;</div>
-        {/* Subtle gold accent in corner */}
-        <div className="absolute top-0 right-0 w-24 h-24 pointer-events-none"
-          style={{ background: "radial-gradient(circle at top right, rgba(197, 165, 90, 0.15) 0%, transparent 70%)" }} />
-
         <div className="relative">
           <p className="text-[13px] tracking-[3px] mb-1 font-heading text-gold-light uppercase">
             {dayNamesRo[today.getDay()]}
@@ -57,9 +144,8 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
           {saint.type && (
             <span className="inline-block text-[13px] font-semibold font-heading text-gold-light px-3 py-1 rounded-lg mb-2 mt-2 tracking-wider"
               style={{
-                background: "linear-gradient(135deg, #C5A55A33, #C5A55A11)",
-                border: "1px solid #C5A55A66",
-                boxShadow: "0 2px 8px rgba(197, 165, 90, 0.15)",
+                background: "linear-gradient(135deg, #C5A55A22, #C5A55A0a)",
+                border: "1px solid #C5A55A44",
               }}>
               {saint.type}
             </span>
@@ -68,11 +154,11 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
           <div className="flex items-center gap-2 mt-3 w-fit rounded-lg px-3 py-1.5"
             style={{
               background: saint.fasting === "post"
-                ? "linear-gradient(135deg, #6B1D2A88, #6B1D2A44)"
+                ? "linear-gradient(135deg, #6B1D2A55, #6B1D2A22)"
                 : saint.fasting === "harti"
-                ? "linear-gradient(135deg, #C5A55A33, #C5A55A11)"
-                : "linear-gradient(135deg, #3A6B3A55, #3A6B3A22)",
-              border: `1px solid ${saint.fasting === "post" ? "#C5A55A33" : saint.fasting === "harti" ? "#C5A55A66" : "#3A6B3A66"}`,
+                ? "linear-gradient(135deg, #C5A55A22, #C5A55A0a)"
+                : "linear-gradient(135deg, #3A6B3A33, #3A6B3A11)",
+              border: `1px solid ${saint.fasting === "post" ? "#C5A55A22" : saint.fasting === "harti" ? "#C5A55A44" : "#3A6B3A44"}`,
             }}>
             <span className="text-sm">{saint.fasting === "post" ? "\u{1F7E3}" : saint.fasting === "harti" ? "\u{2728}" : "\u{1F7E2}"}</span>
             <span className="text-[14px] text-ivory font-medium">
@@ -84,26 +170,24 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
 
       {/* Daily Gospel */}
       <div className="glass-card gold-border-left p-5 mb-4 relative overflow-hidden">
-        <div className="absolute top-2 right-2 text-[60px] opacity-[0.04] leading-none select-none pointer-events-none font-heading text-gold">"</div>
         <p className="text-[13px] text-gold tracking-[3px] font-heading mb-2">EVANGHELIA ZILEI</p>
-        <p className="text-[20px] text-ivory leading-[1.75] italic relative">
+        <p className="text-[20px] text-ivory leading-[1.8] italic relative">
           &bdquo;{saint.gospel}&rdquo;
         </p>
         <div className="flex items-center gap-2 mt-3">
-          <div className="h-px w-6" style={{ background: "#C5A55A66" }} />
+          <div className="h-px w-6" style={{ background: "#C5A55A44" }} />
           <p className="text-[14px] text-gold-light font-heading tracking-wider">
             {saint.gospelRef}
           </p>
         </div>
       </div>
 
-      {/* Spovedanie CTA — Killer Feature */}
+      {/* Spovedanie CTA */}
       <button onClick={() => onNavigate("spovedanie")}
-        className="w-full rounded-2xl p-5 mb-4 flex items-center justify-between active:scale-[0.98] transition-transform relative overflow-hidden"
+        className="w-full rounded-2xl p-5 mb-4 flex items-center justify-between active:scale-[0.98] transition-transform"
         style={{
-          background: "linear-gradient(135deg, #4A0E1Add, #1B3A5Cdd)",
-          border: "1px solid #C5A55A44",
-          boxShadow: "0 4px 16px rgba(27, 58, 92, 0.25)",
+          background: "linear-gradient(135deg, #4A0E1Acc, #1B3A5Ccc)",
+          border: "1px solid #C5A55A33",
         }}>
         <div className="text-left flex-1">
           <p className="text-[13px] text-gold-light tracking-[3px] font-heading uppercase mb-1">
@@ -112,88 +196,37 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
           <p className="text-[20px] font-bold text-ivory font-heading tracking-wider">
             EXAMEN DE CONȘTIINȚĂ
           </p>
-          <p className="text-[15px] text-ivory/85 mt-1 italic">
-            Pregătește-te pentru spovedanie
-          </p>
         </div>
-        <div className="ml-2 w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-          style={{
-            background: "linear-gradient(135deg, #C5A55A22, #C5A55A0a)",
-            border: "1px solid #C5A55A44",
-          }}>
-          <span className="text-xl">&#10013;&#65039;</span>
-        </div>
+        <span className="text-gold text-xl ml-2">&#8594;</span>
       </button>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-        {[
-          { icon: "\u{2600}\u{FE0F}", label: "Pravila\nDimineții", action: () => onOpenPravila("dimineata"), color: "#C5A55A", done: pravilaDimDone },
-          { icon: "\u{1F319}", label: "Pravila\nSerii", action: () => onOpenPravila("seara"), color: "#1B3A5C", done: pravilaSearaDone },
-          { icon: "\u{1F957}", label: "Post\nAzi", action: () => onNavigate("fasting"), color: "#8B3A62", done: false },
-          { icon: "\u{1F4DC}", label: "Citește\nÎndreptarul", action: () => onNavigate("spovedanie"), color: "#6B1D2A", done: false },
-        ].map((item, i) => (
-          <button key={i} onClick={item.action}
-            className="rounded-2xl p-5 flex flex-col items-center gap-2 transition-all active:scale-95 relative"
-            style={{
-              background: item.done
-                ? `linear-gradient(180deg, ${item.color}22, ${item.color}0a)`
-                : `linear-gradient(180deg, ${item.color}15, ${item.color}08)`,
-              border: `1px solid ${item.color}${item.done ? "55" : "28"}`,
-            }}>
-            {item.done && (
-              <span className="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold done-badge"
-                style={{ background: "#C5A55A", color: "#1A1410" }}>
-                ✓
-              </span>
-            )}
-            <span className="text-3xl">{item.icon}</span>
-            <span className="text-[14px] text-ivory text-center whitespace-pre-line leading-tight font-medium">
-              {item.label}
-            </span>
-          </button>
-        ))}
-      </div>
-
       {/* Week Calendar */}
-      <div className="glass-card-elevated p-4 mb-4">
+      <div className="glass-card p-4 mb-4" style={{ border: "1px solid #C5A55A15" }}>
         <div className="flex items-center justify-between mb-3">
-          <p className="text-[13px] text-gold tracking-[2px] font-heading">
-            {saint.type?.includes("Săptămâna") || saint.type?.includes("Luminată")
-              ? saint.type?.toUpperCase()
-              : "CALENDAR SĂPTĂMÂNAL"}
-          </p>
-          <div className="h-px flex-1 mx-3" style={{ background: "linear-gradient(90deg, #C5A55A55, transparent)" }} />
-          <span className="text-[12px] text-warm-gray font-heading tracking-wider">LUN – DUM</span>
+          <p className="text-[13px] text-gold tracking-[2px] font-heading">SĂPTĂMÂNA</p>
         </div>
         <div className="flex gap-1.5 justify-between">
           {week.map((d, i) => {
             const isToday = d.key === todayKey;
-            const isSpecial = d.saint?.type === "PAȘTE";
             const isFasting = d.saint?.fasting === "post";
             return (
-              <div key={i} className="flex-1 text-center rounded-xl py-2 px-0.5 transition-all"
+              <div key={i} className="flex-1 text-center rounded-xl py-2 px-0.5"
                 style={{
-                  background: isSpecial
-                    ? "linear-gradient(180deg, #C5A55A44, #C5A55A22)"
-                    : isToday
-                    ? "linear-gradient(180deg, #C5A55A28, #C5A55A12)"
+                  background: isToday
+                    ? "#C5A55A18"
                     : isFasting
-                    ? "linear-gradient(180deg, #6B1D2A44, #6B1D2A22)"
-                    : "linear-gradient(180deg, #6B1D2A22, #6B1D2A08)",
+                    ? "#6B1D2A22"
+                    : "#6B1D2A0a",
                   border: isToday
-                    ? "1px solid #C5A55A88"
-                    : isSpecial
-                    ? "1px solid #C5A55A66"
+                    ? "1px solid #C5A55A55"
                     : "1px solid transparent",
-                  boxShadow: isToday ? "0 0 12px rgba(197, 165, 90, 0.25)" : "none",
                 }}>
                 <p className="text-[13px] text-warm-gray mb-1 font-heading">{dayLetters[i]}</p>
-                <p className={`text-[16px] mb-0.5 ${isSpecial ? "text-gold font-bold" : isToday ? "text-gold font-bold" : "text-ivory"}`}>
+                <p className={`text-[16px] mb-0.5 ${isToday ? "text-gold font-bold" : "text-ivory"}`}>
                   {d.date.getDate()}
                 </p>
-                <p className={`text-[11px] ${isSpecial ? "text-gold" : isFasting ? "text-[#C08080]" : "text-warm-gray"} font-heading tracking-wider uppercase`}>
-                  {isSpecial ? "Paște" : d.saint?.fasting === "post" ? "post" : d.saint?.fasting === "harti" ? "harți" : "liber"}
+                <p className={`text-[11px] ${isFasting ? "text-[#C08080]" : "text-warm-gray"} font-heading tracking-wider uppercase`}>
+                  {d.saint?.fasting === "post" ? "post" : d.saint?.fasting === "harti" ? "harți" : "liber"}
                 </p>
               </div>
             );
