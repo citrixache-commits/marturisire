@@ -63,13 +63,7 @@ Doamne, ușurează, iartă și lasă, Stăpâne, sminteala mea din ziua aceasta,
     duration: "5 min",
     icon: "necaz",
     category: "necaz",
-    text: `Doamne Iisuse Hristoase, Fiul lui Dumnezeu, miluiește-mă pe mine, păcătosul.
-
-(Se repetă cu atenție și smerenie, în ritmul respirației.)
-
-Această rugăciune scurtă cuprinde toată credința și toată cererea creștinului: recunoașterea lui Iisus ca Domn și Fiu al lui Dumnezeu, și cererea de milă.
-
-Tradiția ortodoxă o numește „rugăciunea inimii" — este temelia isihasmului și poate fi rostită oriunde, oricând, în orice lucrare.`,
+    text: `Doamne Iisuse Hristoase, Fiul lui Dumnezeu, miluiește-mă pe mine, păcătosul.`,
   },
   {
     id: 4,
