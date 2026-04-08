@@ -125,11 +125,7 @@ Ceea ce ești mai cinstită decât heruvimii și mai slăvită fără de asemăn
     duration: "2 min",
     icon: "ioan-botezator",
     category: "ioan-botezator",
-    text: `Sfinte Ioane, Înainte-mergătorule, frumusețea cerului și bucuria pământului, cel ce prin tăierea capului tău pământul întreg l-ai sfințit, primind această smerită rugăciune a noastră, izbăvește-ne din toate nevoile și ne scoate din chinul ce va să fie, pe noi, cei ce te lăudăm cu credință și nădejde.
-
-Ca unul ce stai înaintea scaunului lui Hristos, ajută-ne să-i biruim pe vrăjmașii văzuți și pe cei nevăzuți. Izbăvește-ne din tot necazul și, având îndrăznire către Domnul, ferește-ne de ispitele acestui veac.
-
-Dăruiește-ne nouă, Sfinte Ioane Proorocule, putere din cer și, ca unul ce ești făclie strălucitoare, luminează-ne pe noi, cei ce alergăm la slăvita prăznuire a trecerii tale la Domnul. Amin!`,
+    text: `Doamne Dumnezeul meu, osândit stau înaintea Feţei Tale celei Sfinte, şi-mi mărturisesc nevrednicia, neputinţa şi sărăcia mea cea mare. Pentru aceasta mă rog Ţie, o, Izvor dulce şi noianul îndurării, deschide stavilele cerului şi plouă asupra mea bunătăţile îndurării Tale, ca să pot scoate lacrimi, să plâng, să spăl şi să curăţesc sufletul meu de întinăciunea păcatelor, cu căinţă tare şi adevărată. Şi ca să-mi dai acest dar, Stăpâne, pun mijlocitor pe Înaintemergătorul Ioan, către care zic: O, învăţătorule al credinţei şi mărite Prorocule, care eşti mai mare decât toţi prorocii, precum Însuşi Fiul lui Dumnezeu te-a numit în Sfânta Evanghelie, tu care ai arătat poporului pe Stăpânul Hristos, tu care L-ai botezat în Iordan şi ai văzut cerurile deschizându-se, tu care ai auzit glasul Părintelui Ceresc şi ai văzut pe Duhul Sfânt ca un porumbel pogorându-se peste El. Rogu-te, ajută-mi cu mijlocirea ta, tu care stai în cer înaintea judecătorului Veşnic, şi fă să se îndure de mine, că ai multă îndrăzneală înaintea Lui. Întinde mâna aceea cu care L-ai botezat şi strică cugetele mele cele rele şi mă întăreşte să-mi petrec viaţa pe calea cea bună a lui Dumnezeu. O, Prorocule, luminează-mi mintea cu poruncile Domnului, ca să le ţin minte şi să le păzesc până la capătul vieţii mele. Şi să stai lângă mine în ora morţii mele, să mă duci pocăit înaintea Stăpânului meu, Dumnezeu. Roagă-te încă şi pentru toată lumea, ca Dumnezeu să dea ajutor creştinilor, şi celor vii şi celor răposaţi, şi să-i odihnească de nevoile cele multe, să le dea toate cele de trebuinţă şi să-i învrednicească Împărăţiei Sale. Amin.`,
   },
   {
     id: 8,
