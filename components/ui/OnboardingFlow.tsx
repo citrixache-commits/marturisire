@@ -118,7 +118,7 @@ export default function OnboardingFlow({ onComplete }: Props) {
               </p>
               <p className="text-[14px] text-ivory leading-[1.75] text-left mt-3">
                 A murit în <span className="text-gold font-semibold">1952</span>,
-                la Târgu Ocna. A lăsat în urmă Îndreptarul pe care îl ai acum în mână.
+                la Târgu Ocna. A lăsat în urmă Îndreptarul pe care îl citești.
               </p>
             </div>
             <p className="text-[12px] text-warm-gray text-center italic max-w-[300px]">
