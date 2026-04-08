@@ -24,8 +24,8 @@ export default function CalendarScreen() {
 
   return (
     <div className="px-4 py-5 stagger-children">
-      <h2 className="text-[22px] font-heading text-gold tracking-wider mb-0.5">Calendar Ortodox</h2>
-      <p className="text-[13px] text-warm-gray mb-5">Sărbători, sfinți, posturi · 2026</p>
+      <h2 className="text-[24px] font-heading text-gold tracking-wider mb-0.5">Calendar Ortodox</h2>
+      <p className="text-[14px] text-warm-gray mb-5">Sărbători, sfinți, posturi · 2026</p>
 
       {/* Tabs */}
       <div className="flex gap-2 mb-5">
@@ -33,7 +33,7 @@ export default function CalendarScreen() {
           <button
             key={t}
             onClick={() => setTab(t)}
-            className="flex-1 text-[12px] py-2 rounded-lg font-heading tracking-[1.5px] transition-all"
+            className="flex-1 text-[13px] py-2 rounded-lg font-heading tracking-[1.5px] transition-all"
             style={{
               background: tab === t ? "#C5A55A22" : "#1A141066",
               border: tab === t ? "1px solid #C5A55A66" : "1px solid #C5A55A11",
@@ -59,21 +59,21 @@ export default function CalendarScreen() {
             <p className="text-[11px] text-gold-light tracking-[2px] font-heading mb-2">
               ASTĂZI
             </p>
-            <p className="text-[17px] text-ivory font-medium mb-1">
+            <p className="text-[18px] text-ivory font-medium mb-1">
               {formatDateRomanian(todayISO)}
             </p>
             {todaySaint?.type && (
-              <p className="text-[14px] text-gold mb-1">{todaySaint.type}</p>
+              <p className="text-[15px] text-gold mb-1">{todaySaint.type}</p>
             )}
             {todaySaint && (
-              <p className="text-[13px] text-warm-gray mb-3">{todaySaint.name}</p>
+              <p className="text-[14px] text-warm-gray mb-3">{todaySaint.name}</p>
             )}
             {todaySaint?.gospel && (
               <div
                 className="mt-3 p-3 rounded-xl"
                 style={{ background: "#1A141066", border: "1px solid #C5A55A22" }}
               >
-                <p className="text-[14px] text-ivory/90 italic leading-relaxed">
+                <p className="text-[15px] text-ivory/90 italic leading-relaxed">
                   „{todaySaint.gospel}"
                 </p>
                 {todaySaint.gospelRef && (
@@ -103,7 +103,7 @@ export default function CalendarScreen() {
                 <p className="text-[11px] text-gold-light tracking-[2px] font-heading mb-0.5">
                   PÂNĂ LA PAȘTE
                 </p>
-                <p className="text-[16px] text-ivory font-medium">
+                <p className="text-[17px] text-ivory font-medium">
                   Duminică, 12 aprilie 2026
                 </p>
                 <p className="text-[11px] text-warm-gray">Învierea Domnului</p>
@@ -166,7 +166,7 @@ export default function CalendarScreen() {
                   }}
                 >
                   <p
-                    className="text-[10px] font-heading tracking-wider mb-1"
+                    className="text-[11px] font-heading tracking-wider mb-1"
                     style={{ color: isToday ? "#C5A55A" : "#A89E92" }}
                   >
                     {dayNames[dow]}
@@ -231,7 +231,7 @@ export default function CalendarScreen() {
             <p className="text-[11px] text-gold-light tracking-[2px] font-heading mb-2">
               SĂPTĂMÂNA MARE
             </p>
-            <p className="text-[14px] text-ivory font-medium mb-3">6 — 11 aprilie 2026</p>
+            <p className="text-[15px] text-ivory font-medium mb-3">6 — 11 aprilie 2026</p>
             <div className="space-y-1.5">
               {saptamanaMare.map((day) => {
                 const isToday = day.date === todayISO;
@@ -247,7 +247,7 @@ export default function CalendarScreen() {
                     <span className="text-base">{day.icon}</span>
                     <div className="flex-1">
                       <p
-                        className="text-[13px] font-medium"
+                        className="text-[14px] font-medium"
                         style={{ color: isToday ? "#C5A55A" : "#F5F0E8" }}
                       >
                         {day.name}
@@ -321,7 +321,7 @@ export default function CalendarScreen() {
                   <span className="text-3xl">{post.icon}</span>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <p className="text-[14px] text-ivory font-medium">{post.name}</p>
+                      <p className="text-[15px] text-ivory font-medium">{post.name}</p>
                       {isActive && (
                         <span
                           className="text-[9px] text-gold px-1.5 py-0.5 rounded font-heading tracking-wider"

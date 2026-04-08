@@ -14,15 +14,15 @@ export default function PrayersScreen({ onShowPremium }: Props) {
 
   return (
     <div className="px-4 py-5">
-      <h2 className="text-[22px] font-heading text-gold tracking-wider mb-0.5">Rugăciuni</h2>
-      <p className="text-[13px] text-warm-gray mb-5">Rugăciuni canonice ortodoxe pentru viața zilnică</p>
+      <h2 className="text-[24px] font-heading text-gold tracking-wider mb-0.5">Rugăciuni</h2>
+      <p className="text-[14px] text-warm-gray mb-5">Rugăciuni canonice ortodoxe pentru viața zilnică</p>
 
       {/* Active Prayer Player */}
       {activePrayer && (
         <div className="rounded-2xl p-6 mb-5 animate-fade-in"
           style={{ background: "linear-gradient(135deg, #4A0E1A, #6B1D2A)", border: "1px solid #C5A55A44" }}>
-          <p className="text-[12px] text-gold-light tracking-[2px] font-heading mb-2">SE ASCULTĂ ACUM</p>
-          <h3 className="text-lg text-ivory font-medium mb-4">{activePrayer.title}</h3>
+          <p className="text-[13px] text-gold-light tracking-[2px] font-heading mb-2">SE ASCULTĂ ACUM</p>
+          <h3 className="text-[19px] text-ivory font-medium mb-4">{activePrayer.title}</h3>
 
           {/* Progress bar */}
           <div className="w-full h-1 rounded-full mb-3" style={{ background: "#F5F0E822" }}>
@@ -53,7 +53,7 @@ export default function PrayersScreen({ onShowPremium }: Props) {
           {showText && activePrayer.text && (
             <div className="mt-4 p-4 rounded-xl max-h-60 overflow-y-auto"
               style={{ background: "#1A141088", border: "1px solid #C5A55A11" }}>
-              <p className="text-[15px] text-ivory/90 leading-[1.8] whitespace-pre-wrap font-body">
+              <p className="text-[16px] text-ivory/90 leading-[1.8] whitespace-pre-wrap font-body">
                 {activePrayer.text}
               </p>
             </div>
@@ -93,8 +93,8 @@ export default function PrayersScreen({ onShowPremium }: Props) {
               }}>
               <span className="text-2xl">{iconMap[prayer.icon] || "\u{1F64F}"}</span>
               <div className="flex-1">
-                <p className="text-[15px] text-ivory font-medium">{prayer.title}</p>
-                <p className="text-[12px] text-warm-gray mt-0.5">{prayer.duration}</p>
+                <p className="text-[16px] text-ivory font-medium">{prayer.title}</p>
+                <p className="text-[13px] text-warm-gray mt-0.5">{prayer.duration}</p>
               </div>
               {prayer.premium ? (
                 <span className="text-[9px] text-gold px-2 py-0.5 rounded-md font-heading tracking-wider"

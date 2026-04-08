@@ -8,16 +8,16 @@ export default function FastingScreen() {
 
   return (
     <div className="px-4 py-5 stagger-children">
-      <h2 className="text-[22px] font-heading text-gold tracking-wider mb-0.5">Calendar de Post</h2>
-      <p className="text-[13px] text-warm-gray mb-5">Rețete de post și ghid alimentar</p>
+      <h2 className="text-[24px] font-heading text-gold tracking-wider mb-0.5">Calendar de Post</h2>
+      <p className="text-[14px] text-warm-gray mb-5">Rețete de post și ghid alimentar</p>
 
       {/* Current fast status */}
       <div className="rounded-2xl p-5 mb-5"
         style={{ background: "linear-gradient(135deg, #4A0E1A, #6B1D2A88)", border: "1px solid #C5A55A33" }}>
         <div className="flex justify-between items-center">
           <div>
-            <p className="text-[12px] text-gold-light tracking-[2px] font-heading mb-1">POSTUL MARE</p>
-            <p className="text-xl text-ivory font-medium">Săptămâna Patimilor</p>
+            <p className="text-[13px] text-gold-light tracking-[2px] font-heading mb-1">POSTUL MARE</p>
+            <p className="text-[22px] text-ivory font-medium">Săptămâna Patimilor</p>
           </div>
           <div className="w-14 h-14 rounded-full flex flex-col items-center justify-center"
             style={{ border: "3px solid #C5A55A" }}>
@@ -34,7 +34,7 @@ export default function FastingScreen() {
       {/* Today's rules */}
       <div className="glass-card p-4 mb-5">
         <p className="text-[11px] text-gold tracking-[2px] font-heading mb-3">REGULI DE POST AZI</p>
-        <p className="text-[14px] text-ivory/85 mb-3">{rules.description}</p>
+        <p className="text-[15px] text-ivory/85 mb-3">{rules.description}</p>
         <div className="flex flex-wrap gap-2">
           {rules.forbidden.map((r, i) => (
             <span key={i} className="text-xs rounded-lg px-2.5 py-1 text-[#E8A0A0]"
@@ -58,8 +58,8 @@ export default function FastingScreen() {
           <div key={i} className="glass-card p-3.5 flex items-center gap-3.5">
             <span className="text-3xl">{recipe.emoji}</span>
             <div className="flex-1">
-              <p className="text-[15px] text-ivory font-medium">{recipe.name}</p>
-              <p className="text-[12px] text-warm-gray mt-0.5">
+              <p className="text-[16px] text-ivory font-medium">{recipe.name}</p>
+              <p className="text-[13px] text-warm-gray mt-0.5">
                 {recipe.time} &middot; {recipe.cal}
               </p>
             </div>

@@ -1,16 +1,20 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import OrthodoxCross from "./ui/OrthodoxCross";
 import PremiumModal from "./ui/PremiumModal";
 import OnboardingFlow from "./ui/OnboardingFlow";
 import PravilaModal from "./ui/PravilaModal";
+import ScreenSkeleton from "./ui/Skeleton";
 import HomeScreen from "./screens/HomeScreen";
-import PrayersScreen from "./screens/PrayersScreen";
-import SpovedanieScreen from "./screens/SpovedanieScreen";
-import FastingScreen from "./screens/FastingScreen";
-import CalendarScreen from "./screens/CalendarScreen";
+
+const PrayersScreen = lazy(() => import("./screens/PrayersScreen"));
+const SpovedanieScreen = lazy(() => import("./screens/SpovedanieScreen"));
+const FastingScreen = lazy(() => import("./screens/FastingScreen"));
+const CalendarScreen = lazy(() => import("./screens/CalendarScreen"));
 
 type Tab = "home" | "calendar" | "spovedanie" | "prayers" | "fasting";
+
+const tabOrder: Tab[] = ["home", "calendar", "spovedanie", "prayers", "fasting"];
 
 const tabs: { id: Tab; label: string; icon: string }[] = [
   { id: "home", label: "Acasă", icon: "\u{1F3E0}" },
@@ -20,6 +24,12 @@ const tabs: { id: Tab; label: string; icon: string }[] = [
   { id: "fasting", label: "Post", icon: "\u{1F957}" },
 ];
 
+function haptic() {
+  if (typeof navigator !== "undefined" && "vibrate" in navigator) {
+    navigator.vibrate(8);
+  }
+}
+
 export default function AppShell() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [showPremium, setShowPremium] = useState(false);
@@ -27,11 +37,22 @@ export default function AppShell() {
   const [pravilaOpen, setPravilaOpen] = useState<"dimineata" | "seara" | null>(null);
   const [pravilaRefresh, setPravilaRefresh] = useState(0);
   const [streak] = useState(12);
-  const [fadeIn, setFadeIn] = useState(true);
+  const [slideClass, setSlideClass] = useState("");
+  const prevTabRef = useRef<Tab>("home");
 
+  function switchTab(tab: Tab) {
+    if (tab === activeTab) return;
+    haptic();
+    const prevIdx = tabOrder.indexOf(prevTabRef.current);
+    const nextIdx = tabOrder.indexOf(tab);
+    setSlideClass(nextIdx > prevIdx ? "animate-slide-in-right" : "animate-slide-in-left");
+    prevTabRef.current = tab;
+    setActiveTab(tab);
+  }
+
+  // Reset slide animation after it plays
   useEffect(() => {
-    setFadeIn(false);
-    const t = setTimeout(() => setFadeIn(true), 50);
+    const t = setTimeout(() => setSlideClass(""), 350);
     return () => clearTimeout(t);
   }, [activeTab]);
 
@@ -67,6 +88,7 @@ export default function AppShell() {
     <div className="font-body min-h-screen text-ivory max-w-[430px] mx-auto relative overflow-hidden"
       style={{ background: "linear-gradient(180deg, #1A1410 0%, #4A0E1A 100%)" }}>
 
+      <a href="#main-content" className="sr-only">Salt la conținut</a>
       <div className="fixed inset-0 pointer-events-none z-0 bg-byzantine" />
 
       {/* Header */}
@@ -83,7 +105,7 @@ export default function AppShell() {
               <h1 className="text-[22px] font-heading font-bold text-gold tracking-[2px] leading-none">
                 MĂRTURISIRE
               </h1>
-              <p className="text-[10px] text-gold-light tracking-[4px] font-light">
+              <p className="text-[11px] text-gold-light tracking-[4px] font-light">
                 CREDINȚĂ ORTODOXĂ
               </p>
             </div>
@@ -92,7 +114,7 @@ export default function AppShell() {
             <div className="flex items-center gap-1 px-3 py-1 rounded-full"
               style={{ background: "#C5A55A22", border: "1px solid #C5A55A44" }}>
               <span className="text-sm">{"\u{1F525}"}</span>
-              <span className="text-[13px] text-gold font-semibold">{streak}</span>
+              <span className="text-[14px] text-gold font-semibold">{streak}</span>
             </div>
             <div className="w-9 h-9 rounded-full flex items-center justify-center text-base font-bold"
               style={{
@@ -106,28 +128,32 @@ export default function AppShell() {
       </header>
 
       {/* Content */}
-      <main className="relative z-[1] pb-[100px] transition-opacity duration-300"
-        style={{ opacity: fadeIn ? 1 : 0 }}>
-        {activeTab === "home" && <HomeScreen onNavigate={(t) => setActiveTab(t as Tab)} onShowPremium={() => setShowPremium(true)} onOpenPravila={(type) => setPravilaOpen(type)} pravilaRefresh={pravilaRefresh} />}
-        {activeTab === "calendar" && <CalendarScreen />}
-        {activeTab === "spovedanie" && <SpovedanieScreen />}
-        {activeTab === "prayers" && <PrayersScreen onShowPremium={() => setShowPremium(true)} />}
-        {activeTab === "fasting" && <FastingScreen />}
+      <main id="main-content" className={`relative z-[1] pb-[100px] ${slideClass}`} role="main">
+        {activeTab === "home" && <HomeScreen onNavigate={(t) => switchTab(t as Tab)} onShowPremium={() => setShowPremium(true)} onOpenPravila={(type) => { haptic(); setPravilaOpen(type); }} pravilaRefresh={pravilaRefresh} />}
+        <Suspense fallback={<ScreenSkeleton />}>
+          {activeTab === "calendar" && <CalendarScreen />}
+          {activeTab === "spovedanie" && <SpovedanieScreen />}
+          {activeTab === "prayers" && <PrayersScreen onShowPremium={() => setShowPremium(true)} />}
+          {activeTab === "fasting" && <FastingScreen />}
+        </Suspense>
       </main>
 
       {/* Tab Bar */}
-      <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-[200] flex justify-around px-2 pt-2 pb-5"
+      <nav aria-label="Navigare principală" className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-[200] flex justify-around px-2 pt-2"
         style={{
           background: "linear-gradient(180deg, #1A1410ee, #1A1410)",
           backdropFilter: "blur(16px)",
           borderTop: "1px solid #C5A55A15",
+          paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))",
         }}>
         {tabs.map((tab) => (
-          <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+          <button key={tab.id} onClick={() => switchTab(tab.id)}
+            aria-label={tab.label}
+            aria-current={activeTab === tab.id ? "page" : undefined}
             className="flex flex-col items-center gap-0.5 px-3 py-1.5 transition-colors"
             style={{ opacity: activeTab === tab.id ? 1 : 0.55 }}>
             <span className="text-[15px]">{tab.icon}</span>
-            <span className="text-[9px] tracking-[0.3px] font-heading"
+            <span className="text-[10px] tracking-[0.3px] font-heading"
               style={{
                 color: activeTab === tab.id ? "#C5A55A" : "#A89E92",
               }}>

@@ -73,7 +73,7 @@ export default function OnboardingFlow({ onComplete }: Props) {
               background: "linear-gradient(90deg, #C5A55A, #E8D5A3)",
             }} />
         </div>
-        <p className="text-[11px] text-warm-gray text-right mt-1">{step + 1}/{TOTAL_STEPS}</p>
+        <p className="text-[12px] text-warm-gray text-right mt-1">{step + 1}/{TOTAL_STEPS}</p>
       </div>
 
       {/* Content */}
@@ -84,7 +84,7 @@ export default function OnboardingFlow({ onComplete }: Props) {
           <>
             <OrthodoxCross size={56} color="#C5A55A" />
             <h1 className="text-[26px] font-heading text-gold tracking-[2px] mt-6 mb-2">MĂRTURISIRE</h1>
-            <p className="text-[11px] text-gold-light tracking-[3px] font-heading uppercase mb-4">
+            <p className="text-[12px] text-gold-light tracking-[3px] font-heading uppercase mb-4">
               Credință Ortodoxă
             </p>
             <p className="text-lg text-ivory text-center leading-relaxed mb-3 max-w-[320px]">
@@ -104,7 +104,7 @@ export default function OnboardingFlow({ onComplete }: Props) {
               style={{ background: "#C5A55A22", border: "2px solid #C5A55A66" }}>
               <OrthodoxCross size={32} color="#C5A55A" />
             </div>
-            <p className="text-[11px] text-gold-light tracking-[3px] font-heading uppercase mb-2">
+            <p className="text-[12px] text-gold-light tracking-[3px] font-heading uppercase mb-2">
               Sfântul Închisorilor
             </p>
             <h2 className="text-2xl font-heading text-gold text-center mb-5">
@@ -121,10 +121,10 @@ export default function OnboardingFlow({ onComplete }: Props) {
                 la Târgu Ocna. A lăsat în urmă Îndreptarul pe care îl ai acum în mână.
               </p>
             </div>
-            <p className="text-[11px] text-warm-gray text-center italic max-w-[300px]">
+            <p className="text-[12px] text-warm-gray text-center italic max-w-[300px]">
               „{epigrafe[0].text}"
             </p>
-            <p className="text-[11px] text-gold-light text-center mt-1">
+            <p className="text-[12px] text-gold-light text-center mt-1">
               — {epigrafe[0].referinta}
             </p>
           </>
@@ -133,7 +133,7 @@ export default function OnboardingFlow({ onComplete }: Props) {
         {/* Step 2: Ce este păcatul — verbatim din Îndreptar */}
         {step === 2 && (
           <>
-            <p className="text-[11px] text-gold-light tracking-[3px] font-heading uppercase mb-2">
+            <p className="text-[12px] text-gold-light tracking-[3px] font-heading uppercase mb-2">
               Îndreptarul
             </p>
             <h2 className="text-xl text-gold font-heading text-center mb-5 max-w-[320px]">
@@ -152,7 +152,7 @@ export default function OnboardingFlow({ onComplete }: Props) {
         {/* Step 3: Întrebările deschiderii — verbatim din Îndreptar */}
         {step === 3 && (
           <>
-            <p className="text-[11px] text-gold-light tracking-[3px] font-heading uppercase mb-2">
+            <p className="text-[12px] text-gold-light tracking-[3px] font-heading uppercase mb-2">
               Spovedania
             </p>
             <h2 className="text-xl text-gold font-heading text-center mb-5 max-w-[320px]">
@@ -171,13 +171,13 @@ export default function OnboardingFlow({ onComplete }: Props) {
         {/* Step 4: Preview examen — 3 întrebări verbatim din Porunca 1 */}
         {step === 4 && (
           <>
-            <p className="text-[11px] text-gold-light tracking-[3px] font-heading uppercase mb-2">
+            <p className="text-[12px] text-gold-light tracking-[3px] font-heading uppercase mb-2">
               Porunca întâi
             </p>
             <h2 className="text-lg text-ivory text-center leading-snug mb-1 max-w-[320px]">
               Examenul de conștiință
             </h2>
-            <p className="text-[11px] text-warm-gray mb-5 text-center max-w-[300px]">
+            <p className="text-[12px] text-warm-gray mb-5 text-center max-w-[300px]">
               Răspunde sincer. Doar tu vezi răspunsurile.
             </p>
             <div className="space-y-3 w-full max-w-[340px]">
@@ -222,7 +222,7 @@ export default function OnboardingFlow({ onComplete }: Props) {
         {/* Step 5: Scope — 178 întrebări */}
         {step === 5 && (
           <>
-            <p className="text-[11px] text-gold-light tracking-[3px] font-heading uppercase mb-3">
+            <p className="text-[12px] text-gold-light tracking-[3px] font-heading uppercase mb-3">
               Îndreptarul complet
             </p>
             <div className="text-center mb-5">
@@ -240,7 +240,7 @@ export default function OnboardingFlow({ onComplete }: Props) {
                   <span className="text-2xl font-heading text-gold w-8 text-center">{s.count}</span>
                   <div className="flex-1">
                     <p className="text-[13px] text-ivory font-medium">{s.label}</p>
-                    <p className="text-[11px] text-warm-gray">{s.detail}</p>
+                    <p className="text-[12px] text-warm-gray">{s.detail}</p>
                   </div>
                 </div>
               ))}
@@ -255,11 +255,11 @@ export default function OnboardingFlow({ onComplete }: Props) {
             <h2 className="text-xl text-ivory text-center leading-snug mb-2 max-w-[320px]">
               La ce oră vrei<br/>să te rogi?
             </h2>
-            <p className="text-[11px] text-warm-gray mb-5 text-center max-w-[280px]">
+            <p className="text-[12px] text-warm-gray mb-5 text-center max-w-[280px]">
               O notificare blândă pentru rugăciunile dimineții
             </p>
             <div className="max-w-[320px] w-full">
-              <p className="text-[11px] text-gold tracking-[2px] font-heading mb-2">DIMINEAȚA</p>
+              <p className="text-[12px] text-gold tracking-[2px] font-heading mb-2">DIMINEAȚA</p>
               <div className="grid grid-cols-4 gap-2 mb-4">
                 {[6, 7, 8, 9].map((h) => (
                   <button key={h} onClick={() => setReminderHour(h)}
@@ -273,7 +273,7 @@ export default function OnboardingFlow({ onComplete }: Props) {
                   </button>
                 ))}
               </div>
-              <p className="text-[11px] text-gold tracking-[2px] font-heading mb-2">SEARA</p>
+              <p className="text-[12px] text-gold tracking-[2px] font-heading mb-2">SEARA</p>
               <div className="grid grid-cols-4 gap-2">
                 {[20, 21, 22, 23].map((h) => (
                   <button key={h} onClick={() => setReminderHour(h)}
@@ -320,7 +320,7 @@ export default function OnboardingFlow({ onComplete }: Props) {
             <div className="flex gap-3 max-w-[320px] w-full mb-4">
               <div className="flex-1 rounded-xl p-4 text-center"
                 style={{ background: "#1A141066", border: "1px solid #C5A55A22" }}>
-                <p className="text-[11px] text-warm-gray mb-1">Săptămânal</p>
+                <p className="text-[12px] text-warm-gray mb-1">Săptămânal</p>
                 <p className="text-xl text-ivory font-bold">&euro;2.99</p>
                 <p className="text-[9px] text-warm-gray">/săptămână</p>
               </div>
@@ -329,13 +329,13 @@ export default function OnboardingFlow({ onComplete }: Props) {
                 <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-[8px] text-dark bg-gold rounded-md px-2 py-0.5 font-bold font-heading whitespace-nowrap">
                   ECONOMISEȘTI 80%
                 </span>
-                <p className="text-[11px] text-gold-light mb-1">Anual</p>
+                <p className="text-[12px] text-gold-light mb-1">Anual</p>
                 <p className="text-xl text-gold font-bold">&euro;29.99</p>
                 <p className="text-[9px] text-gold-light">/an (&euro;2.50/lună)</p>
               </div>
             </div>
 
-            <p className="text-[11px] text-gold-light text-center mb-2 font-semibold">
+            <p className="text-[12px] text-gold-light text-center mb-2 font-semibold">
               7 zile GRATUIT — anulezi oricând
             </p>
           </>

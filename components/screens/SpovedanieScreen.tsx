@@ -112,9 +112,9 @@ export default function SpovedanieScreen() {
     return (
       <div className="px-4 py-5 stagger-children">
         <div className="flex items-center gap-2 mb-0.5">
-          <h2 className="text-[22px] font-heading text-gold tracking-wider">Spovedanie</h2>
+          <h2 className="text-[24px] font-heading text-gold tracking-wider">Spovedanie</h2>
         </div>
-        <p className="text-[13px] text-warm-gray mb-5">
+        <p className="text-[14px] text-warm-gray mb-5">
           Îndreptar de Spovedanie &mdash; Valeriu Gafencu
         </p>
 
@@ -133,7 +133,7 @@ export default function SpovedanieScreen() {
           <p className="text-[13px] text-warm-gray italic leading-relaxed mb-3">
             1921 &ndash; 1952 &middot; Martir al temnițelor comuniste
           </p>
-          <p className="text-[14px] text-ivory leading-relaxed">
+          <p className="text-[15px] text-ivory leading-relaxed">
             &bdquo;Doresc și rog ca fiecare prieten să copieze acest îndreptar la spovedanie.&rdquo;
           </p>
         </div>
@@ -282,7 +282,7 @@ export default function SpovedanieScreen() {
 
         {/* Section header */}
         <div className="mb-5">
-          <h3 className="text-[22px] font-heading text-gold leading-tight mb-1">
+          <h3 className="text-[24px] font-heading text-gold leading-tight mb-1">
             {currentSection.title}
           </h3>
           {currentSection.subtitle && (
@@ -303,7 +303,7 @@ export default function SpovedanieScreen() {
             const ans = answers[q.id];
             return (
               <div key={q.id} className="glass-card p-4">
-                <p className="text-[15px] text-ivory leading-relaxed mb-3">
+                <p className="text-[16px] text-ivory leading-relaxed mb-3">
                   <span className="text-gold font-semibold mr-2">{i + 1}.</span>
                   {q.text}
                 </p>
@@ -360,9 +360,9 @@ export default function SpovedanieScreen() {
     return (
       <div className="px-4 py-5 stagger-children">
         <div className="flex items-center gap-2 mb-0.5">
-          <h2 className="text-[22px] font-heading text-gold tracking-wider">Rezumat</h2>
+          <h2 className="text-[24px] font-heading text-gold tracking-wider">Rezumat</h2>
         </div>
-        <p className="text-[13px] text-warm-gray mb-5">
+        <p className="text-[14px] text-warm-gray mb-5">
           {pacateIdentificate.length} lucruri de mărturisit Duhovnicului
         </p>
 
@@ -399,7 +399,7 @@ export default function SpovedanieScreen() {
                 </p>
                 <ul className="space-y-2">
                   {items.map((q, i) => (
-                    <li key={i} className="text-[13px] text-ivory leading-relaxed flex gap-2">
+                    <li key={i} className="text-[14px] text-ivory leading-relaxed flex gap-2">
                       <span className="text-wine-medium flex-shrink-0">&bull;</span>
                       <span>{q}</span>
                     </li>
@@ -450,16 +450,16 @@ export default function SpovedanieScreen() {
         </button>
 
         <div className="flex items-center gap-2 mb-0.5">
-          <h2 className="text-[22px] font-heading text-gold tracking-wider">Sfaturi</h2>
+          <h2 className="text-[24px] font-heading text-gold tracking-wider">Sfaturi</h2>
         </div>
-        <p className="text-[13px] text-warm-gray mb-5">
+        <p className="text-[14px] text-warm-gray mb-5">
           Pentru o spovedanie adevărată
         </p>
 
         <div className="glass-card gold-border-left p-5 mb-4">
           <ul className="space-y-3">
             {sfaturiFinale.map((s, i) => (
-              <li key={i} className="text-[14px] text-ivory leading-relaxed flex gap-3">
+              <li key={i} className="text-[15px] text-ivory leading-relaxed flex gap-3">
                 <span className="text-gold flex-shrink-0 font-heading font-semibold">{i + 1}.</span>
                 <span>{s}</span>
               </li>
