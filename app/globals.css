@@ -237,6 +237,26 @@ button, a {
   box-shadow: 0 0 8px rgba(197, 165, 90, 0.35);
 }
 
+/* Responsive text scaling */
+#main-content {
+  zoom: 1.05;
+}
+@media (min-width: 768px) {
+  #main-content {
+    zoom: 1.2;
+  }
+}
+@media (min-width: 1024px) {
+  #main-content {
+    zoom: 1.35;
+  }
+}
+@media (min-width: 1440px) {
+  #main-content {
+    zoom: 1.45;
+  }
+}
+
 /* Reduced motion — respect user preferences */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
