@@ -83,14 +83,65 @@ export default function AppShell() {
   }
 
   return (
-    <div className="font-body min-h-screen text-ivory max-w-[430px] mx-auto relative overflow-hidden"
+    <div className="font-body min-h-screen text-ivory relative overflow-hidden"
       style={{ background: "linear-gradient(180deg, #1A1410 0%, #4A0E1A 100%)" }}>
 
       <a href="#main-content" className="sr-only">Salt la conținut</a>
       <div className="fixed inset-0 pointer-events-none z-0 bg-byzantine" />
 
-      {/* Header */}
-      <header className="sticky top-0 z-[100] px-5 pt-4 pb-3"
+      {/* Desktop sidebar nav */}
+      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-[220px] z-[200] flex-col pt-6 pb-6 px-4"
+        style={{
+          background: "linear-gradient(180deg, #1A1410, #1A1410ee)",
+          borderRight: "1px solid #C5A55A22",
+        }}>
+        <div className="flex items-center gap-2.5 mb-8 px-2">
+          <OrthodoxCross size={24} color="#C5A55A" />
+          <div>
+            <h1 className="text-[18px] font-heading font-bold text-gold tracking-[2px] leading-none">
+              MĂRTURISIRE
+            </h1>
+            <p className="text-[9px] text-gold-light tracking-[3px] font-light">
+              CREDINȚĂ ORTODOXĂ
+            </p>
+          </div>
+        </div>
+        <nav className="flex flex-col gap-1 flex-1">
+          {tabs.map((tab) => (
+            <button key={tab.id} onClick={() => switchTab(tab.id)}
+              aria-label={tab.label}
+              aria-current={activeTab === tab.id ? "page" : undefined}
+              className="flex items-center gap-3 px-3 py-3 rounded-xl text-left transition-all"
+              style={{
+                background: activeTab === tab.id ? "#C5A55A18" : "transparent",
+                border: activeTab === tab.id ? "1px solid #C5A55A33" : "1px solid transparent",
+              }}>
+              <span className="text-[18px]">{tab.icon}</span>
+              <span className="text-[15px] tracking-[0.5px] font-heading"
+                style={{ color: activeTab === tab.id ? "#C5A55A" : "#A89E92" }}>
+                {tab.label}
+              </span>
+            </button>
+          ))}
+        </nav>
+        <div className="flex items-center gap-2 px-2 pt-4" style={{ borderTop: "1px solid #C5A55A22" }}>
+          <div className="flex items-center gap-1 px-3 py-1 rounded-full"
+            style={{ background: "#C5A55A22", border: "1px solid #C5A55A44" }}>
+            <span className="text-sm">{"\u{1F525}"}</span>
+            <span className="text-[14px] text-gold font-semibold">{streak}</span>
+          </div>
+          <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold"
+            style={{
+              background: "linear-gradient(135deg, #6B1D2A, #C5A55A)",
+              border: "2px solid #C5A55A66",
+            }}>
+            S
+          </div>
+        </div>
+      </aside>
+
+      {/* Mobile Header — hidden on desktop */}
+      <header className="sticky top-0 z-[100] px-5 pt-4 pb-3 lg:hidden"
         style={{
           background: "linear-gradient(180deg, #1A1410ee, #1A1410cc)",
           backdropFilter: "blur(20px)",
@@ -125,19 +176,21 @@ export default function AppShell() {
         </div>
       </header>
 
-      {/* Content */}
-      <main id="main-content" className={`relative z-[1] pb-[100px] ${slideClass}`} role="main">
-        {activeTab === "home" && <HomeScreen onNavigate={(t) => switchTab(t as Tab)} onOpenPravila={(type) => { haptic(); setPravilaOpen(type); }} pravilaRefresh={pravilaRefresh} />}
-        <Suspense fallback={<ScreenSkeleton />}>
-          {activeTab === "calendar" && <CalendarScreen />}
-          {activeTab === "spovedanie" && <SpovedanieScreen />}
-          {activeTab === "prayers" && <PrayersScreen />}
-          {activeTab === "fasting" && <FastingScreen />}
-        </Suspense>
+      {/* Content — offset on desktop for sidebar */}
+      <main id="main-content" className={`relative z-[1] pb-[100px] lg:pb-10 lg:ml-[220px] ${slideClass}`} role="main">
+        <div className="max-w-[430px] md:max-w-none mx-auto lg:mx-0 lg:px-8 xl:px-12">
+          {activeTab === "home" && <HomeScreen onNavigate={(t) => switchTab(t as Tab)} onOpenPravila={(type) => { haptic(); setPravilaOpen(type); }} pravilaRefresh={pravilaRefresh} />}
+          <Suspense fallback={<ScreenSkeleton />}>
+            {activeTab === "calendar" && <CalendarScreen />}
+            {activeTab === "spovedanie" && <SpovedanieScreen />}
+            {activeTab === "prayers" && <PrayersScreen />}
+            {activeTab === "fasting" && <FastingScreen />}
+          </Suspense>
+        </div>
       </main>
 
-      {/* Tab Bar */}
-      <nav aria-label="Navigare principală" className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-[200] flex justify-around px-2 pt-2"
+      {/* Mobile Tab Bar — hidden on desktop */}
+      <nav aria-label="Navigare principală" className="lg:hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] md:max-w-full z-[200] flex justify-around px-2 pt-2"
         style={{
           background: "linear-gradient(180deg, #1A1410ee, #1A1410)",
           backdropFilter: "blur(16px)",

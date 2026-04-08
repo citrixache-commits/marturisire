@@ -33,7 +33,7 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
   }, [todayKey, pravilaRefresh]);
 
   return (
-    <div className="px-4 py-5 stagger-children">
+    <div className="px-4 py-5 stagger-children lg:py-8">
       {/* Date & Saint Card */}
       <div className="relative overflow-hidden rounded-2xl p-6 mb-4"
         style={{
@@ -126,7 +126,7 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
       </button>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
         {[
           { icon: "\u{2600}\u{FE0F}", label: "Pravila\nDimineții", action: () => onOpenPravila("dimineata"), color: "#C5A55A", done: pravilaDimDone },
           { icon: "\u{1F319}", label: "Pravila\nSerii", action: () => onOpenPravila("seara"), color: "#1B3A5C", done: pravilaSearaDone },

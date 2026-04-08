@@ -1,15 +1,29 @@
 "use client";
+import { useState, useRef, useEffect } from "react";
 import { getTodaySaint } from "@/data/saints-calendar";
 import { fastingTypes, fastingRecipes } from "@/data/fasting-rules";
 
 export default function FastingScreen() {
   const saint = getTodaySaint();
   const rules = fastingTypes[saint.fasting] || fastingTypes.liber;
+  const [openRecipe, setOpenRecipe] = useState<number | null>(null);
+  const recipeRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (openRecipe !== null && recipeRef.current) {
+      setTimeout(() => {
+        recipeRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 80);
+    }
+  }, [openRecipe]);
 
   return (
-    <div className="px-4 py-5 stagger-children">
+    <div className="px-4 py-5 stagger-children lg:py-8">
       <h2 className="text-[26px] font-heading text-gold tracking-wider mb-0.5">Calendar de Post</h2>
       <p className="text-[15px] text-warm-gray mb-5">Rețete de post și ghid alimentar</p>
+
+      {/* Top section: status + rules side by side on desktop */}
+      <div className="lg:grid lg:grid-cols-2 lg:gap-5">
 
       {/* Current fast status */}
       <div className="rounded-2xl p-5 mb-5"
@@ -51,21 +65,66 @@ export default function FastingScreen() {
         </div>
       </div>
 
+      </div>{/* end top grid */}
+
       {/* Recipes */}
-      <p className="text-[11px] text-gold tracking-[2px] font-heading mb-3">REȚETE DE POST RECOMANDATE</p>
+      <p className="text-[11px] text-gold tracking-[2px] font-heading mb-3">REȚETE DE POST</p>
       <div className="space-y-2 stagger-children">
-        {fastingRecipes.map((recipe, i) => (
-          <div key={i} className="glass-card p-3.5 flex items-center gap-3.5">
-            <span className="text-3xl">{recipe.emoji}</span>
-            <div className="flex-1">
-              <p className="text-[18px] text-ivory font-medium">{recipe.name}</p>
-              <p className="text-[14px] text-warm-gray mt-0.5">
-                {recipe.time} &middot; {recipe.cal}
-              </p>
+        {fastingRecipes.map((recipe, i) => {
+          const isOpen = openRecipe === i;
+          return (
+            <div key={i} ref={isOpen ? recipeRef : null}>
+              <button
+                onClick={() => setOpenRecipe(isOpen ? null : i)}
+                className="w-full text-left p-3.5 flex items-center gap-3.5 transition-all active:scale-[0.98]"
+                style={{
+                  background: isOpen ? "#C5A55A15" : "#1A141066",
+                  border: isOpen ? "1px solid #C5A55A44" : "1px solid #C5A55A11",
+                  borderRadius: isOpen ? "12px 12px 0 0" : "12px",
+                }}>
+                <span className="text-3xl">{recipe.emoji}</span>
+                <div className="flex-1">
+                  <p className="text-[18px] text-ivory font-medium">{recipe.name}</p>
+                  <p className="text-[14px] text-warm-gray mt-0.5">
+                    {recipe.time} &middot; {recipe.servings}
+                  </p>
+                </div>
+                <span className="text-gold text-base transition-transform" style={{ transform: isOpen ? "rotate(90deg)" : "none" }}>&#9654;</span>
+              </button>
+
+              {isOpen && (
+                <div className="rounded-b-xl p-5 animate-fade-in"
+                  style={{ background: "linear-gradient(180deg, #C5A55A10, #1A141088)", border: "1px solid #C5A55A44", borderTop: "none" }}>
+
+                  {/* Ingredients */}
+                  <p className="text-[13px] text-gold tracking-[2px] font-heading mb-2">INGREDIENTE</p>
+                  <div className="space-y-1.5 mb-5">
+                    {recipe.ingredients.map((ing, j) => (
+                      <div key={j} className="flex items-start gap-2">
+                        <span className="text-gold text-[10px] mt-1.5">&#10022;</span>
+                        <p className="text-[16px] text-ivory/90 leading-snug">{ing}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Steps */}
+                  <p className="text-[13px] text-gold tracking-[2px] font-heading mb-2">PREPARARE</p>
+                  <div className="space-y-3">
+                    {recipe.steps.map((step, j) => (
+                      <div key={j} className="flex items-start gap-3">
+                        <span className="w-6 h-6 rounded-full flex items-center justify-center text-[12px] font-bold flex-shrink-0 mt-0.5"
+                          style={{ background: "#C5A55A22", border: "1px solid #C5A55A44", color: "#C5A55A" }}>
+                          {j + 1}
+                        </span>
+                        <p className="text-[16px] text-ivory/90 leading-[1.7]">{step}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-            <span className="text-gold text-sm">&rarr;</span>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

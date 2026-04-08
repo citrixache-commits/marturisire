@@ -23,7 +23,7 @@ export default function CalendarScreen() {
   const daysToPascha = getDaysUntil("2026-04-12", todayISO);
 
   return (
-    <div className="px-4 py-5 stagger-children">
+    <div className="px-4 py-5 stagger-children lg:py-8">
       <h2 className="text-[26px] font-heading text-gold tracking-wider mb-0.5">Calendar Ortodox</h2>
       <p className="text-[15px] text-warm-gray mb-5">Sărbători, sfinți, posturi · 2026</p>
 

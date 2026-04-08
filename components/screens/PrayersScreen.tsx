@@ -31,12 +31,12 @@ export default function PrayersScreen() {
   };
 
   return (
-    <div className="px-4 py-5">
+    <div className="px-4 py-5 lg:py-8">
       <h2 className="text-[26px] font-heading text-gold tracking-wider mb-0.5">Rugăciuni</h2>
       <p className="text-[15px] text-warm-gray mb-5">Rugăciuni canonice ortodoxe pentru viața zilnică</p>
 
       {/* Prayer list — inline expand */}
-      <div className="space-y-2 stagger-children">
+      <div className="space-y-2 stagger-children lg:max-w-[800px]">
         {prayers.map((prayer) => {
           const isActive = activeId === prayer.id;
           return (
