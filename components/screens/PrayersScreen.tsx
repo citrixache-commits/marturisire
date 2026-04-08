@@ -2,11 +2,7 @@
 import { useState } from "react";
 import { prayers } from "@/data/prayers";
 
-interface Props {
-  onShowPremium: () => void;
-}
-
-export default function PrayersScreen({ onShowPremium }: Props) {
+export default function PrayersScreen() {
   const [activeId, setActiveId] = useState<number | null>(null);
   const [showText, setShowText] = useState(false);
 
@@ -82,7 +78,6 @@ export default function PrayersScreen({ onShowPremium }: Props) {
           return (
             <button key={prayer.id}
               onClick={() => {
-                if (prayer.premium) { onShowPremium(); return; }
                 setActiveId(prayer.id);
                 setShowText(false);
               }}
@@ -96,12 +91,7 @@ export default function PrayersScreen({ onShowPremium }: Props) {
                 <p className="text-[18px] text-ivory font-medium">{prayer.title}</p>
                 <p className="text-[14px] text-warm-gray mt-0.5">{prayer.duration}</p>
               </div>
-              {prayer.premium ? (
-                <span className="text-[9px] text-gold px-2 py-0.5 rounded-md font-heading tracking-wider"
-                  style={{ background: "#C5A55A22" }}>PREMIUM</span>
-              ) : (
-                <span className="text-gold text-base">&#9654;</span>
-              )}
+              <span className="text-gold text-base">&#9654;</span>
             </button>
           );
         })}

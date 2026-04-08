@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import OrthodoxCross from "./ui/OrthodoxCross";
-import PremiumModal from "./ui/PremiumModal";
 import OnboardingFlow from "./ui/OnboardingFlow";
 import PravilaModal from "./ui/PravilaModal";
 import ScreenSkeleton from "./ui/Skeleton";
@@ -32,7 +31,6 @@ function haptic() {
 
 export default function AppShell() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
-  const [showPremium, setShowPremium] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [pravilaOpen, setPravilaOpen] = useState<"dimineata" | "seara" | null>(null);
   const [pravilaRefresh, setPravilaRefresh] = useState(0);
@@ -129,11 +127,11 @@ export default function AppShell() {
 
       {/* Content */}
       <main id="main-content" className={`relative z-[1] pb-[100px] ${slideClass}`} role="main">
-        {activeTab === "home" && <HomeScreen onNavigate={(t) => switchTab(t as Tab)} onShowPremium={() => setShowPremium(true)} onOpenPravila={(type) => { haptic(); setPravilaOpen(type); }} pravilaRefresh={pravilaRefresh} />}
+        {activeTab === "home" && <HomeScreen onNavigate={(t) => switchTab(t as Tab)} onOpenPravila={(type) => { haptic(); setPravilaOpen(type); }} pravilaRefresh={pravilaRefresh} />}
         <Suspense fallback={<ScreenSkeleton />}>
           {activeTab === "calendar" && <CalendarScreen />}
           {activeTab === "spovedanie" && <SpovedanieScreen />}
-          {activeTab === "prayers" && <PrayersScreen onShowPremium={() => setShowPremium(true)} />}
+          {activeTab === "prayers" && <PrayersScreen />}
           {activeTab === "fasting" && <FastingScreen />}
         </Suspense>
       </main>
@@ -163,7 +161,6 @@ export default function AppShell() {
         ))}
       </nav>
 
-      {showPremium && <PremiumModal onClose={() => setShowPremium(false)} />}
       {showOnboarding && <OnboardingFlow onComplete={completeOnboarding} />}
       {pravilaOpen && <PravilaModal pravilaId={pravilaOpen} onClose={() => { setPravilaOpen(null); setPravilaRefresh((n) => n + 1); }} />}
     </div>

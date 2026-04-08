@@ -67,11 +67,7 @@ const categoryLabels: Record<string, string> = {
   educatie: "Educație",
 };
 
-interface Props {
-  onShowPremium: () => void;
-}
-
-export default function DonationsScreen({ onShowPremium }: Props) {
+export default function DonationsScreen() {
   const [filter, setFilter] = useState<string>("all");
   const [donatedTo, setDonatedTo] = useState<Set<string>>(new Set());
   const [showThankYou, setShowThankYou] = useState(false);
@@ -218,20 +214,6 @@ export default function DonationsScreen({ onShowPremium }: Props) {
           </p>
         </div>
       )}
-
-      {/* Premium donors section */}
-      <div className="mt-5 rounded-2xl p-5"
-        style={{ background: "linear-gradient(135deg, #C5A55A15, #4A0E1A44)", border: "1px solid #C5A55A33" }}>
-        <p className="text-[11px] text-gold tracking-[2px] font-heading mb-2">PREMIUM DONORS</p>
-        <p className="text-[13px] text-ivory leading-relaxed mb-3">
-          Cu abonamentul Premium, 30% din plata ta lunară merge automat către familii sărace și biserici ortodoxe.
-        </p>
-        <button onClick={onShowPremium}
-          className="w-full rounded-xl p-3 text-sm font-heading tracking-wider text-center transition-all active:scale-[0.98]"
-          style={{ background: "linear-gradient(135deg, #C5A55A, #6B1D2A)", color: "#F5F0E8" }}>
-          Devino Premium Donor &rarr;
-        </button>
-      </div>
 
       {/* Transparency */}
       <div className="mt-4 text-center">

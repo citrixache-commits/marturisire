@@ -7,7 +7,7 @@ interface Props {
   onComplete: () => void;
 }
 
-const TOTAL_STEPS = 8;
+const TOTAL_STEPS = 7;
 
 // 3 întrebări verbatim din Porunca întâi — Îndreptar Valeriu Gafencu
 const previewQuestions = [
@@ -54,7 +54,7 @@ export default function OnboardingFlow({ onComplete }: Props) {
 
   const buttonLabel =
     step === 0 ? "Începe \u2794"
-    : step === TOTAL_STEPS - 1 ? "Începe 7 zile GRATUIT \u2794"
+    : step === TOTAL_STEPS - 1 ? "Începe \u2794"
     : "Continuă \u2794";
 
   // Primele 2 paragrafe din „Ce este păcatul" — verbatim
@@ -291,55 +291,6 @@ export default function OnboardingFlow({ onComplete }: Props) {
           </>
         )}
 
-        {/* Step 7: Paywall */}
-        {step === 7 && (
-          <>
-            <OrthodoxCross size={36} color="#C5A55A" />
-            <h2 className="text-[22px] font-heading text-gold tracking-wider mt-3 mb-1">MĂRTURISIRE PREMIUM</h2>
-            <p className="text-xs text-warm-gray text-center mb-5 max-w-[280px]">
-              Îndreptarul complet + rugăciuni + calendar ortodox
-            </p>
-
-            <div className="max-w-[320px] w-full grid grid-cols-2 gap-2 mb-5">
-              {[
-                { emoji: "\u{1F4DC}", label: "Îndreptar Gafencu — 178 întrebări" },
-                { emoji: "\u{1F4DD}", label: "Istoric spovedanii" },
-                { emoji: "\u{1F64F}", label: "Toate rugăciunile" },
-                { emoji: "\u{1F4C5}", label: "Calendar liturgic complet" },
-                { emoji: "\u{1F514}", label: "Reminder personalizat" },
-                { emoji: "\u{2728}", label: "Fără reclame" },
-              ].map((f, i) => (
-                <div key={i} className="flex items-center gap-2 p-2.5 rounded-lg"
-                  style={{ background: "#C5A55A0A", border: "1px solid #C5A55A15" }}>
-                  <span className="text-lg">{f.emoji}</span>
-                  <p className="text-[11px] text-ivory leading-tight">{f.label}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex gap-3 max-w-[320px] w-full mb-4">
-              <div className="flex-1 rounded-xl p-4 text-center"
-                style={{ background: "#1A141066", border: "1px solid #C5A55A22" }}>
-                <p className="text-[12px] text-warm-gray mb-1">Săptămânal</p>
-                <p className="text-xl text-ivory font-bold">&euro;2.99</p>
-                <p className="text-[9px] text-warm-gray">/săptămână</p>
-              </div>
-              <div className="flex-1 rounded-xl p-4 text-center relative"
-                style={{ background: "#C5A55A22", border: "2px solid #C5A55A66" }}>
-                <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-[8px] text-dark bg-gold rounded-md px-2 py-0.5 font-bold font-heading whitespace-nowrap">
-                  ECONOMISEȘTI 80%
-                </span>
-                <p className="text-[12px] text-gold-light mb-1">Anual</p>
-                <p className="text-xl text-gold font-bold">&euro;29.99</p>
-                <p className="text-[9px] text-gold-light">/an (&euro;2.50/lună)</p>
-              </div>
-            </div>
-
-            <p className="text-[12px] text-gold-light text-center mb-2 font-semibold">
-              7 zile GRATUIT — anulezi oricând
-            </p>
-          </>
-        )}
       </div>
 
       {/* Bottom button */}
@@ -358,12 +309,6 @@ export default function OnboardingFlow({ onComplete }: Props) {
           <button onClick={onComplete}
             className="w-full text-warm-gray text-[13px] mt-3 p-2 bg-transparent border-none">
             Am mai folosit aplicația
-          </button>
-        )}
-        {step === TOTAL_STEPS - 1 && (
-          <button onClick={onComplete}
-            className="w-full text-warm-gray text-[13px] mt-2 p-2 bg-transparent border-none">
-            Nu acum, continuă gratuit
           </button>
         )}
       </div>

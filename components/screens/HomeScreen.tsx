@@ -9,12 +9,11 @@ const monthNamesRo = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iuni
 
 interface Props {
   onNavigate: (tab: string) => void;
-  onShowPremium: () => void;
   onOpenPravila: (type: "dimineata" | "seara") => void;
   pravilaRefresh?: number;
 }
 
-export default function HomeScreen({ onNavigate, onShowPremium, onOpenPravila, pravilaRefresh }: Props) {
+export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }: Props) {
   const today = new Date();
   const saint = getTodaySaint();
   const week = getWeekDays();
@@ -155,14 +154,6 @@ export default function HomeScreen({ onNavigate, onShowPremium, onOpenPravila, p
           </button>
         ))}
       </div>
-
-      {/* Ce vine — discret */}
-      <button onClick={onShowPremium}
-        className="w-full py-3 mb-4 active:scale-[0.98] transition-transform text-center">
-        <p className="text-[14px] text-warm-gray italic">
-          Vezi ce pregătim <span className="text-gold-dim">&rarr;</span>
-        </p>
-      </button>
 
       {/* Week Calendar */}
       <div className="glass-card-elevated p-4 mb-4">
