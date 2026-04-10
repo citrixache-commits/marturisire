@@ -690,3 +690,4 @@ export const toateSectiunile: ExamenSection[] = [
 ];
 
 export const totalIntrebari = toateSectiunile.reduce((sum, s) => sum + s.questions.length, 0);
+export const totalSectiuni = toateSectiunile.length;

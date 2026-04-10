@@ -201,7 +201,7 @@ export const sfintiMari: CalendarEvent[] = [
     name: "Sf. Mare Mucenic Gheorghe",
     type: "sfant-mare",
     description: "Purtătorul de biruință",
-    icon: "🐉",
+    icon: "🛡️",
   },
   {
     date: "2026-05-21",

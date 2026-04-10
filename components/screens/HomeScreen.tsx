@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { getTodaySaint, getWeekDays } from "@/data/saints-calendar";
+import { totalSectiuni } from "@/data/indreptar-spovedanie";
 
 const dayNamesRo = ["Duminică", "Luni", "Marți", "Miercuri", "Joi", "Vineri", "Sâmbătă"];
 const dayLetters = ["L", "M", "M", "J", "V", "S", "D"];
@@ -12,16 +13,22 @@ interface Props {
   pravilaRefresh?: number;
 }
 
-function getIndruptarProgress(): { answered: number; total: number } {
-  if (typeof window === "undefined") return { answered: 0, total: 178 };
+type IndreptarProgress = { sectionIndex: number; total: number; completed: boolean };
+
+function getIndruptarProgress(): IndreptarProgress {
+  if (typeof window === "undefined") return { sectionIndex: 0, total: totalSectiuni, completed: false };
   try {
     const saved = localStorage.getItem("lumina-spovedanie");
     if (saved) {
       const data = JSON.parse(saved);
-      return { answered: Object.keys(data.answers || {}).length, total: 178 };
+      return {
+        sectionIndex: data.sectionIndex || 0,
+        total: totalSectiuni,
+        completed: !!data.completed,
+      };
     }
   } catch {}
-  return { answered: 0, total: 178 };
+  return { sectionIndex: 0, total: totalSectiuni, completed: false };
 }
 
 export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }: Props) {
@@ -33,7 +40,7 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
 
   const [pravilaDimDone, setPravilaDimDone] = useState(false);
   const [pravilaSearaDone, setPravilaSearaDone] = useState(false);
-  const [indreptarProgress, setIndreptarProgress] = useState({ answered: 0, total: 178 });
+  const [indreptarProgress, setIndreptarProgress] = useState<IndreptarProgress>({ sectionIndex: 0, total: totalSectiuni, completed: false });
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -54,8 +61,11 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
     if (!pravilaSearaDone) {
       return { label: "Începe Pravila Serii", action: () => onOpenPravila("seara"), icon: "\u{1F319}" };
     }
-    if (indreptarProgress.answered < indreptarProgress.total) {
+    if (indreptarProgress.sectionIndex > 0 && !indreptarProgress.completed) {
       return { label: "Continuă Îndreptarul", action: () => onNavigate("spovedanie"), icon: "\u{1F4DC}" };
+    }
+    if (!indreptarProgress.completed && indreptarProgress.sectionIndex === 0) {
+      return { label: "Începe Îndreptarul", action: () => onNavigate("spovedanie"), icon: "\u{1F4DC}" };
     }
     return { label: "Citește Rugăciunile", action: () => onNavigate("prayers"), icon: "\u{1F64F}" };
   })();
@@ -110,22 +120,33 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
         ))}
       </div>
 
-      {/* Îndreptar progress — only if started */}
-      {indreptarProgress.answered > 0 && (
+      {/* Îndreptar progress — only if in progress */}
+      {indreptarProgress.sectionIndex > 0 && !indreptarProgress.completed && (
         <button onClick={() => onNavigate("spovedanie")}
           className="w-full rounded-xl p-4 mb-5 flex items-center gap-3 active:scale-[0.98] transition-transform"
           style={{ background: "#1A141066", border: "1px solid #C5A55A15" }}>
           <span className="text-xl">{"\u{1F4DC}"}</span>
           <div className="flex-1 text-left">
-            <p className="text-[14px] text-ivory">Îndreptar — {indreptarProgress.answered}/{indreptarProgress.total}</p>
+            <p className="text-[14px] text-ivory">
+              Îndreptar &mdash; secțiunea {indreptarProgress.sectionIndex + 1} din {indreptarProgress.total}
+            </p>
             <div className="w-full h-1 rounded-full mt-1.5" style={{ background: "#F5F0E815" }}>
               <div className="h-full rounded-full" style={{
-                width: `${Math.round((indreptarProgress.answered / indreptarProgress.total) * 100)}%`,
+                width: `${Math.round(((indreptarProgress.sectionIndex + 1) / indreptarProgress.total) * 100)}%`,
                 background: "linear-gradient(90deg, #C5A55A, #6B1D2A)",
               }} />
             </div>
           </div>
         </button>
+      )}
+      {indreptarProgress.completed && (
+        <div className="w-full rounded-xl p-4 mb-5 flex items-center gap-3"
+          style={{ background: "#3A6B3A18", border: "1px solid #3A6B3A44" }}>
+          <span className="text-xl">&#10003;</span>
+          <div className="flex-1 text-left">
+            <p className="text-[14px] text-[#C5E5A0]">Îndreptar &mdash; reflecție parcursă</p>
+          </div>
+        </div>
       )}
 
       {/* Date & Saint Card */}

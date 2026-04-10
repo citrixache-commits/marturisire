@@ -18,19 +18,16 @@ import {
   celeNouaPoruciBisericesti,
   sfaturiFinale,
   inchidere,
-  totalIntrebari,
   type ExamenSection,
 } from "@/data/indreptar-spovedanie";
 import OrthodoxCross from "@/components/ui/OrthodoxCross";
 
-type Phase = "welcome" | "intro" | "examen" | "rezumat" | "sfaturi" | "citire";
-type Answer = "da" | "nu" | null;
+type Phase = "welcome" | "intro" | "examen" | "terminat" | "sfaturi" | "citire";
 
 export default function SpovedanieScreen() {
   const [phase, setPhase] = useState<Phase>("welcome");
   const [sectionIndex, setSectionIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, Answer>>({});
-  const [startTime, setStartTime] = useState<number | null>(null);
+  const [completed, setCompleted] = useState(false);
 
   // Load saved progress
   useEffect(() => {
@@ -39,8 +36,8 @@ export default function SpovedanieScreen() {
       if (saved) {
         try {
           const data = JSON.parse(saved);
-          setAnswers(data.answers || {});
           setSectionIndex(data.sectionIndex || 0);
+          setCompleted(data.completed || false);
           setPhase(data.phase || "welcome");
         } catch {}
       }
@@ -52,34 +49,23 @@ export default function SpovedanieScreen() {
     if (typeof window !== "undefined" && phase !== "welcome") {
       localStorage.setItem(
         "lumina-spovedanie",
-        JSON.stringify({ answers, sectionIndex, phase })
+        JSON.stringify({ sectionIndex, completed, phase })
       );
     }
-  }, [answers, sectionIndex, phase]);
+  }, [sectionIndex, completed, phase]);
 
   const currentSection: ExamenSection | null =
     phase === "examen" ? toateSectiunile[sectionIndex] : null;
 
-  const answeredCount = Object.keys(answers).length;
-  const progressPct = Math.round((answeredCount / totalIntrebari) * 100);
-
-  // Păcate identificate (toate răspunsurile "da" la întrebările de păcat)
-  const pacateIdentificate = toateSectiunile.flatMap((section) =>
-    section.questions
-      .filter((q) => answers[q.id] === "da")
-      .map((q) => ({ sectionTitle: section.title, question: q.text }))
-  );
-
-  function handleAnswer(qId: string, ans: Answer) {
-    setAnswers((prev) => ({ ...prev, [qId]: ans }));
-  }
+  const progressPct = Math.round(((sectionIndex + 1) / toateSectiunile.length) * 100);
 
   function nextSection() {
     if (sectionIndex < toateSectiunile.length - 1) {
       setSectionIndex(sectionIndex + 1);
       window.scrollTo(0, 0);
     } else {
-      setPhase("rezumat");
+      setCompleted(true);
+      setPhase("terminat");
       window.scrollTo(0, 0);
     }
   }
@@ -93,7 +79,6 @@ export default function SpovedanieScreen() {
 
   function startExamen() {
     setPhase("examen");
-    setStartTime(Date.now());
     window.scrollTo(0, 0);
   }
 
@@ -101,10 +86,9 @@ export default function SpovedanieScreen() {
     if (typeof window !== "undefined") {
       localStorage.removeItem("lumina-spovedanie");
     }
-    setAnswers({});
     setSectionIndex(0);
+    setCompleted(false);
     setPhase("welcome");
-    setStartTime(null);
   }
 
   // ============ WELCOME PHASE ============
@@ -147,7 +131,7 @@ export default function SpovedanieScreen() {
               ÎNCEPE EXAMENUL DE CONȘTIINȚĂ
             </p>
             <p className="text-[14px] text-ivory/85 mt-1">
-              {totalIntrebari} întrebări &middot; ~20 minute
+              {toateSectiunile.length} secțiuni &middot; reflecție personală
             </p>
           </div>
           <span className="text-2xl text-ivory">&rarr;</span>
@@ -169,17 +153,30 @@ export default function SpovedanieScreen() {
         </button>
 
         {/* Continue if progress exists */}
-        {answeredCount > 0 && (
+        {sectionIndex > 0 && !completed && (
           <button onClick={() => setPhase("examen")}
             className="w-full rounded-xl p-4 mb-4 flex items-center justify-between active:scale-[0.98] transition-transform"
             style={{ background: "#C5A55A22", border: "1px solid #C5A55A44" }}>
             <div className="text-left">
               <p className="text-sm font-semibold text-gold">Continuă examenul</p>
               <p className="text-xs text-warm-gray mt-0.5">
-                {answeredCount}/{totalIntrebari} întrebări &middot; {progressPct}%
+                Secțiunea {sectionIndex + 1} din {toateSectiunile.length}
               </p>
             </div>
             <span className="text-xl text-gold">&rarr;</span>
+          </button>
+        )}
+        {completed && (
+          <button onClick={resetExamen}
+            className="w-full rounded-xl p-4 mb-4 flex items-center justify-between active:scale-[0.98] transition-transform"
+            style={{ background: "#3A6B3A22", border: "1px solid #3A6B3A44" }}>
+            <div className="text-left">
+              <p className="text-sm font-semibold text-[#C5E5A0]">Ai parcurs tot examenul</p>
+              <p className="text-xs text-warm-gray mt-0.5">
+                Apasă pentru a începe o nouă reflecție
+              </p>
+            </div>
+            <span className="text-xl text-[#C5E5A0]">&#10003;</span>
           </button>
         )}
 
@@ -258,9 +255,6 @@ export default function SpovedanieScreen() {
 
   // ============ EXAMEN PHASE ============
   if (phase === "examen" && currentSection) {
-    const sectionAnswered = currentSection.questions.filter((q) => answers[q.id]).length;
-    const allAnswered = sectionAnswered === currentSection.questions.length;
-
     return (
       <div className="px-4 py-5">
         {/* Progress bar */}
@@ -297,43 +291,29 @@ export default function SpovedanieScreen() {
           )}
         </div>
 
-        {/* Questions */}
-        <div className="space-y-3 mb-6">
-          {currentSection.questions.map((q, i) => {
-            const ans = answers[q.id];
-            return (
-              <div key={q.id} className="glass-card p-4">
-                <p className="text-[18px] text-ivory leading-relaxed mb-3">
-                  <span className="text-gold font-semibold mr-2">{i + 1}.</span>
-                  {q.text}
-                </p>
-                <div className="flex gap-2">
-                  <button onClick={() => handleAnswer(q.id, "da")}
-                    className="flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all active:scale-95"
-                    style={{
-                      background: ans === "da" ? "#6B1D2A88" : "#1A141066",
-                      border: ans === "da" ? "1px solid #C5A55A66" : "1px solid #C5A55A22",
-                      color: ans === "da" ? "#F5F0E8" : "#A89E92",
-                    }}>
-                    Da
-                  </button>
-                  <button onClick={() => handleAnswer(q.id, "nu")}
-                    className="flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all active:scale-95"
-                    style={{
-                      background: ans === "nu" ? "#3A6B3A66" : "#1A141066",
-                      border: ans === "nu" ? "1px solid #5A9B5A66" : "1px solid #C5A55A22",
-                      color: ans === "nu" ? "#F5F0E8" : "#A89E92",
-                    }}>
-                    Nu
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+        {/* Reflection instruction */}
+        <div className="glass-card gold-border-left p-4 mb-5">
+          <p className="text-[14px] text-ivory leading-relaxed italic">
+            Citește fiecare întrebare în tăcere și răspunde sincer în conștiința ta, înaintea lui Dumnezeu.
+          </p>
+        </div>
+
+        {/* Questions — pure reflection list, no DA/NU */}
+        <div className="glass-card p-5 mb-6">
+          <ol className="space-y-4">
+            {currentSection.questions.map((q, i) => (
+              <li key={q.id} className="flex gap-3">
+                <span className="text-gold font-heading text-[16px] flex-shrink-0 min-w-[28px] leading-[1.8]">
+                  {i + 1}.
+                </span>
+                <p className="text-[17px] text-ivory leading-[1.8]">{q.text}</p>
+              </li>
+            ))}
+          </ol>
         </div>
 
         {/* Navigation */}
-        <div className="flex gap-3 mb-4">
+        <div className="flex gap-3 mb-3">
           <button onClick={prevSection} disabled={sectionIndex === 0}
             className="flex-1 rounded-xl py-3 text-sm font-semibold transition-all active:scale-95 disabled:opacity-40"
             style={{ background: "#1A141066", border: "1px solid #C5A55A22", color: "#C5A55A" }}>
@@ -342,101 +322,77 @@ export default function SpovedanieScreen() {
           <button onClick={nextSection}
             className="flex-[2] rounded-xl py-3 text-sm font-semibold transition-all active:scale-95"
             style={{
-              background: allAnswered ? "linear-gradient(135deg, #C5A55A, #6B1D2A)" : "#C5A55A55",
+              background: "linear-gradient(135deg, #C5A55A, #6B1D2A)",
               color: "#F5F0E8",
             }}>
-            {sectionIndex === toateSectiunile.length - 1 ? "Vezi rezumat" : "Continuă"} &rarr;
+            {sectionIndex === toateSectiunile.length - 1 ? "Am terminat reflecția" : "Continuă"} &rarr;
           </button>
         </div>
         <p className="text-[12px] text-warm-gray text-center">
-          {sectionAnswered}/{currentSection.questions.length} întrebări răspunse în această secțiune
+          {currentSection.questions.length} întrebări de reflecție în această secțiune
         </p>
       </div>
     );
   }
 
-  // ============ REZUMAT PHASE ============
-  if (phase === "rezumat") {
+  // ============ TERMINAT PHASE ============
+  if (phase === "terminat") {
     return (
       <div className="px-4 py-5 stagger-children">
-        <div className="flex items-center gap-2 mb-0.5">
-          <h2 className="text-[26px] font-heading text-gold tracking-wider">Rezumat</h2>
-        </div>
-        <p className="text-[15px] text-warm-gray mb-5">
-          {pacateIdentificate.length} lucruri de mărturisit Duhovnicului
-        </p>
-
-        {/* Summary card */}
-        <div className="rounded-2xl p-5 mb-4"
+        {/* Completion card */}
+        <div className="rounded-2xl p-6 mb-5 text-center"
           style={{ background: "linear-gradient(135deg, #4A0E1Acc, #1B3A5C88)", border: "1px solid #C5A55A33" }}>
-          <div className="flex items-center gap-3 mb-3">
-            <OrthodoxCross size={20} color="#C5A55A" />
-            <p className="text-[12px] text-gold-light tracking-[2px] font-heading">EXAMEN DE CONȘTIINȚĂ</p>
+          <div className="flex justify-center mb-3">
+            <OrthodoxCross size={40} color="#C5A55A" />
           </div>
-          <p className="text-3xl text-gold font-bold">{pacateIdentificate.length}</p>
-          <p className="text-xs text-warm-gray mt-1">păcate identificate din {answeredCount} întrebări</p>
-          <p className="text-[13px] text-ivory italic leading-relaxed mt-3">
-            &bdquo;Scrie păcatele pe hârtie, altfel le poți uita. Apoi arde hârtia imediat.&rdquo;
-            <br />
-            <span className="text-[10px] text-warm-gray not-italic">&mdash; Valeriu Gafencu</span>
+          <p className="text-[12px] text-gold-light tracking-[3px] font-heading mb-2 uppercase">
+            Ai terminat reflecția
           </p>
+          <h2 className="text-[24px] font-heading text-ivory mb-3 tracking-wider">
+            Întrebările sunt oglinda
+          </h2>
+          <p className="text-[15px] text-ivory italic leading-[1.7]">
+            &bdquo;Scrie păcatele pe hârtie, altfel le poți uita. Apoi arde hârtia imediat.&rdquo;
+          </p>
+          <p className="text-[12px] text-warm-gray mt-2">&mdash; Valeriu Gafencu</p>
         </div>
 
-        {/* Lista păcate */}
-        {pacateIdentificate.length > 0 ? (
-          <div className="space-y-3 mb-4">
-            {/* Group by section */}
-            {Object.entries(
-              pacateIdentificate.reduce((acc, p) => {
-                if (!acc[p.sectionTitle]) acc[p.sectionTitle] = [];
-                acc[p.sectionTitle].push(p.question);
-                return acc;
-              }, {} as Record<string, string[]>)
-            ).map(([section, items]) => (
-              <div key={section} className="glass-card p-4">
-                <p className="text-[12px] text-gold tracking-[2px] font-heading mb-3">
-                  {section.toUpperCase()}
-                </p>
-                <ul className="space-y-2">
-                  {items.map((q, i) => (
-                    <li key={i} className="text-[15px] text-ivory leading-relaxed flex gap-2">
-                      <span className="text-wine-medium flex-shrink-0">&bull;</span>
-                      <span>{q}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="glass-card p-5 mb-4 text-center">
-            <p className="text-[15px] text-ivory leading-relaxed">
-              Nu ai identificat păcate. Roagă-te lui Dumnezeu să-ți lumineze conștiința.
+        {/* Primary CTA — read full Îndreptar */}
+        <button onClick={() => { setPhase("citire"); window.scrollTo(0, 0); }}
+          className="w-full rounded-2xl p-5 mb-3 flex items-center justify-between active:scale-[0.98] transition-transform"
+          style={{ background: "linear-gradient(135deg, #C5A55A, #6B1D2A)", border: "none" }}>
+          <div className="text-left flex-1">
+            <p className="text-base font-bold text-ivory font-heading tracking-wider">
+              CITEȘTE ÎNDREPTARUL INTEGRAL
+            </p>
+            <p className="text-[13px] text-ivory/85 mt-1">
+              Toată cartea lui Valeriu Gafencu
             </p>
           </div>
-        )}
+          <span className="text-2xl text-ivory ml-2">&rarr;</span>
+        </button>
 
-        {/* Actions */}
-        <div className="flex flex-col gap-3 mb-4">
-          <button onClick={() => setPhase("sfaturi")}
-            className="w-full rounded-xl p-4 text-sm font-heading tracking-wider transition-all active:scale-[0.98]"
-            style={{ background: "linear-gradient(135deg, #C5A55A, #6B1D2A)", color: "#F5F0E8" }}>
-            VEZI SFATURI FINALE &rarr;
-          </button>
-          <button onClick={() => {
-            setSectionIndex(0);
-            setPhase("examen");
-          }}
-            className="w-full rounded-xl p-3 text-sm transition-all active:scale-[0.98]"
-            style={{ background: "#1A141066", border: "1px solid #C5A55A33", color: "#C5A55A" }}>
-            Revizuiește răspunsurile
-          </button>
-          <button onClick={resetExamen}
-            className="w-full rounded-xl p-3 text-xs transition-all active:scale-[0.98]"
-            style={{ background: "transparent", border: "1px solid #C5A55A22", color: "#A89E92" }}>
-            Șterge și începe din nou
-          </button>
-        </div>
+        {/* Secondary CTA — sfaturi */}
+        <button onClick={() => { setPhase("sfaturi"); window.scrollTo(0, 0); }}
+          className="w-full rounded-xl p-4 mb-3 flex items-center justify-between active:scale-[0.98] transition-transform"
+          style={{ background: "#1A141066", border: "1px solid #C5A55A44" }}>
+          <div className="text-left flex-1">
+            <p className="text-sm font-bold text-gold font-heading tracking-wider">
+              SFATURI PENTRU SPOVEDANIE
+            </p>
+            <p className="text-xs text-warm-gray mt-0.5">
+              Cuvinte pentru o spovedanie adevărată
+            </p>
+          </div>
+          <span className="text-xl text-gold ml-2">&rarr;</span>
+        </button>
+
+        {/* Reset */}
+        <button onClick={resetExamen}
+          className="w-full rounded-xl p-3 text-sm transition-all active:scale-[0.98] mb-4"
+          style={{ background: "transparent", border: "1px solid #C5A55A22", color: "#A89E92" }}>
+          Reia examenul de la început
+        </button>
       </div>
     );
   }
@@ -445,8 +401,8 @@ export default function SpovedanieScreen() {
   if (phase === "sfaturi") {
     return (
       <div className="px-4 py-5 stagger-children">
-        <button onClick={() => setPhase("rezumat")} className="text-gold text-sm mb-3 flex items-center gap-1">
-          <span>&larr;</span> Înapoi la rezumat
+        <button onClick={() => setPhase(completed ? "terminat" : "welcome")} className="text-gold text-sm mb-3 flex items-center gap-1">
+          <span>&larr;</span> Înapoi
         </button>
 
         <div className="flex items-center gap-2 mb-0.5">
