@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { getTodaySaint, getWeekDays } from "@/data/saints-calendar";
+import { getTodaySaint, getWeekDays, getLocalDateKey } from "@/data/saints-calendar";
 import { totalSectiuni } from "@/data/indreptar-spovedanie";
 
 const dayNamesRo = ["Duminică", "Luni", "Marți", "Miercuri", "Joi", "Vineri", "Sâmbătă"];
@@ -35,7 +35,7 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
   const today = new Date();
   const saint = getTodaySaint();
   const week = getWeekDays();
-  const todayKey = today.toISOString().split("T")[0];
+  const todayKey = getLocalDateKey(today);
   const hour = today.getHours();
 
   const [pravilaDimDone, setPravilaDimDone] = useState(false);

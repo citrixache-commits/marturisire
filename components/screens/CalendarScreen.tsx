@@ -9,7 +9,7 @@ import {
   getDaysUntil,
   getFastingStatus,
 } from "@/data/calendar";
-import { saintsCalendar, getWeekDays, getTodaySaint } from "@/data/saints-calendar";
+import { saintsCalendar, getWeekDays, getTodaySaint, getLocalDateKey } from "@/data/saints-calendar";
 import { fastingTypes, fastingRecipes } from "@/data/fasting-rules";
 
 export default function CalendarScreen() {
@@ -18,7 +18,7 @@ export default function CalendarScreen() {
   const recipeRef = useRef<HTMLDivElement | null>(null);
 
   const today = new Date();
-  const todayISO = today.toISOString().split("T")[0];
+  const todayISO = getLocalDateKey(today);
   const todaySaint = saintsCalendar[todayISO];
   const saint = getTodaySaint();
   const fastingStatus = getFastingStatus(todayISO);

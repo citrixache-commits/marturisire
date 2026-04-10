@@ -40,9 +40,24 @@ export const saintsCalendar: Record<string, SaintDay> = {
   "2026-04-30": { name: "Sf. Ap. Iacob al lui Zevedeu", fasting: "post", gospel: "Cine voiește să fie întâi, să fie slujitorul tuturor.", gospelRef: "Marcu 10:44" },
 };
 
+/**
+ * Returns a YYYY-MM-DD key based on the LOCAL date of the user, not UTC.
+ *
+ * Bug fix: `new Date().toISOString().split("T")[0]` returns UTC date, which
+ * causes the saint lookup to be off by one day for users in positive
+ * timezones (e.g. Romania GMT+2/+3) during late-night hours, when local
+ * time is already the next day but UTC is still the previous day.
+ */
+export function getLocalDateKey(date: Date = new Date()): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 export function getTodaySaint(): SaintDay & { date: string } {
   const today = new Date();
-  const key = today.toISOString().split("T")[0];
+  const key = getLocalDateKey(today);
   const saint = saintsCalendar[key] || {
     name: "Sf. Gheorghe Mărturisitorul",
     fasting: "liber" as const,
@@ -61,7 +76,7 @@ export function getWeekDays(centerDate?: Date): { date: Date; key: string; saint
   return Array.from({ length: 7 }, (_, i) => {
     const d = new Date(monday);
     d.setDate(monday.getDate() + i);
-    const key = d.toISOString().split("T")[0];
+    const key = getLocalDateKey(d);
     return { date: d, key, saint: saintsCalendar[key] };
   });
 }

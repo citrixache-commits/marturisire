@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { getPravilaById } from "@/data/pravila";
+import { getLocalDateKey } from "@/data/saints-calendar";
 import ByzantineDivider from "./ByzantineDivider";
 
 interface Props {
@@ -44,8 +45,8 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
     setCheckedSteps(newSet);
 
     if (isLastStep) {
-      // Save completion to localStorage
-      const today = new Date().toISOString().split("T")[0];
+      // Save completion to localStorage (use LOCAL date, not UTC, to match HomeScreen)
+      const today = getLocalDateKey();
       if (typeof window !== "undefined") {
         localStorage.setItem(`lumina-pravila-${pravilaId}-${today}`, "done");
       }
