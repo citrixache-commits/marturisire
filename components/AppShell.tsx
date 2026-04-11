@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { getTodaySaint } from "@/data/saints-calendar";
 import OrthodoxCross from "./ui/OrthodoxCross";
 import OnboardingFlow from "./ui/OnboardingFlow";
 import PravilaModal from "./ui/PravilaModal";
@@ -35,7 +36,15 @@ export default function AppShell() {
   const [pravilaRefresh, setPravilaRefresh] = useState(0);
   const [showAbout, setShowAbout] = useState(false);
   const [slideClass, setSlideClass] = useState("");
+  const [isPaschaDay, setIsPaschaDay] = useState(false);
   const prevTabRef = useRef<Tab>("home");
+
+  // Detect Pascha day client-side to avoid hydration mismatch
+  useEffect(() => {
+    try {
+      setIsPaschaDay(getTodaySaint().type === "PAȘTE");
+    } catch {}
+  }, []);
 
   function switchTab(tab: Tab) {
     if (tab === activeTab) return;
@@ -86,6 +95,54 @@ export default function AppShell() {
 
       <a href="#main-content" className="sr-only">Salt la conținut</a>
       <div className="fixed inset-0 pointer-events-none z-0 bg-byzantine" />
+
+      {/* PASCHAL AMBIENT LIGHT — full viewport, ONLY on Easter Sunday */}
+      {isPaschaDay && (
+        <>
+          {/* Dawn glow from top — warm gold radiance */}
+          <div
+            className="fixed top-0 left-0 right-0 pointer-events-none z-0"
+            style={{
+              height: "85vh",
+              background:
+                "radial-gradient(ellipse 85% 55% at 50% 0%, rgba(232, 213, 163, 0.26) 0%, rgba(197, 165, 90, 0.1) 35%, transparent 75%)",
+            }}
+          />
+          {/* Slowly rotating light rays — covering the whole viewport */}
+          <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+            <svg
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+              style={{
+                width: "220vmax",
+                height: "220vmax",
+                opacity: 0.22,
+                animation: "rayRotate 75s linear infinite",
+              }}
+              viewBox="0 0 200 200"
+              aria-hidden="true"
+            >
+              <defs>
+                <radialGradient id="paschaAmbientRay" cx="50%" cy="50%" r="50%">
+                  <stop offset="25%" stopColor="#E8D5A3" stopOpacity="0" />
+                  <stop offset="55%" stopColor="#E8D5A3" stopOpacity="0.9" />
+                  <stop offset="100%" stopColor="#E8D5A3" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+              {Array.from({ length: 40 }).map((_, i) => (
+                <rect
+                  key={i}
+                  x="99.75"
+                  y="0"
+                  width="0.5"
+                  height="100"
+                  fill="url(#paschaAmbientRay)"
+                  transform={`rotate(${i * 9} 100 100)`}
+                />
+              ))}
+            </svg>
+          </div>
+        </>
+      )}
 
       {/* Desktop sidebar nav */}
       <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-[220px] z-[200] flex-col pt-6 pb-6 px-4"
