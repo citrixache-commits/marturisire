@@ -163,27 +163,35 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
             {today.getDate()} <span className="text-[28px] text-gold-light font-light">{monthNamesRo[today.getMonth()]}</span>
           </h2>
           {saint.type && (
-            <span className="inline-block text-[13px] font-semibold font-heading text-gold-light px-3 py-1 rounded-lg mb-2 mt-2 tracking-wider"
-              style={{
-                background: "linear-gradient(135deg, #C5A55A22, #C5A55A0a)",
-                border: "1px solid #C5A55A44",
-              }}>
-              {saint.type}
-            </span>
+            <div className="flex items-center gap-3 mt-3 mb-1">
+              <span className="inline-block h-px w-6" style={{ background: "#C5A55A55" }} />
+              <p className="text-[12px] font-heading text-gold-light uppercase tracking-[3px]">
+                {saint.type}
+              </p>
+              <span className="inline-block h-px flex-1 max-w-[40px]" style={{ background: "#C5A55A55" }} />
+            </div>
           )}
           <p className="text-[20px] italic text-ivory leading-relaxed mt-2">{saint.name}</p>
-          <div className="flex items-center gap-2 mt-3 w-fit rounded-lg px-3 py-1.5"
-            style={{
-              background: saint.fasting === "post"
-                ? "linear-gradient(135deg, #6B1D2A55, #6B1D2A22)"
-                : saint.fasting === "harti"
-                ? "linear-gradient(135deg, #C5A55A22, #C5A55A0a)"
-                : "linear-gradient(135deg, #3A6B3A33, #3A6B3A11)",
-              border: `1px solid ${saint.fasting === "post" ? "#C5A55A22" : saint.fasting === "harti" ? "#C5A55A44" : "#3A6B3A44"}`,
-            }}>
-            <span className="text-sm">{saint.fasting === "post" ? "\u{1F7E3}" : saint.fasting === "harti" ? "\u{2728}" : "\u{1F7E2}"}</span>
-            <span className="text-[14px] text-ivory font-medium">
-              {saint.fasting === "post" ? "Zi de Post" : saint.fasting === "harti" ? "Harți — Sărbătoare!" : "Dezlegare"}
+          <div className="flex items-center gap-2.5 mt-3">
+            <span
+              className="inline-block w-2 h-2 rounded-full flex-shrink-0"
+              style={{
+                background:
+                  saint.fasting === "post"
+                    ? "#C06878"
+                    : saint.fasting === "harti"
+                    ? "#E8D5A3"
+                    : "#7FAE7F",
+                boxShadow:
+                  saint.fasting === "post"
+                    ? "0 0 6px #C0687877"
+                    : saint.fasting === "harti"
+                    ? "0 0 6px #E8D5A377"
+                    : "0 0 6px #7FAE7F77",
+              }}
+            />
+            <span className="text-[14px] text-ivory/80 font-medium">
+              {saint.fasting === "post" ? "Zi de Post" : saint.fasting === "harti" ? "Harți — Sărbătoare" : "Dezlegare"}
             </span>
           </div>
         </div>
