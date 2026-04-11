@@ -450,7 +450,7 @@ export default function SpovedanieScreen() {
           <h2 className="text-[24px] font-heading text-gold tracking-wider">Îndreptar</h2>
         </div>
         <p className="text-[14px] text-warm-gray mb-5">
-          Valeriu Gafencu &middot; Text integral
+          Îndreptar de Spovedanie
         </p>
 
         {/* Dedicația */}
