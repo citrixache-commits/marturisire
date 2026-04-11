@@ -676,22 +676,9 @@ export default function SpovedanieScreen() {
           </div>
         </div>
 
-        {/* Dedicația — la sfârșit */}
-        <div className="glass-card p-5 mt-4 mb-3">
-          <p className="text-[11px] text-gold tracking-[2px] font-heading uppercase mb-3">
-            Dedicat părinților Sf. Valeriu
-          </p>
-          <p className="text-[14px] text-ivory italic leading-relaxed text-center">
-            {dedicatie.text}
-          </p>
-          <p className="text-[15px] text-gold font-heading mt-2 text-center">
-            {dedicatie.semnatura}
-          </p>
-        </div>
-
         {/* Autor — Sf. Valeriu Gafencu — cel mai la sfârșit */}
         <div
-          className="rounded-xl p-4 mb-4 text-center"
+          className="rounded-xl p-4 mt-4 mb-4 text-center"
           style={{
             background: "linear-gradient(180deg, rgba(197, 165, 90, 0.08), rgba(26, 20, 16, 0.4))",
             border: "1px solid #C5A55A22",
