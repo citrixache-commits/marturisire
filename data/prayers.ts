@@ -3,12 +3,28 @@ export interface Prayer {
   title: string;
   duration: string;
   icon: string;
-  category: "dimineata" | "seara" | "masa" | "necaz" | "adormiti" | "crez" | "maica-domnului" | "inger" | "ioan-botezator" | "acatist" | "canon" | "psaltire";
+  category: "dimineata" | "seara" | "masa" | "necaz" | "adormiti" | "crez" | "maica-domnului" | "inger" | "ioan-botezator" | "acatist" | "canon" | "psaltire" | "domneasca";
   text?: string;
 }
 
 // Rugăciuni canonice ortodoxe — tradiție liturgică (domeniu public)
 export const prayers: Prayer[] = [
+  {
+    id: 11,
+    title: "Tatăl Nostru",
+    duration: "1 min",
+    icon: "domneasca",
+    category: "domneasca",
+    text: `Tatăl nostru, Care ești în ceruri, sfințească-se numele Tău, vie Împărăția Ta, facă-se voia Ta, precum în cer așa și pe pământ.
+
+Pâinea noastră cea spre ființă dă-ne-o nouă astăzi.
+
+Și ne iartă nouă greșelile noastre, precum și noi iertăm greșiților noștri.
+
+Și nu ne duce pe noi în ispită, ci ne izbăvește de cel rău.
+
+Că a Ta este Împărăția și puterea și slava, a Tatălui și a Fiului și a Sfântului Duh, acum și pururea și în vecii vecilor. Amin.`,
+  },
   {
     id: 1,
     title: "Rugăciunile Dimineții",

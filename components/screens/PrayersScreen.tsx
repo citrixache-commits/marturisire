@@ -16,6 +16,7 @@ export default function PrayersScreen() {
   }, [activeId]);
 
   const iconMap: Record<string, string> = {
+    domneasca: "\u{1F451}",
     dimineata: "\u{2600}\u{FE0F}",
     seara: "\u{1F319}",
     masa: "\u{1F35E}",
