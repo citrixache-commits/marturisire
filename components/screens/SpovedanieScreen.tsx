@@ -449,9 +449,28 @@ export default function SpovedanieScreen() {
         <div className="flex items-center gap-2 mb-0.5">
           <h2 className="text-[24px] font-heading text-gold tracking-wider">Îndreptar</h2>
         </div>
-        <p className="text-[14px] text-warm-gray mb-5">
+        <p className="text-[14px] text-warm-gray mb-1">
           Îndreptar de Spovedanie
         </p>
+
+        {/* Autor — Sf. Valeriu Gafencu */}
+        <div
+          className="rounded-xl p-4 mb-5 mt-3"
+          style={{
+            background: "linear-gradient(180deg, rgba(197, 165, 90, 0.08), rgba(26, 20, 16, 0.4))",
+            border: "1px solid #C5A55A22",
+          }}
+        >
+          <p className="text-[12px] text-gold tracking-[2px] font-heading mb-1.5 uppercase">
+            Scris de Sf. Valeriu Gafencu
+          </p>
+          <p className="text-[13px] text-ivory/85 leading-[1.7] italic">
+            &bdquo;Sfântul închisorilor&rdquo; &mdash; a pătimit în temnițele comuniste
+            (Aiud, Pitești, Târgu Ocna) din 1941 până la moartea sa la numai 30 de ani,
+            în 18 februarie 1952. A scris acest îndreptar ca testament duhovnicesc
+            pentru pocăința deplină a celui care vrea să se mântuiască.
+          </p>
+        </div>
 
         {/* Dedicația */}
         <div className="glass-card p-5 mb-4 text-center">
