@@ -694,7 +694,7 @@ export default function SpovedanieScreen() {
             24 ianuarie 1921 &ndash; 18 februarie 1952
           </p>
           <p className="text-[11px] text-warm-gray tracking-[2px] font-heading uppercase mt-1">
-            &bdquo;Sfântul Închisorilor&rdquo; &middot; Pomenit 18 februarie
+            &bdquo;Sfântul Închisorilor&rdquo; &middot; Pomenit pe 18 februarie
           </p>
         </div>
 
