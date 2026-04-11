@@ -180,20 +180,6 @@ export default function SpovedanieScreen() {
           </button>
         )}
 
-        {/* Despre carte */}
-        <div className="glass-card p-5 mb-4">
-          <p className="text-[12px] text-gold tracking-[2px] font-heading mb-3">DESPRE ÎNDREPTAR</p>
-          <p className="text-[14px] text-ivory leading-[1.7]">
-            Îndreptarul a fost scris de Valeriu Gafencu în închisoarea comunistă, ca dar pentru
-            familia sa (&bdquo;Lui Gheorghe și Maria cu dragoste&rdquo;). Astăzi este unul dintre cele mai
-            folosite ghiduri de examinare a conștiinței în Biserica Ortodoxă Română.
-          </p>
-          <p className="text-[13px] text-warm-gray leading-relaxed mt-3 italic">
-            Valeriu Gafencu a murit în închisoarea de la Târgu Ocna, dăruindu-și ultimul medicament
-            unui preot bolnav. Este supranumit &bdquo;Sfântul Închisorilor&rdquo;.
-          </p>
-        </div>
-
         {/* Sfaturi rapide */}
         <div className="glass-card gold-border-left p-5">
           <p className="text-[12px] text-gold tracking-[2px] font-heading mb-3">SFATURI PENTRU SPOVEDANIE</p>
@@ -449,41 +435,9 @@ export default function SpovedanieScreen() {
         <div className="flex items-center gap-2 mb-0.5">
           <h2 className="text-[24px] font-heading text-gold tracking-wider">Îndreptar</h2>
         </div>
-        <p className="text-[14px] text-warm-gray mb-1">
+        <p className="text-[14px] text-warm-gray mb-5">
           Îndreptar de Spovedanie
         </p>
-
-        {/* Autor — Sf. Valeriu Gafencu */}
-        <div
-          className="rounded-xl p-4 mb-5 mt-3"
-          style={{
-            background: "linear-gradient(180deg, rgba(197, 165, 90, 0.08), rgba(26, 20, 16, 0.4))",
-            border: "1px solid #C5A55A22",
-          }}
-        >
-          <p className="text-[12px] text-gold tracking-[2px] font-heading uppercase">
-            Scris de
-          </p>
-          <p className="text-[16px] text-ivory font-heading mt-0.5">
-            Sf. Valeriu Gafencu
-          </p>
-          <p className="text-[12px] text-gold-light font-heading tracking-[1px] mt-0.5">
-            24 ianuarie 1921 &ndash; 18 februarie 1952
-          </p>
-          <p className="text-[11px] text-warm-gray tracking-[2px] font-heading uppercase mt-1">
-            &bdquo;Sfântul Închisorilor&rdquo; &middot; Pomenit 18 februarie
-          </p>
-        </div>
-
-        {/* Dedicația */}
-        <div className="glass-card p-5 mb-4 text-center">
-          <p className="text-[14px] text-ivory italic leading-relaxed">
-            {dedicatie.text}
-          </p>
-          <p className="text-[15px] text-gold font-heading mt-2">
-            {dedicatie.semnatura}
-          </p>
-        </div>
 
         {/* Epigrafe */}
         <div className="glass-card gold-border-left p-5 mb-4">
@@ -723,6 +677,38 @@ export default function SpovedanieScreen() {
             <p className="text-[15px] text-gold font-heading">{inchidere.salut}</p>
             <p className="text-[12px] text-warm-gray mt-3 italic">{inchidere.sfarsit}</p>
           </div>
+        </div>
+
+        {/* Dedicația — la sfârșit */}
+        <div className="glass-card p-5 mt-4 mb-3 text-center">
+          <p className="text-[14px] text-ivory italic leading-relaxed">
+            {dedicatie.text}
+          </p>
+          <p className="text-[15px] text-gold font-heading mt-2">
+            {dedicatie.semnatura}
+          </p>
+        </div>
+
+        {/* Autor — Sf. Valeriu Gafencu — cel mai la sfârșit */}
+        <div
+          className="rounded-xl p-4 mb-4 text-center"
+          style={{
+            background: "linear-gradient(180deg, rgba(197, 165, 90, 0.08), rgba(26, 20, 16, 0.4))",
+            border: "1px solid #C5A55A22",
+          }}
+        >
+          <p className="text-[12px] text-gold tracking-[2px] font-heading uppercase">
+            Scris de
+          </p>
+          <p className="text-[16px] text-ivory font-heading mt-0.5">
+            Sf. Valeriu Gafencu
+          </p>
+          <p className="text-[12px] text-gold-light font-heading tracking-[1px] mt-0.5">
+            24 ianuarie 1921 &ndash; 18 februarie 1952
+          </p>
+          <p className="text-[11px] text-warm-gray tracking-[2px] font-heading uppercase mt-1">
+            &bdquo;Sfântul Închisorilor&rdquo; &middot; Pomenit 18 februarie
+          </p>
         </div>
 
         {/* Back to top */}
