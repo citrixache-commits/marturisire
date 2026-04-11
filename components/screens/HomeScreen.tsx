@@ -199,8 +199,19 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
             boxShadow: "inset 0 2px 24px rgba(0, 0, 0, 0.6), 0 8px 32px rgba(0, 0, 0, 0.4)",
           }}>
           <div className="relative px-6 py-8 text-center">
-            <p className="text-[10px] text-warm-gray tracking-[5px] font-heading uppercase mb-5 opacity-70">
-              SĂPTĂMÂNA SFINTELOR PATIMI
+            <p
+              className="text-[13px] font-heading uppercase mb-5"
+              style={{
+                background: "linear-gradient(180deg, #E8D5A3 0%, #C5A55A 55%, #9A7F3C 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                letterSpacing: "4px",
+                fontWeight: 600,
+                filter: "drop-shadow(0 0 10px rgba(197, 165, 90, 0.35))",
+              }}
+            >
+              Săptămâna Sfintelor Patimi
             </p>
 
             {/* Orthodox three-bar cross silhouette */}
