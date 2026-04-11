@@ -461,16 +461,25 @@ export default function SpovedanieScreen() {
             border: "1px solid #C5A55A22",
           }}
         >
-          <p className="text-[12px] text-gold tracking-[2px] font-heading mb-1.5 uppercase">
-            Scris de Sf. Valeriu Gafencu
+          <p className="text-[12px] text-gold tracking-[2px] font-heading uppercase">
+            Scris de
           </p>
+          <p className="text-[16px] text-ivory font-heading mt-0.5">
+            Sf. Valeriu Gafencu
+          </p>
+          <p className="text-[12px] text-gold-light font-heading tracking-[1px] mt-0.5">
+            24 ianuarie 1921 &ndash; 18 februarie 1952
+          </p>
+          <p className="text-[11px] text-warm-gray tracking-[2px] font-heading uppercase mt-1">
+            &bdquo;Sfântul Închisorilor&rdquo; &middot; Pomenit 18 februarie
+          </p>
+          <div className="h-px my-3" style={{ background: "#C5A55A22" }} />
           <p className="text-[13px] text-ivory/85 leading-[1.75] italic">
-            &bdquo;Sfântul închisorilor&rdquo; &mdash; a pătimit în temnițele comuniste
-            (Aiud, Pitești, Târgu Ocna) din 1941 până la moartea sa, la numai 31 de ani,
-            pe 18 februarie 1952. Bolnav greu de tuberculoză, a dăruit doza sa
-            salvatoare de streptomicină pastorului Richard Wurmbrand, jertfindu-și
-            astfel propria viață pentru a-l salva pe un altul. Este pomenit anual
-            pe 18 februarie. A scris acest îndreptar ca testament duhovnicesc
+            A pătimit în temnițele comuniste (Aiud, Pitești, Târgu Ocna) din
+            1941 până la moartea sa, la numai 31 de ani. Bolnav greu de
+            tuberculoză, a dăruit doza sa salvatoare de streptomicină pastorului
+            Richard Wurmbrand, jertfindu-și astfel propria viață pentru a-l
+            salva pe un altul. A scris acest îndreptar ca testament duhovnicesc
             pentru pocăința deplină a celui care vrea să se mântuiască.
           </p>
         </div>
