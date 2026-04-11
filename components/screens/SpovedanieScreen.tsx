@@ -473,15 +473,6 @@ export default function SpovedanieScreen() {
           <p className="text-[11px] text-warm-gray tracking-[2px] font-heading uppercase mt-1">
             &bdquo;Sfântul Închisorilor&rdquo; &middot; Pomenit 18 februarie
           </p>
-          <div className="h-px my-3" style={{ background: "#C5A55A22" }} />
-          <p className="text-[13px] text-ivory/85 leading-[1.75] italic">
-            A pătimit în temnițele comuniste (Aiud, Pitești, Târgu Ocna) din
-            1941 până la moartea sa, la numai 31 de ani. Bolnav greu de
-            tuberculoză, a dăruit doza sa salvatoare de streptomicină pastorului
-            Richard Wurmbrand, jertfindu-și astfel propria viață pentru a-l
-            salva pe un altul. A scris acest îndreptar ca testament duhovnicesc
-            pentru pocăința deplină a celui care vrea să se mântuiască.
-          </p>
         </div>
 
         {/* Dedicația */}
