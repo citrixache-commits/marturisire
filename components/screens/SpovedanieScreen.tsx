@@ -432,12 +432,9 @@ export default function SpovedanieScreen() {
           <span>&larr;</span> Înapoi
         </button>
 
-        <div className="flex items-center gap-2 mb-0.5">
-          <h2 className="text-[24px] font-heading text-gold tracking-wider">Îndreptar</h2>
-        </div>
-        <p className="text-[14px] text-warm-gray mb-5">
+        <h2 className="text-[24px] font-heading text-gold tracking-wider mb-5">
           Îndreptar de Spovedanie
-        </p>
+        </h2>
 
         {/* Epigrafe */}
         <div className="glass-card gold-border-left p-5 mb-4">
