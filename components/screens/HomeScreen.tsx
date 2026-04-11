@@ -38,9 +38,65 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
   const todayKey = getLocalDateKey(today);
   const hour = today.getHours();
 
+  // Pascha detection — the day feels like the most important day of the year
+  const isPaschaDay = saint.type === "PAȘTE";
+
+  // Săptămâna Mare — Holy Week of the Passion (verified liturgical texts per day)
+  const holyWeekTexts: Record<string, { dayName: string; quote: string; attr: string }> = {
+    "2026-04-06": {
+      dayName: "LUNEA MARE",
+      quote: "Iată, Mirele vine în miezul nopții și fericită este sluga pe care o va afla priveghind.",
+      attr: "Troparul Deniilor",
+    },
+    "2026-04-07": {
+      dayName: "MARȚEA MARE",
+      quote: "Iată, Mirele vine în miezul nopții și fericită este sluga pe care o va afla priveghind.",
+      attr: "Troparul Deniilor",
+    },
+    "2026-04-08": {
+      dayName: "MIERCUREA MARE",
+      quote: "Cămara Ta, Mântuitorule, o văd împodobită și îmbrăcăminte nu am, ca să intru într-însa.",
+      attr: "Luminânda Deniilor",
+    },
+    "2026-04-09": {
+      dayName: "JOIA MARE",
+      quote: "Cinei Tale celei de taină, astăzi, Fiul lui Dumnezeu, părtaș mă primește.",
+      attr: "Chinonicul Joii celei Mari",
+    },
+    "2026-04-10": {
+      dayName: "VINEREA MARE",
+      quote: "Astăzi S-a spânzurat pe lemn, Cel ce a spânzurat pământul pe ape.",
+      attr: "Antifonul al XV-lea",
+    },
+    "2026-04-11": {
+      dayName: "SÂMBĂTA MARE",
+      quote: "Să tacă tot trupul omenesc și să stea cu frică și cu cutremur.",
+      attr: "Heruvicul Sâmbetei celei Mari",
+    },
+  };
+  const holyWeekEntry = holyWeekTexts[todayKey];
+  const isSaptamanaMare = !isPaschaDay && !!holyWeekEntry;
+
+  // Săptămâna Luminată — Bright Week, joyful continuation of Pascha
+  const brightWeekLabels: Record<string, string> = {
+    "2026-04-13": "Lunea Luminată",
+    "2026-04-14": "Marțea Luminată",
+    "2026-04-15": "Miercurea Luminată",
+    "2026-04-16": "Joia Luminată",
+    "2026-04-17": "Vinerea Luminată",
+    "2026-04-18": "Sâmbăta Luminată",
+  };
+  const saptamanaLuminataLabel = brightWeekLabels[todayKey];
+  const isSaptamanaLuminata =
+    !isPaschaDay && (saint.type === "Săptămâna Luminată" || !!saptamanaLuminataLabel);
+
+  // Overall "bright mood" — Pascha day or any day of Bright Week
+  const isBrightWeek = isPaschaDay || isSaptamanaLuminata;
+
   const [pravilaDimDone, setPravilaDimDone] = useState(false);
   const [pravilaSearaDone, setPravilaSearaDone] = useState(false);
   const [indreptarProgress, setIndreptarProgress] = useState<IndreptarProgress>({ sectionIndex: 0, total: totalSectiuni, completed: false });
+  const [othersOpen, setOthersOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -72,6 +128,135 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
 
   return (
     <div className="px-4 py-5 stagger-children lg:py-8">
+
+      {/* PASCHAL BANNER — only on Easter Sunday itself */}
+      {isPaschaDay && (
+        <div className="relative rounded-3xl mb-5 overflow-hidden animate-pascha-glow"
+          style={{
+            background: "linear-gradient(135deg, #4A0E1A 0%, #C5A55A 50%, #4A0E1A 100%)",
+            border: "2px solid #E8D5A3",
+          }}>
+          {/* Rotating light rays */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <svg width="520" height="520" viewBox="0 0 200 200"
+              className="animate-ray-rotate opacity-35"
+              style={{ filter: "blur(1px)" }}>
+              <defs>
+                <radialGradient id="paschalRayGrad" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#F5F0E8" stopOpacity="0.85" />
+                  <stop offset="100%" stopColor="#F5F0E8" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+              {Array.from({ length: 24 }).map((_, i) => (
+                <rect key={i} x="99.5" y="5" width="1" height="90"
+                  fill="url(#paschalRayGrad)"
+                  transform={`rotate(${i * 15} 100 100)`} />
+              ))}
+            </svg>
+          </div>
+
+          {/* Soft pulsing halo behind the text */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 rounded-full pointer-events-none animate-pulse-gentle"
+            style={{ background: "radial-gradient(circle, rgba(255, 240, 200, 0.22) 0%, transparent 70%)" }} />
+
+          <div className="relative px-6 py-9 text-center">
+            <p className="text-[10px] text-ivory/75 tracking-[6px] font-heading uppercase mb-4"
+              style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>
+              ZIUA ÎNVIERII DOMNULUI
+            </p>
+
+            <h1 className="text-[30px] font-heading font-bold text-ivory leading-tight tracking-[2px]"
+              style={{ textShadow: "0 2px 16px rgba(26, 20, 16, 0.7), 0 0 28px rgba(255, 240, 200, 0.3)" }}>
+              HRISTOS
+            </h1>
+            <h1 className="text-[48px] font-heading font-black leading-none tracking-[3px] mt-1 text-ivory animate-pascha-shimmer">
+              A ÎNVIAT!
+            </h1>
+
+            <div className="flex items-center gap-3 my-4 justify-center">
+              <div className="h-px w-14" style={{ background: "linear-gradient(90deg, transparent, #F5F0E8)" }} />
+              <span className="text-ivory text-base">&#10022;</span>
+              <div className="h-px w-14" style={{ background: "linear-gradient(90deg, #F5F0E8, transparent)" }} />
+            </div>
+
+            <p className="text-[16px] text-ivory italic font-body"
+              style={{ textShadow: "0 1px 6px rgba(0,0,0,0.5)" }}>
+              Adevărat a înviat!
+            </p>
+            <p className="text-[11px] text-ivory/55 italic font-body mt-2.5 tracking-[2px]">
+              Χριστὸς Ἀνέστη! &middot; Христóсъ воскрéсе!
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* HOLY WEEK BANNER — Săptămâna Sfintelor Patimi (somber, reverent) */}
+      {isSaptamanaMare && holyWeekEntry && (
+        <div className="relative rounded-3xl mb-5 overflow-hidden animate-fade-in"
+          style={{
+            background: "linear-gradient(180deg, #0A0706 0%, #1A1410 50%, #0A0706 100%)",
+            border: "1px solid #C5A55A22",
+            boxShadow: "inset 0 2px 24px rgba(0, 0, 0, 0.6), 0 8px 32px rgba(0, 0, 0, 0.4)",
+          }}>
+          <div className="relative px-6 py-8 text-center">
+            <p className="text-[10px] text-warm-gray tracking-[5px] font-heading uppercase mb-5 opacity-70">
+              SĂPTĂMÂNA SFINTELOR PATIMI
+            </p>
+
+            {/* Orthodox three-bar cross silhouette */}
+            <div className="flex justify-center mb-5">
+              <svg width="38" height="56" viewBox="0 0 38 56" fill="none">
+                <g stroke="#C5A55A" strokeWidth="1.2" opacity="0.6" strokeLinecap="round">
+                  <line x1="19" y1="3" x2="19" y2="53" />
+                  <line x1="12" y1="10" x2="26" y2="10" />
+                  <line x1="5" y1="20" x2="33" y2="20" />
+                  <line x1="8" y1="36" x2="30" y2="32" />
+                </g>
+              </svg>
+            </div>
+
+            <h2 className="text-[24px] font-heading text-ivory tracking-[4px] font-light mb-1">
+              {holyWeekEntry.dayName}
+            </h2>
+
+            <div className="flex items-center gap-2 my-4 justify-center opacity-55">
+              <div className="h-px w-10" style={{ background: "linear-gradient(90deg, transparent, #C5A55A)" }} />
+              <span className="text-gold-dim text-[10px]">&#10022;</span>
+              <div className="h-px w-10" style={{ background: "linear-gradient(90deg, #C5A55A, transparent)" }} />
+            </div>
+
+            <p className="text-[17px] text-ivory/90 italic leading-[1.75] font-body max-w-sm mx-auto">
+              &bdquo;{holyWeekEntry.quote}&rdquo;
+            </p>
+            <p className="text-[11px] text-gold-light/60 font-heading tracking-[2px] mt-4 uppercase">
+              &mdash; {holyWeekEntry.attr}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* BRIGHT WEEK MINI-BANNER — Săptămâna Luminată (joyful continuation) */}
+      {isSaptamanaLuminata && (
+        <div className="relative rounded-2xl mb-5 overflow-hidden animate-fade-in"
+          style={{
+            background: "linear-gradient(135deg, #4A0E1A 0%, #C5A55A44 50%, #4A0E1A 100%)",
+            border: "1px solid #C5A55A66",
+            boxShadow: "0 6px 24px rgba(197, 165, 90, 0.2)",
+          }}>
+          <div className="relative px-5 py-5 text-center">
+            <p className="text-[9px] text-ivory/60 tracking-[5px] font-heading uppercase">
+              SĂPTĂMÂNA LUMINATĂ{saptamanaLuminataLabel ? ` · ${saptamanaLuminataLabel.toUpperCase()}` : ""}
+            </p>
+            <h2 className="text-[26px] font-heading font-bold text-ivory tracking-[3px] leading-none mt-2.5"
+              style={{ textShadow: "0 0 18px rgba(255, 240, 200, 0.4)" }}>
+              HRISTOS A ÎNVIAT!
+            </h2>
+            <p className="text-[13px] text-ivory/75 italic mt-2 font-body">
+              Adevărat a înviat!
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Main CTA — single dominant action */}
       <button onClick={mainCTA.action}
@@ -152,8 +337,11 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
       {/* Date & Saint Card */}
       <div className="relative overflow-hidden rounded-2xl p-6 mb-4"
         style={{
-          background: "linear-gradient(135deg, #4A0E1Acc, #6B1D2A77 50%, #4A0E1Acc)",
-          border: "1px solid #C5A55A33",
+          background: isBrightWeek
+            ? "linear-gradient(135deg, #4A0E1Add, #C5A55A33 50%, #4A0E1Add)"
+            : "linear-gradient(135deg, #4A0E1Acc, #6B1D2A77 50%, #4A0E1Acc)",
+          border: isBrightWeek ? "1px solid #C5A55A77" : "1px solid #C5A55A33",
+          boxShadow: isBrightWeek ? "0 0 30px rgba(197, 165, 90, 0.12)" : undefined,
         }}>
         <div className="relative">
           <p className="text-[13px] tracking-[3px] mb-1 font-heading text-gold-light uppercase">
@@ -172,6 +360,36 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
             </div>
           )}
           <p className="text-[20px] italic text-ivory leading-relaxed mt-2">{saint.name}</p>
+          {saint.others && saint.others.length > 0 && (
+            <div className="mt-2">
+              <button
+                type="button"
+                onClick={() => setOthersOpen((v) => !v)}
+                className="text-[12px] text-gold-light tracking-[1px] font-heading uppercase active:opacity-70 transition-opacity"
+                style={{
+                  borderBottom: "1px dashed #C5A55A55",
+                  paddingBottom: "1px",
+                }}
+              >
+                {othersOpen
+                  ? "ascunde"
+                  : `+ ${saint.others.length} ${saint.others.length === 1 ? "alt sfânt" : "alți sfinți"}`}
+              </button>
+              {othersOpen && (
+                <ul className="mt-2 space-y-1 animate-fade-in">
+                  {saint.others.map((o, i) => (
+                    <li
+                      key={i}
+                      className="text-[13px] text-ivory/80 leading-snug flex gap-2"
+                    >
+                      <span className="text-gold-light mt-0.5">&#10022;</span>
+                      <span>{o}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
           <div className="flex items-center gap-2.5 mt-3">
             <span
               className="inline-block w-2 h-2 rounded-full flex-shrink-0"
@@ -197,37 +415,65 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
         </div>
       </div>
 
-      {/* Daily Gospel */}
-      <div className="glass-card gold-border-left p-5 mb-4 relative overflow-hidden">
-        <p className="text-[13px] text-gold tracking-[3px] font-heading mb-2">EVANGHELIA ZILEI</p>
-        <p className="text-[20px] text-ivory leading-[1.8] italic relative">
-          &bdquo;{saint.gospel}&rdquo;
-        </p>
-        <div className="flex items-center gap-2 mt-3">
-          <div className="h-px w-6" style={{ background: "#C5A55A44" }} />
-          <p className="text-[14px] text-gold-light font-heading tracking-wider">
-            {saint.gospelRef}
+      {/* Troparion — shown on Pascha and throughout Bright Week */}
+      {isBrightWeek && (
+        <div
+          className="p-5 mb-4 relative overflow-hidden"
+          style={{
+            background: "linear-gradient(180deg, rgba(197, 165, 90, 0.14), rgba(26, 20, 16, 0.6))",
+            border: "1px solid #C5A55A66",
+            borderRadius: "16px",
+            boxShadow: "0 0 24px rgba(197, 165, 90, 0.12)",
+          }}
+        >
+          <p className="text-[13px] text-gold tracking-[3px] font-heading mb-2">
+            TROPARUL ÎNVIERII
+          </p>
+          <p className="text-[20px] text-ivory leading-[1.8] italic relative">
+            &bdquo;Hristos a înviat din morți, cu moartea pe moarte călcând, și celor din morminte viață dăruindu-le!&rdquo;
           </p>
         </div>
-      </div>
+      )}
 
-      {/* Spovedanie CTA */}
-      <button onClick={() => onNavigate("spovedanie")}
-        className="w-full rounded-2xl p-5 mb-4 flex items-center justify-between active:scale-[0.98] transition-transform"
-        style={{
-          background: "linear-gradient(135deg, #4A0E1Acc, #1B3A5Ccc)",
-          border: "1px solid #C5A55A33",
-        }}>
-        <div className="text-left flex-1">
-          <p className="text-[13px] text-gold-light tracking-[3px] font-heading uppercase mb-1">
-            Îndreptar Valeriu Gafencu
+      {/* Daily Gospel — only when we have verified gospel text */}
+      {!isBrightWeek && saint.gospel && (
+        <div className="glass-card gold-border-left p-5 mb-4 relative overflow-hidden">
+          <p className="text-[13px] text-gold tracking-[3px] font-heading mb-2">
+            EVANGHELIA ZILEI
           </p>
-          <p className="text-[20px] font-bold text-ivory font-heading tracking-wider">
-            EXAMEN DE CONȘTIINȚĂ
+          <p className="text-[20px] text-ivory leading-[1.8] italic relative">
+            &bdquo;{saint.gospel}&rdquo;
           </p>
+          {saint.gospelRef && (
+            <div className="flex items-center gap-2 mt-3">
+              <div className="h-px w-6" style={{ background: "#C5A55A44" }} />
+              <p className="text-[14px] text-gold-light font-heading tracking-wider">
+                {saint.gospelRef}
+              </p>
+            </div>
+          )}
         </div>
-        <span className="text-gold text-xl ml-2">&#8594;</span>
-      </button>
+      )}
+
+      {/* Spovedanie CTA — hidden all Bright Week (joy, not examination of conscience) */}
+      {!isBrightWeek && (
+        <button onClick={() => onNavigate("spovedanie")}
+          className="w-full rounded-2xl p-5 mb-4 flex items-center justify-between active:scale-[0.98] transition-transform"
+          style={{
+            background: "linear-gradient(135deg, #4A0E1Acc, #1B3A5Ccc)",
+            border: "1px solid #C5A55A33",
+          }}>
+          <div className="text-left flex-1">
+            <p className="text-[13px] text-gold-light tracking-[3px] font-heading uppercase mb-1">
+              Îndreptar Valeriu Gafencu
+            </p>
+            <p className="text-[20px] font-bold text-ivory font-heading tracking-wider">
+              EXAMEN DE CONȘTIINȚĂ
+            </p>
+          </div>
+          <span className="text-gold text-xl ml-2">&#8594;</span>
+        </button>
+      )}
 
       {/* Week Calendar */}
       <div className="glass-card p-4 mb-4" style={{ border: "1px solid #C5A55A15" }}>

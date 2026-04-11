@@ -15,6 +15,7 @@ import { fastingTypes, fastingRecipes } from "@/data/fasting-rules";
 export default function CalendarScreen() {
   const [tab, setTab] = useState<"azi" | "praznice" | "posturi" | "retete">("azi");
   const [openRecipe, setOpenRecipe] = useState<number | null>(null);
+  const [selectedDayKey, setSelectedDayKey] = useState<string | null>(null);
   const recipeRef = useRef<HTMLDivElement | null>(null);
 
   const today = new Date();
@@ -73,7 +74,17 @@ export default function CalendarScreen() {
             <p className="text-[12px] text-gold-light tracking-[2px] font-heading mb-2">ASTĂZI</p>
             <p className="text-[20px] text-ivory font-medium mb-1">{formatDateRomanian(todayISO)}</p>
             {todaySaint?.type && <p className="text-[16px] text-gold mb-1">{todaySaint.type}</p>}
-            {todaySaint && <p className="text-[15px] text-warm-gray mb-3">{todaySaint.name}</p>}
+            {todaySaint && <p className="text-[15px] text-ivory mb-2">{todaySaint.name}</p>}
+            {todaySaint?.others && todaySaint.others.length > 0 && (
+              <ul className="mt-2 space-y-1">
+                {todaySaint.others.map((o, i) => (
+                  <li key={i} className="text-[13px] text-ivory/75 leading-snug flex gap-2">
+                    <span className="text-gold-light mt-0.5">&#10022;</span>
+                    <span>{o}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
             {todaySaint?.gospel && (
               <div className="mt-3 p-3 rounded-xl" style={{ background: "#1A141055", border: "1px solid #C5A55A15" }}>
                 <p className="text-[16px] text-ivory/90 italic leading-[1.8]">&bdquo;{todaySaint.gospel}&rdquo;</p>
@@ -136,31 +147,80 @@ export default function CalendarScreen() {
             </div>
           )}
 
-          {/* Week view */}
+          {/* Week view — tap a day to see its saints */}
           <p className="text-[12px] text-gold tracking-[2px] font-heading mb-3">SĂPTĂMÂNA ACEASTA</p>
-          <div className="grid grid-cols-7 gap-1 mb-5">
+          <div className="grid grid-cols-7 gap-1 mb-3">
             {weekDays.map(({ date, key, saint: daySaint }) => {
               const isToday = key === todayISO;
+              const isSelected = selectedDayKey === key;
               const dayNames = ["D", "L", "M", "M", "J", "V", "S"];
               const dow = date.getDay();
               return (
-                <div key={key} className="rounded-lg p-2 text-center"
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setSelectedDayKey(isSelected ? null : key)}
+                  className="rounded-lg p-2 text-center active:scale-[0.97] transition-transform"
                   style={{
-                    background: isToday ? "#C5A55A18" : "#1A141033",
-                    border: isToday ? "1px solid #C5A55A55" : "1px solid transparent",
+                    background: isSelected
+                      ? "#C5A55A33"
+                      : isToday
+                      ? "#C5A55A18"
+                      : "#1A141033",
+                    border: isSelected
+                      ? "1px solid #C5A55A"
+                      : isToday
+                      ? "1px solid #C5A55A55"
+                      : "1px solid transparent",
                   }}>
-                  <p className="text-[12px] font-heading tracking-wider mb-1" style={{ color: isToday ? "#C5A55A" : "#A89E92" }}>
+                  <p className="text-[12px] font-heading tracking-wider mb-1" style={{ color: isToday || isSelected ? "#C5A55A" : "#A89E92" }}>
                     {dayNames[dow]}
                   </p>
-                  <p className="text-[15px] font-bold" style={{ color: isToday ? "#C5A55A" : "#F5F0E8" }}>
+                  <p className="text-[15px] font-bold" style={{ color: isToday || isSelected ? "#C5A55A" : "#F5F0E8" }}>
                     {date.getDate()}
                   </p>
                   {daySaint?.fasting === "post" && <span className="text-[9px] text-[#E8A0A0]">&#9675;</span>}
                   {daySaint?.fasting === "harti" && <span className="text-[9px] text-gold">&#10022;</span>}
-                </div>
+                </button>
               );
             })}
           </div>
+
+          {/* Expanded day view */}
+          {selectedDayKey && (() => {
+            const selected = saintsCalendar[selectedDayKey];
+            if (!selected) return null;
+            return (
+              <div className="rounded-xl p-4 mb-5 animate-fade-in"
+                style={{ background: "#1A141066", border: "1px solid #C5A55A33" }}>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-[12px] text-gold-light tracking-[2px] font-heading">
+                    {formatDateRomanian(selectedDayKey)}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedDayKey(null)}
+                    className="text-[12px] text-warm-gray active:opacity-70">
+                    &#10005;
+                  </button>
+                </div>
+                {selected.type && (
+                  <p className="text-[13px] text-gold mb-1 font-heading tracking-wider uppercase">{selected.type}</p>
+                )}
+                <p className="text-[16px] text-ivory italic mb-2">{selected.name}</p>
+                {selected.others && selected.others.length > 0 && (
+                  <ul className="space-y-1">
+                    {selected.others.map((o, i) => (
+                      <li key={i} className="text-[13px] text-ivory/75 leading-snug flex gap-2">
+                        <span className="text-gold-light mt-0.5">&#10022;</span>
+                        <span>{o}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            );
+          })()}
 
           {/* Upcoming */}
           <p className="text-[12px] text-gold tracking-[2px] font-heading mb-3">URMEAZĂ</p>
