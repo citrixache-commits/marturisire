@@ -26,6 +26,52 @@ Pâinea noastră cea spre ființă dă-ne-o nouă astăzi.
 Că a Ta este Împărăția și puterea și slava, a Tatălui și a Fiului și a Sfântului Duh, acum și pururea și în vecii vecilor. Amin.`,
   },
   {
+    id: 3,
+    title: "Rugăciunea lui Iisus",
+    duration: "5 min",
+    icon: "necaz",
+    category: "necaz",
+    text: `Doamne Iisuse Hristoase, Fiul lui Dumnezeu, miluiește-mă pe mine, păcătosul.`,
+  },
+  {
+    id: 4,
+    title: "Crezul",
+    duration: "2 min",
+    icon: "crez",
+    category: "crez",
+    text: `Cred întru unul Dumnezeu, Tatăl Atotțiitorul, Făcătorul cerului și al pământului, văzutelor tuturor și nevăzutelor.
+
+Și întru unul Domn Iisus Hristos, Fiul lui Dumnezeu, Unul-Născut, Care din Tatăl S-a născut mai înainte de toți vecii. Lumină din Lumină, Dumnezeu adevărat din Dumnezeu adevărat, născut, nu făcut; Cel de o ființă cu Tatăl, prin Care toate s-au făcut.
+
+Care, pentru noi oamenii și pentru a noastră mântuire, S-a pogorât din ceruri și S-a întrupat de la Duhul Sfânt și din Maria Fecioara și S-a făcut om.
+
+Și S-a răstignit pentru noi în zilele lui Ponțiu Pilat și a pătimit și S-a îngropat.
+
+Și a înviat a treia zi, după Scripturi.
+
+Și S-a înălțat la ceruri și șade de-a dreapta Tatălui.
+
+Și iarăși va să vină cu slavă, să judece viii și morții, a Cărui împărăție nu va avea sfârșit.
+
+Și întru Duhul Sfânt, Domnul de viață Făcătorul, Care din Tatăl purcede, Cel ce împreună cu Tatăl și cu Fiul este închinat și slăvit, Care a grăit prin prooroci.
+
+Întru una, sfântă, sobornicească și apostolească Biserică.
+
+Mărturisesc un botez spre iertarea păcatelor.
+
+Aștept învierea morților și viața veacului ce va să fie. Amin.`,
+  },
+  {
+    id: 5,
+    title: "Cuvine-se cu adevărat",
+    duration: "1 min",
+    icon: "maica-domnului",
+    category: "maica-domnului",
+    text: `Cuvine-se cu adevărat să te fericim, Născătoare de Dumnezeu, cea pururea fericită și prea nevinovată și Maica Dumnezeului nostru.
+
+Ceea ce ești mai cinstită decât heruvimii și mai slăvită fără de asemănare decât serafimii, care fără stricăciune pe Dumnezeu Cuvântul ai născut, pe tine, cea cu adevărat Născătoare de Dumnezeu, te mărim.`,
+  },
+  {
     id: 1,
     title: "Rugăciunile Dimineții",
     duration: "15 min",
@@ -72,52 +118,6 @@ Doamne miluiește. (de 3 ori)
 Tatăl nostru, Care ești în ceruri, sfințească-se numele Tău, vie Împărăția Ta, facă-se voia Ta, precum în cer așa și pe pământ. Pâinea noastră cea spre ființă dă-ne-o nouă astăzi. Și ne iartă nouă greșelile noastre, precum și noi iertăm greșiților noștri. Și nu ne duce pe noi în ispită, ci ne izbăvește de cel rău. Amin.
 
 Doamne, ușurează, iartă și lasă, Stăpâne, sminteala mea din ziua aceasta, cea cu lucrul, cu cuvântul și cu gândul. Odihnește somnul meu fără de tulburare.`,
-  },
-  {
-    id: 3,
-    title: "Rugăciunea lui Iisus",
-    duration: "5 min",
-    icon: "necaz",
-    category: "necaz",
-    text: `Doamne Iisuse Hristoase, Fiul lui Dumnezeu, miluiește-mă pe mine, păcătosul.`,
-  },
-  {
-    id: 4,
-    title: "Crezul",
-    duration: "2 min",
-    icon: "crez",
-    category: "crez",
-    text: `Cred întru unul Dumnezeu, Tatăl Atotțiitorul, Făcătorul cerului și al pământului, văzutelor tuturor și nevăzutelor.
-
-Și întru unul Domn Iisus Hristos, Fiul lui Dumnezeu, Unul-Născut, Care din Tatăl S-a născut mai înainte de toți vecii. Lumină din Lumină, Dumnezeu adevărat din Dumnezeu adevărat, născut, nu făcut; Cel de o ființă cu Tatăl, prin Care toate s-au făcut.
-
-Care, pentru noi oamenii și pentru a noastră mântuire, S-a pogorât din ceruri și S-a întrupat de la Duhul Sfânt și din Maria Fecioara și S-a făcut om.
-
-Și S-a răstignit pentru noi în zilele lui Ponțiu Pilat și a pătimit și S-a îngropat.
-
-Și a înviat a treia zi, după Scripturi.
-
-Și S-a înălțat la ceruri și șade de-a dreapta Tatălui.
-
-Și iarăși va să vină cu slavă, să judece viii și morții, a Cărui împărăție nu va avea sfârșit.
-
-Și întru Duhul Sfânt, Domnul de viață Făcătorul, Care din Tatăl purcede, Cel ce împreună cu Tatăl și cu Fiul este închinat și slăvit, Care a grăit prin prooroci.
-
-Întru una, sfântă, sobornicească și apostolească Biserică.
-
-Mărturisesc un botez spre iertarea păcatelor.
-
-Aștept învierea morților și viața veacului ce va să fie. Amin.`,
-  },
-  {
-    id: 5,
-    title: "Cuvine-se cu adevărat",
-    duration: "1 min",
-    icon: "maica-domnului",
-    category: "maica-domnului",
-    text: `Cuvine-se cu adevărat să te fericim, Născătoare de Dumnezeu, cea pururea fericită și prea nevinovată și Maica Dumnezeului nostru.
-
-Ceea ce ești mai cinstită decât heruvimii și mai slăvită fără de asemănare decât serafimii, care fără stricăciune pe Dumnezeu Cuvântul ai născut, pe tine, cea cu adevărat Născătoare de Dumnezeu, te mărim.`,
   },
   {
     id: 6,
