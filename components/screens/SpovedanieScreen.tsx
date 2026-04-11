@@ -464,10 +464,13 @@ export default function SpovedanieScreen() {
           <p className="text-[12px] text-gold tracking-[2px] font-heading mb-1.5 uppercase">
             Scris de Sf. Valeriu Gafencu
           </p>
-          <p className="text-[13px] text-ivory/85 leading-[1.7] italic">
+          <p className="text-[13px] text-ivory/85 leading-[1.75] italic">
             &bdquo;Sfântul închisorilor&rdquo; &mdash; a pătimit în temnițele comuniste
-            (Aiud, Pitești, Târgu Ocna) din 1941 până la moartea sa la numai 30 de ani,
-            în 18 februarie 1952. A scris acest îndreptar ca testament duhovnicesc
+            (Aiud, Pitești, Târgu Ocna) din 1941 până la moartea sa, la numai 31 de ani,
+            pe 18 februarie 1952. Bolnav greu de tuberculoză, a dăruit doza sa
+            salvatoare de streptomicină pastorului Richard Wurmbrand, jertfindu-și
+            astfel propria viață pentru a-l salva pe un altul. Este pomenit anual
+            pe 18 februarie. A scris acest îndreptar ca testament duhovnicesc
             pentru pocăința deplină a celui care vrea să se mântuiască.
           </p>
         </div>
