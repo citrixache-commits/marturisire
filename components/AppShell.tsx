@@ -145,50 +145,59 @@ export default function AppShell() {
       )}
 
       {/* Desktop sidebar nav */}
-      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-[220px] z-[200] flex-col pt-6 pb-6 px-4"
+      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-[240px] z-40 flex-col pt-6 pb-6 px-3"
         style={{
-          background: "linear-gradient(180deg, #1A1410, #1A1410ee)",
+          background: "#1A1410",
           borderRight: "1px solid #C5A55A22",
+          boxShadow: "inset -1px 0 0 rgba(197, 165, 90, 0.04)",
         }}>
-        <div className="flex items-center gap-2.5 mb-8 px-2">
+        <div className="flex items-center gap-2.5 mb-8 px-3">
           <OrthodoxCross size={24} color="#C5A55A" />
           <div>
             <h1 className="text-[18px] font-heading font-bold text-gold tracking-[2px] leading-none">
               MĂRTURISIRE
             </h1>
-            <p className="text-[9px] text-gold-light tracking-[3px] font-light">
+            <p className="text-[10px] text-gold-light tracking-[2px] font-light mt-1">
               CREDINȚĂ ORTODOXĂ
             </p>
           </div>
         </div>
-        <nav className="flex flex-col gap-1 flex-1">
-          {tabs.map((tab) => (
-            <button key={tab.id} onClick={() => switchTab(tab.id)}
-              aria-label={tab.label}
-              aria-current={activeTab === tab.id ? "page" : undefined}
-              className="flex items-center gap-3 px-3 py-3 rounded-xl text-left transition-all"
-              style={{
-                background: activeTab === tab.id ? "#C5A55A18" : "transparent",
-                border: activeTab === tab.id ? "1px solid #C5A55A33" : "1px solid transparent",
-              }}>
-              <span className="text-[18px]">{tab.icon}</span>
-              <span className="text-[15px] tracking-[0.5px] font-heading"
-                style={{ color: activeTab === tab.id ? "#C5A55A" : "#A89E92" }}>
-                {tab.label}
-              </span>
-            </button>
-          ))}
+        <nav className="flex flex-col gap-0.5">
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button key={tab.id} onClick={() => switchTab(tab.id)}
+                aria-label={tab.label}
+                aria-current={isActive ? "page" : undefined}
+                className="relative flex items-center gap-3 pl-4 pr-3 py-2.5 rounded-lg text-left transition-all"
+                style={{
+                  background: isActive ? "#C5A55A18" : "transparent",
+                }}>
+                {isActive && (
+                  <span aria-hidden="true"
+                    className="absolute left-0 top-1.5 bottom-1.5 w-[3px] rounded-r-full"
+                    style={{ background: "linear-gradient(180deg, #E8D5A3, #C5A55A)" }} />
+                )}
+                <span className="text-[17px]">{tab.icon}</span>
+                <span className="text-[15px] tracking-[0.5px] font-heading"
+                  style={{ color: isActive ? "#C5A55A" : "#A89E92" }}>
+                  {tab.label}
+                </span>
+              </button>
+            );
+          })}
         </nav>
-        <button onClick={() => setShowAbout(true)}
-          className="flex items-center gap-3 px-3 py-3 rounded-xl text-left transition-all mt-2"
-          style={{ border: "1px solid transparent" }}>
-          <span className="text-[18px]">ℹ️</span>
-          <span className="text-[15px] tracking-[0.5px] font-heading text-warm-gray">Despre</span>
-        </button>
+        <div className="mt-auto pt-3" style={{ borderTop: "1px solid #C5A55A1F" }}>
+          <button onClick={() => setShowAbout(true)}
+            className="w-full flex items-center gap-3 pl-4 pr-3 py-2.5 rounded-lg text-left transition-all hover:bg-[#C5A55A0F]">
+            <span className="text-[17px]">ℹ️</span>
+            <span className="text-[15px] tracking-[0.5px] font-heading text-warm-gray">Despre</span>
+          </button>
+        </div>
       </aside>
 
       {/* Mobile Header */}
-      <header className="sticky top-0 z-[100] px-5 pt-4 pb-3 lg:hidden"
+      <header className="sticky top-0 z-30 px-5 pt-4 pb-3 lg:hidden"
         style={{
           background: "linear-gradient(180deg, #1A1410ee, #1A1410cc)",
           backdropFilter: "blur(20px)",
@@ -215,9 +224,26 @@ export default function AppShell() {
         </div>
       </header>
 
+      {/* Desktop top strip — orientation crumb (chrome only, no content) */}
+      <div className="hidden lg:block sticky top-0 z-30 lg:ml-[240px]"
+        style={{
+          background: "linear-gradient(180deg, rgba(26,20,16,0.92), rgba(26,20,16,0.78))",
+          backdropFilter: "blur(16px)",
+          borderBottom: "1px solid #C5A55A1A",
+        }}>
+        <div className="max-w-[760px] mx-auto px-6 xl:px-10 py-3 flex items-center gap-2">
+          <span className="text-[14px] opacity-80" aria-hidden="true">
+            {tabs.find((t) => t.id === activeTab)?.icon}
+          </span>
+          <span className="text-[11px] tracking-[3px] font-heading uppercase text-gold-light">
+            {tabs.find((t) => t.id === activeTab)?.label}
+          </span>
+        </div>
+      </div>
+
       {/* Content */}
-      <main id="main-content" className={`relative z-[1] pb-[100px] lg:pb-10 lg:ml-[220px] ${slideClass}`} role="main">
-        <div className="max-w-[430px] md:max-w-none mx-auto lg:mx-0 lg:px-8 xl:px-12">
+      <main id="main-content" className={`relative z-[1] pb-[100px] lg:pb-10 lg:ml-[240px] ${slideClass}`} role="main">
+        <div className="max-w-[430px] md:max-w-[720px] lg:max-w-[760px] mx-auto md:px-2 lg:px-6 xl:px-10">
           {activeTab === "home" && <HomeScreen onNavigate={(t) => switchTab(t as Tab)} onOpenPravila={(type) => { haptic(); setPravilaOpen(type); }} pravilaRefresh={pravilaRefresh} />}
           <Suspense fallback={<ScreenSkeleton />}>
             {activeTab === "calendar" && <CalendarScreen />}
@@ -228,7 +254,7 @@ export default function AppShell() {
       </main>
 
       {/* Mobile Tab Bar */}
-      <nav aria-label="Navigare principală" className="lg:hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] md:max-w-full z-[200] flex justify-around px-2 pt-2"
+      <nav aria-label="Navigare principală" className="lg:hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] md:max-w-[500px] z-40 flex justify-around px-2 pt-2"
         style={{
           background: "linear-gradient(180deg, #1A1410ee, #1A1410)",
           backdropFilter: "blur(16px)",
