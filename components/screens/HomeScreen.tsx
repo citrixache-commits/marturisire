@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { getTodaySaint, getWeekDays, getLocalDateKey } from "@/data/saints-calendar";
 import { totalSectiuni } from "@/data/indreptar-spovedanie";
 import { getTroparForDate } from "@/data/troparia";
+import { getTroparSfantForDate } from "@/data/tropare-sfinti";
 import { getApoftegmaForDate } from "@/data/pateric";
 import { getCitiriForDate } from "@/data/citiri-zilnice";
 
@@ -98,11 +99,15 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
 
   // Daily Tropar (verified canonical text only — for major feasts) and Pateric apoftegma
   const dailyTropar = getTroparForDate(today);
+  const dailySaintTropar = getTroparSfantForDate(today);
   const dailyApoftegma = getApoftegmaForDate(today);
   const dailyCitiri = getCitiriForDate(today);
   // Hide major-feast tropar during Bright Week (Pascha tropar already shown separately)
   // and during Holy Week (banner already dominant)
   const showMajorTropar = !isBrightWeek && !isSaptamanaMare && !!dailyTropar;
+  // Saint tropar — fallback when no major-feast tropar; same hide rules
+  const showSaintTropar =
+    !isBrightWeek && !isSaptamanaMare && !showMajorTropar && !!dailySaintTropar;
 
   const [pravilaDimDone, setPravilaDimDone] = useState(false);
   const [pravilaSearaDone, setPravilaSearaDone] = useState(false);
@@ -456,6 +461,28 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
           </p>
           <p className="text-[17px] text-ivory leading-[1.75] italic font-body">
             &bdquo;{dailyTropar.tropar}&rdquo;
+          </p>
+        </div>
+      )}
+
+      {/* Daily Saint Tropar — verbatim from doxologia.ro (only when verified) */}
+      {showSaintTropar && dailySaintTropar && (
+        <div
+          className="p-5 mb-4 relative overflow-hidden rounded-2xl"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(197, 165, 90, 0.08), rgba(26, 20, 16, 0.5))",
+            border: "1px solid #C5A55A33",
+          }}
+        >
+          <p className="text-[12px] text-gold tracking-[3px] font-heading uppercase">
+            Troparul Sfântului{dailySaintTropar.glas ? ` · ${dailySaintTropar.glas}` : ""}
+          </p>
+          <p className="text-[13px] text-gold-light/80 font-heading mt-0.5 mb-3">
+            {dailySaintTropar.saintName}
+          </p>
+          <p className="text-[16px] text-ivory leading-[1.75] italic font-body">
+            &bdquo;{dailySaintTropar.tropar}&rdquo;
           </p>
         </div>
       )}
