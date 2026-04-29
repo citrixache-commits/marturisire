@@ -4,6 +4,7 @@ import { getTodaySaint, getWeekDays, getLocalDateKey } from "@/data/saints-calen
 import { totalSectiuni } from "@/data/indreptar-spovedanie";
 import { getTroparForDate } from "@/data/troparia";
 import { getApoftegmaForDate } from "@/data/pateric";
+import { getCitiriForDate } from "@/data/citiri-zilnice";
 
 const dayNamesRo = ["Duminică", "Luni", "Marți", "Miercuri", "Joi", "Vineri", "Sâmbătă"];
 const dayLetters = ["L", "M", "M", "J", "V", "S", "D"];
@@ -98,6 +99,7 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
   // Daily Tropar (verified canonical text only — for major feasts) and Pateric apoftegma
   const dailyTropar = getTroparForDate(today);
   const dailyApoftegma = getApoftegmaForDate(today);
+  const dailyCitiri = getCitiriForDate(today);
   // Hide major-feast tropar during Bright Week (Pascha tropar already shown separately)
   // and during Holy Week (banner already dominant)
   const showMajorTropar = !isBrightWeek && !isSaptamanaMare && !!dailyTropar;
@@ -496,23 +498,38 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
         </div>
       )}
 
-      {/* Daily Gospel — only when we have verified gospel text */}
-      {!isBrightWeek && saint.gospel && (
-        <div className="glass-card gold-border-left p-5 mb-4 relative overflow-hidden">
-          <p className="text-[13px] text-gold tracking-[3px] font-heading mb-2">
-            EVANGHELIA ZILEI
+      {/* Daily Apostol + Evanghelia — verbatim BOR, hidden during Bright Week */}
+      {!isBrightWeek && dailyCitiri?.apostol && (
+        <div className="glass-card gold-border-left p-5 mb-4">
+          <p className="text-[12px] text-gold tracking-[3px] font-heading uppercase mb-2">
+            Apostolul zilei
           </p>
-          <p className="text-[20px] text-ivory leading-[1.8] italic relative">
-            &bdquo;{saint.gospel}&rdquo;
+          <p className="text-[16px] text-ivory leading-[1.75] italic font-body">
+            &bdquo;{dailyCitiri.apostol.text}&rdquo;
           </p>
-          {saint.gospelRef && (
-            <div className="flex items-center gap-2 mt-3">
-              <div className="h-px w-6" style={{ background: "#C5A55A44" }} />
-              <p className="text-[14px] text-gold-light font-heading tracking-wider">
-                {saint.gospelRef}
-              </p>
-            </div>
-          )}
+          <div className="flex items-center gap-2 mt-3">
+            <div className="h-px w-6" style={{ background: "#C5A55A44" }} />
+            <p className="text-[13px] text-gold-light font-heading tracking-[1px]">
+              {dailyCitiri.apostol.ref}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {!isBrightWeek && dailyCitiri?.evanghelie && (
+        <div className="glass-card gold-border-left p-5 mb-4">
+          <p className="text-[12px] text-gold tracking-[3px] font-heading uppercase mb-2">
+            Evanghelia zilei
+          </p>
+          <p className="text-[16px] text-ivory leading-[1.75] italic font-body">
+            &bdquo;{dailyCitiri.evanghelie.text}&rdquo;
+          </p>
+          <div className="flex items-center gap-2 mt-3">
+            <div className="h-px w-6" style={{ background: "#C5A55A44" }} />
+            <p className="text-[13px] text-gold-light font-heading tracking-[1px]">
+              {dailyCitiri.evanghelie.ref}
+            </p>
+          </div>
         </div>
       )}
 
