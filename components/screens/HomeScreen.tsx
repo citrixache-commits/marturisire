@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { getTodaySaint, getWeekDays, getLocalDateKey } from "@/data/saints-calendar";
 import { totalSectiuni } from "@/data/indreptar-spovedanie";
+import { getTroparForDate } from "@/data/troparia";
+import { getApoftegmaForDate } from "@/data/pateric";
 
 const dayNamesRo = ["Duminică", "Luni", "Marți", "Miercuri", "Joi", "Vineri", "Sâmbătă"];
 const dayLetters = ["L", "M", "M", "J", "V", "S", "D"];
@@ -92,6 +94,13 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
 
   // Overall "bright mood" — Pascha day or any day of Bright Week
   const isBrightWeek = isPaschaDay || isSaptamanaLuminata;
+
+  // Daily Tropar (verified canonical text only — for major feasts) and Pateric apoftegma
+  const dailyTropar = getTroparForDate(today);
+  const dailyApoftegma = getApoftegmaForDate(today);
+  // Hide major-feast tropar during Bright Week (Pascha tropar already shown separately)
+  // and during Holy Week (banner already dominant)
+  const showMajorTropar = !isBrightWeek && !isSaptamanaMare && !!dailyTropar;
 
   const [pravilaDimDone, setPravilaDimDone] = useState(false);
   const [pravilaSearaDone, setPravilaSearaDone] = useState(false);
@@ -425,6 +434,47 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
           </div>
         </div>
       </div>
+
+      {/* Daily Tropar — major feasts only (verified canonical text from doxologia.ro) */}
+      {showMajorTropar && dailyTropar && (
+        <div
+          className="p-5 mb-4 relative overflow-hidden rounded-2xl"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(197, 165, 90, 0.10), rgba(26, 20, 16, 0.5))",
+            border: "1px solid #C5A55A44",
+            boxShadow: "0 0 18px rgba(197, 165, 90, 0.08)",
+          }}
+        >
+          <p className="text-[12px] text-gold tracking-[3px] font-heading uppercase">
+            Tropar &middot; {dailyTropar.glas}
+          </p>
+          <p className="text-[13px] text-gold-light/80 font-heading mt-0.5 mb-3">
+            {dailyTropar.feastName}
+          </p>
+          <p className="text-[17px] text-ivory leading-[1.75] italic font-body">
+            &bdquo;{dailyTropar.tropar}&rdquo;
+          </p>
+        </div>
+      )}
+
+      {/* Cuvânt din Pateric — rotating daily (hidden during Bright Week — joy focus) */}
+      {!isBrightWeek && dailyApoftegma && (
+        <div className="glass-card gold-border-left p-5 mb-4">
+          <p className="text-[12px] text-gold tracking-[3px] font-heading uppercase mb-2">
+            Cuvânt din Pateric
+          </p>
+          <p className="text-[16px] text-ivory leading-[1.75] italic font-body">
+            &bdquo;{dailyApoftegma.text}&rdquo;
+          </p>
+          <div className="flex items-center gap-2 mt-3">
+            <div className="h-px w-6" style={{ background: "#C5A55A44" }} />
+            <p className="text-[13px] text-gold-light font-heading tracking-[1px]">
+              &mdash; {dailyApoftegma.speaker}
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Troparion — shown on Pascha and throughout Bright Week */}
       {isBrightWeek && (
