@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { getTodaySaint } from "@/data/saints-calendar";
+import { refreshSchedulingOnLoad } from "@/lib/reminders";
 import OrthodoxCross from "./ui/OrthodoxCross";
 import OnboardingFlow from "./ui/OnboardingFlow";
 import PravilaModal from "./ui/PravilaModal";
@@ -44,6 +45,13 @@ export default function AppShell() {
     try {
       setIsPaschaDay(getTodaySaint().type === "PAȘTE");
     } catch {}
+  }, []);
+
+  // Reprogramează notificările la fiecare deschidere (Triggers API e single-shot)
+  useEffect(() => {
+    refreshSchedulingOnLoad().catch(() => {
+      /* silent — utilizatorul vede starea în AboutModal */
+    });
   }, []);
 
   function switchTab(tab: Tab) {

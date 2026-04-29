@@ -34,3 +34,32 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
+// Notification click — focus existing tab or open new one
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const targetUrl = (event.notification.data && event.notification.data.url) || "/";
+  event.waitUntil(
+    self.clients
+      .matchAll({ type: "window", includeUncontrolled: true })
+      .then((clientList) => {
+        for (const client of clientList) {
+          if ("focus" in client) {
+            client.focus();
+            return;
+          }
+        }
+        if (self.clients.openWindow) {
+          return self.clients.openWindow(targetUrl);
+        }
+      })
+  );
+});
+
+// Bump cache version when notification logic changes
+const REMINDERS_VERSION = "v1";
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "GET_VERSION") {
+    event.ports[0]?.postMessage({ version: REMINDERS_VERSION });
+  }
+});
