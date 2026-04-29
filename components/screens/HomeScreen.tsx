@@ -465,7 +465,7 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
         </div>
       )}
 
-      {/* Daily Saint Tropar — verbatim from doxologia.ro (only when verified) */}
+      {/* Daily Saint Tropar/Condac — verbatim from doxologia.ro (only when verified) */}
       {showSaintTropar && dailySaintTropar && (
         <div
           className="p-5 mb-4 relative overflow-hidden rounded-2xl"
@@ -476,7 +476,8 @@ export default function HomeScreen({ onNavigate, onOpenPravila, pravilaRefresh }
           }}
         >
           <p className="text-[12px] text-gold tracking-[3px] font-heading uppercase">
-            Troparul Sfântului{dailySaintTropar.glas ? ` · ${dailySaintTropar.glas}` : ""}
+            {dailySaintTropar.type === "condac" ? "Condacul Sfântului" : "Troparul Sfântului"}
+            {dailySaintTropar.glas ? ` · ${dailySaintTropar.glas}` : ""}
           </p>
           <p className="text-[13px] text-gold-light/80 font-heading mt-0.5 mb-3">
             {dailySaintTropar.saintName}

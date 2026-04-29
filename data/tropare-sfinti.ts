@@ -11,6 +11,8 @@ export interface TroparSfant {
   tropar: string;
   glas?: string;
   source: string;
+  /** "tropar" (default) sau "condac" — etichetă în UI */
+  type?: "tropar" | "condac";
 }
 
 export const tropareSfinti: TroparSfant[] = [
@@ -1560,6 +1562,14 @@ export const tropareSfinti: TroparSfant[] = [
     tropar: `Întru tine, maică, cu osârdie s-a mântuit cel după chip; că, luând crucea, ai urmat lui Hristos; şi lucrând, ai învăţat să nu se uite la trup, căci este trecător; ci să poarte grijă de suflet, de lucrul cel nemuritor. Pentru aceasta şi cu îngerii împreună se bucură, Preacuvioasă Maică Melania, duhul tău.`,
     glas: "Glasul 8",
     source: "https://doxologia.ro/troparul-sfintei-cuvioase-melania-romana-0",
+  },
+  {
+    dateKey: "04-29",
+    saintName: `Sfinții 9 Mucenici din Cizic`,
+    tropar: `Ceata cea tare şi luminată a celor nouă mucenici, care ca nişte mărturisitori ai Dumnezeirii Celei în Trei Străluciri, dintru început înaintea Divanului, aceştia au strigat: sângele şi sufletele noastre împreună cu trupurile, ca o jertfă fără prihană aducem Ţie, Stăpâne; numără-ne în Cetele celor Cereşti ai Tăi, ca un Dumnezeu Milostiv.`,
+    glas: "Glasul 2",
+    source: "https://doxologia.ro/tropar/condacul-sfintilor-9-mucenici-din-cizic",
+    type: "condac",
   },
 ];
 
