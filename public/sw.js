@@ -1,4 +1,4 @@
-const CACHE_NAME = "marturisire-v1";
+const CACHE_NAME = "marturisire-v2-pravila-scurta";
 const STATIC_ASSETS = ["/", "/manifest.json"];
 
 self.addEventListener("install", (event) => {
