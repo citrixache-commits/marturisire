@@ -1,8 +1,30 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { getPravilaById } from "@/data/pravila";
-import { getLocalDateKey } from "@/data/saints-calendar";
+import { getLocalDateKey, getTodaySaint } from "@/data/saints-calendar";
+import { getTroparSfantForDate } from "@/data/tropare-sfinti";
 import ByzantineDivider from "./ByzantineDivider";
+
+/**
+ * Construiește invocația canonică pentru sfântul zilei când nu avem tropar verificat.
+ * Folosește formula liturgică standard din litiile Sf. Liturghii (vocativ).
+ */
+function buildSaintInvocation(saintName: string): string {
+  const cleaned = saintName.replace(/[✝)(]/g, "").trim();
+  if (cleaned.startsWith("Sfinții ")) {
+    return cleaned.replace(/^Sfinții /, "Sfinților ") + ", rugați-vă lui Dumnezeu pentru noi.";
+  }
+  if (cleaned.startsWith("Sfintele ")) {
+    return cleaned.replace(/^Sfintele /, "Sfintelor ") + ", rugați-vă lui Dumnezeu pentru noi.";
+  }
+  if (cleaned.startsWith("Sfânta ")) {
+    return cleaned.replace(/^Sfânta /, "Sfântă ") + ", roagă-te lui Dumnezeu pentru noi.";
+  }
+  if (cleaned.startsWith("Sfântul ")) {
+    return cleaned.replace(/^Sfântul /, "Sfinte ") + ", roagă-te lui Dumnezeu pentru noi.";
+  }
+  return `Pentru rugăciunile pomenirii de astăzi (${cleaned}), Doamne, miluiește-ne pe noi.`;
+}
 
 interface Props {
   pravilaId: "dimineata" | "seara";
@@ -22,6 +44,37 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
   const isFirstStep = currentStep === 0;
   const isChecked = checkedSteps.has(currentStep);
   const progressPct = ((currentStep + 1) / totalSteps) * 100;
+
+  // Pomenirea Sfântului Zilei — calculat dinamic, NU stocat
+  const dynamicSaint = useMemo(() => {
+    if (step.dynamic !== "saintOfDay") return null;
+    try {
+      const today = new Date();
+      const saint = getTodaySaint();
+      const tropar = getTroparSfantForDate(today);
+      if (tropar) {
+        return {
+          subtitle: tropar.saintName,
+          headerNote: `Troparul Sfântului${tropar.glas ? ` · ${tropar.glas}` : ""}`,
+          text: tropar.tropar,
+          source: tropar.source,
+        };
+      }
+      return {
+        subtitle: saint.name,
+        headerNote: "Pomenirea zilei",
+        text: buildSaintInvocation(saint.name),
+        source: undefined as string | undefined,
+      };
+    } catch {
+      return null;
+    }
+  }, [step.dynamic, step.id]);
+
+  // Valori afișate (fallback la cele din data dacă nu e dynamic)
+  const displaySubtitle = dynamicSaint ? dynamicSaint.subtitle : step.subtitle;
+  const displayText = dynamicSaint ? dynamicSaint.text : step.text;
+  const displayNote = dynamicSaint ? dynamicSaint.headerNote : step.note;
 
   // Lock body scroll
   useEffect(() => {
@@ -274,13 +327,13 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
           <h2 className="text-[30px] font-heading text-gold tracking-wide mb-1 leading-tight">
             {step.title}
           </h2>
-          {step.subtitle && (
+          {displaySubtitle && (
             <p className="text-[15px] text-gold-light italic mb-4">
-              {step.subtitle}
+              {displaySubtitle}
             </p>
           )}
 
-          {step.note && (
+          {displayNote && (
             <div
               className="rounded-lg p-3 mb-4 relative"
               style={{
@@ -291,7 +344,7 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
               <div className="absolute left-0 top-0 bottom-0 w-0.5 rounded-l-lg" style={{ background: "#C5A55A" }} />
               <p className="text-[15px] text-ivory/85 italic leading-relaxed pl-2">
                 <span className="text-gold mr-1">¶</span>
-                {step.note}
+                {displayNote}
               </p>
             </div>
           )}
@@ -306,8 +359,13 @@ export default function PravilaModal({ pravilaId, onClose }: Props) {
             }}
           >
             <p className="text-[20px] text-ivory whitespace-pre-wrap font-body sacred-text">
-              {step.text}
+              {displayText}
             </p>
+            {dynamicSaint?.source && (
+              <p className="text-[11px] text-warm-gray/70 mt-4 italic">
+                Sursa: doxologia.ro
+              </p>
+            )}
           </div>
         </div>
 
